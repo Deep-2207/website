@@ -1,0 +1,133 @@
+@media (max-width: 1200px) {
+
+    .scroll-up-btn.top-arrow{
+        left: 10px;
+    }
+    
+    .scroll-up-btn.message-box{
+        right: 10px;
+    }
+    
+    .navbar .navbar-nav li {
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+
+    .navbar .navbar-nav .rounded-link {
+        padding: 6px 13px;
+    }
+}
+
+@media (max-width: 991px) {
+
+    .navbar .navbar-nav .rounded-link{
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }
+
+    .navbar-collapse{
+        background-color: #2d2c2c;
+        height: 100vh;
+    }
+
+    .navbar-collapse .navbar-nav{
+        align-items: center;
+    }
+
+    .navbar-collapse ul li{
+        margin: 7px;
+    }
+
+    .navbar-collapse ul li a{
+        display: inline-block;
+    }
+
+    .home .home-content .button button {
+        margin-bottom: 30px;
+    }
+
+    .home .home-content .payment-process .arrow img {
+        width: 50px;
+    }
+
+    .home .home-content .payment-process .icon-box {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    footer .footer-max-width .logo img{
+        width: 90px;
+    }
+}
+
+@media (max-width: 991px){
+    footer .footer-max-width{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .home .home-content .payment-process .arrow {
+        display: none;
+    }
+
+    .home .home-content .payment-process .payment-process-box {
+        margin: 0px 20px;
+    }
+
+    .home .home-content .payment-process .payment-process-box h6 span {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        height: 90px;
+    }
+
+    .home .home-content{
+        padding: 220px 5px 15px 5px;
+    }
+
+    .home .home-content .payment-process {
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .home .home-content .title {
+        font-size: 25px;
+    }
+
+    .home .home-content .home-text ul li {
+        font-size: 14px;
+    }
+
+    .home .home-content .button button {
+        padding: 8px 20px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .home .home-content .payment-process .icon-box{
+        height: 45px;
+        margin-bottom: 10px;
+    }
+
+    .home .home-content .payment-process .img-size{
+        width: 35px;
+    }
+
+    footer .footer-max-width .logo img{
+        width: 70px;
+    }
+}
+
+@media (max-width: 420px){
+    .home .home-content .payment-process .payment-process-box {
+        margin: 0px 10px;
+    }
+
+    .home .home-content .payment-process .payment-process-box h6{
+        width: 130px;
+    }
+}
