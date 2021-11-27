@@ -16,15 +16,15 @@ $(document).ready(function () {
     $("html").animate({ scrollTop: 0 });
   });
 
-  var posts = $(".filter-images");
-  posts.hide();
+  var posts = $(".accordion");
 
-  $(".container-max-width .control .buttons").click(function () {
-    var customType = $(this).data("filter");
-    console.log(customType);
-    console.log(posts.length);
 
-    posts.hide();
-    $("." + customType).show();
-  });
+  // $(".container-max-width .control .buttons").click(function () {
+  //   var customType = $(this).data("filter");
+  //   console.log(customType);
+  //   console.log(posts.length);
+
+  //   posts.hide();
+  //   $("." + customType).show();
+  // });
 });

@@ -16,17 +16,13 @@
     .navbar .navbar-nav .rounded-link {
         padding: 6px 13px;
     }
-}
-
-@media (max-width: 991px) {
-
     .navbar .navbar-nav .rounded-link{
         margin-top: 7px;
         margin-bottom: 7px;
     }
 
     .navbar-collapse{
-        background-color: #2d2c2c;
+        background-color: #525252;
         height: 100vh;
     }
 
@@ -41,6 +37,11 @@
     .navbar-collapse ul li a{
         display: inline-block;
     }
+}
+
+@media (max-width: 991px) {
+
+   
 
     .home .home-content .button button {
         margin-bottom: 30px;
@@ -120,6 +121,11 @@
     footer .footer-max-width .logo img{
         width: 70px;
     }
+    /* faq page start */
+    .FAQ .container-max-width ul li{
+        display: contents;
+    }
+    /* faq page end */
 }
 
 @media (max-width: 420px){
