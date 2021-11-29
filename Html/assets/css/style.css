@@ -23,6 +23,20 @@ html{
     margin: auto;
     padding: 20px ;
 }
+.max-width-1140{
+    max-width: 986px;
+    margin: auto;
+    padding: 20px ;
+}
+.max-width-1560{
+    max-width: 1560px;
+    margin: auto;
+}
+.max-width-614{
+    max-width: 644px;
+    margin: auto;
+    padding: 0px 20px;
+}
 section{
     padding: 40px 0px;
 }
@@ -52,6 +66,41 @@ section .headding{
 }
 .m-tb-36{
     margin: 36px 0;
+}
+.m-tb-30{
+    margin: 30px 0px;
+}
+.mb-75{
+    margin-bottom: 75px !important;
+}
+.mt-30{
+    margin-top: 30px;
+}
+.mt-70{
+    margin-top: 70px;
+}
+.mb-15
+{
+    margin-bottom: 15px;
+}
+.mt-25{
+    margin-top: 25px;
+}
+.m-50{
+    margin: 50px;
+}
+.pt-43{
+    padding-top: 43px;
+}
+.p-tb-10{
+    padding: 5px 0 !important;
+}
+.pt-23{
+    padding-top: 23px;
+}
+
+.border-b-1{
+    border-bottom: 1px solid #B0C9CE;
 }
 .card .card-body a{
     font-size: 18px;
@@ -116,6 +165,13 @@ section .headding-star::before{
 }
 .bg-btn-29626d{
     background-color: #29626d;
+}
+
+select:invalid{
+    color: gray;
+}
+option{
+    color: black;
 }
 
 /* Navbar start*/
@@ -603,6 +659,8 @@ footer .privacy-policy button{
     background-color: #1d7a8c;
 }
 
+
+/* prices start */
 .prices .price-box{
     margin: auto;
     height: 304px;
@@ -610,13 +668,241 @@ footer .privacy-policy button{
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #B0C9CE;
     opacity: 1;
+    border-radius: 0px;
+}
+.prices .price-box .heading-card{
+    background-color: #1d7a8c;
+    border-radius: 0px;
+    color: #fff;
+}
+.prices .price-box .card-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.prices .price-box .card-body .card-title{
+    font-size: 48px;
+    color: #646464;
+}
+.prices .price-box .card-body .card-title span{
+    font-size: 30px;
+    
+}
+.prices .price-box .card-body .card-text{
+    list-style-type: none;
+    text-align: left;
+    margin: auto;
+    position: relative;
+}
+.prices .price-box .card-body .card-text li{
+    margin-bottom: 15px;
+}
+.prices .price-box .card-body .card-text li::before{
+    content: '';
+    background-image: url(../img/prices/forma-1_5.png);
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    position: absolute;
+}
+
+
+/* Extra-services start */
+
+.Extra-services .other-services{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+
+}
+.Extra-services .other-services .icon-box{
+  
+    width: 109px;
+    height: 109px;
+    border: 1px solid #B0C9CE;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+   
+}
+.Extra-services .other-services .other-services-box{
+    width: 109px;
+    width: 141px;
+    text-align: center;
+    margin: 0 5px;
+}
+.Extra-services .other-services .other-services-box .icon-box{
+    margin: 0 auto 17px auto;
+}
+.Extra-services .other-services .other-services-box h6{
+    font-size: 16px;
+    margin-bottom: 2px !important;
+    color: #646464;
+}
+.Extra-services .other-services .other-services-box h5{
+    font-size: 18px;
+    color: #1d7a8c;
+}
+
+/* Extra-services end */
+/* cleaning start */
+.cleaning{
+    background-color: #F6F6F6;
+}
+.cleaning .cleaning-img-box .card{
+    border: none;
+    background: transparent;
+}
+.cleaning .cleaning-img-box .card .card-body ul{
+   padding: 0 0 0 25px;
+}
+.cleaning .cleaning-img-box .card .card-body ul li{
+    /* list-style-image: url('../img/prices/right-arrow-grey.png'); */
+    list-style: none;
+    font-size: 16px;
+    color: #4F4F4F;
+    position: relative;
+    margin-bottom: 15px;
+}
+.cleaning .cleaning-img-box .card .card-body ul li::before{
+    content: '';
+    background: url(../img/prices/right-arrow-grey.png);
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: -27px;
+}
+.cleaning .cleaning-img-box .card .cleaning-text-box{
+    padding: 0;
+}
+
+.cleaning .headding-star::after {
+    background-color: #f6f6f6;
+}
+
+
+/* cleaning end */
+
+/* why-helperland start */
+.Why-helperland .card{
+    border: none;
+    color: #646464;
+}
+.Why-helperland .card h5{
+    font-size: 20px;
+}
+.Why-helperland .card .card-body p{
+    font-size: 14px;
+}
+.Why-helperland .card .card-body{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 
 
+/* why-helperland end */
 
 
 
+
+/* prices end */
+
+
+/* Contect us start */
+/* 
+.contact-us .contact-img .card-img-top{
+    width: 34px;
+    flex-direction: column;
+    
+}
+.contact-us .contact-img .box{
+   max-width:153px ;
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+.contact-us .contact-img .box .img-box{
+    margin:auto;
+    width: 34px;
+    height: 54px;
+}
+.contact-us .contact-img .box .text-box{
+    font-size: 16px;
+    color: #4f4f4f;
+    width: 200px;
+} */
+
+/* touch us start */
+/* 
+.touch-us .touch-headding{
+    font-size: 28px;
+    font-weight: 400;
+    color: #4F4F4F;
+}
+.touch-us .submit-btn{
+    width: 163px;
+    height: 46px;
+    border: 1px solid #1D7A8C;
+    border-radius: 23px;
+    background-color: #1D7A8C;
+    opacity: 1;
+    font-size: 20px;
+    color: #FFFFFF;
+} */
+
+/* touch us end */
+
+/* touch us map start */
+/* 
+.touch-map .img-1-box{
+    position: relative;
+    width: 100%;
+}
+.touch-map .img-1-box .img-1{
+    width: 100%;
+}
+
+.touch-map .img-2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 9999;
+} */
+
+/* touch us map end */
+/* 
+.contact-us-map{
+    background: url('../img/contect_us/group-16.png') no-repeat center;
+    height: 400px;
+} */
+/* Contect us end */
+
+/* about us start */
+/* 
+.words-1 .text-body{
+    max-width: 982px;
+    
+    font-size: 16px;
+    color: #646464 !important;
+}
+.words-1 .text-body{
+    font-size: 16px;
+    color: #646464 !important;
+} */
+/* about us end */
+
+/* 
 footer .detaile{    
     border-top: 2px solid #424242;
 }
@@ -626,3 +912,13 @@ footer .detaile p{
     padding: 27px 0 0 0;
     
 }
+.selected{
+    
+}
+
+.form-select{
+    color:black !important;
+}
+.form-select .selected{
+    color:#6c757d !important; 
+} */
