@@ -190,7 +190,7 @@ option{
 
 .navbar-brand img {
     height: 130px;
-    width: 175px;
+    /* width: 175px; */
 }
 
 .navbar.navbar-bg-color .navbar-brand img{
@@ -353,7 +353,7 @@ footer .privacy-policy button{
     padding-top: 330px;
 }
 
-.home .home-content .home-text h1{
+.home .home-content .home-text h2{
     line-height: 54px;
     font-size: 50px;
 }
@@ -430,7 +430,9 @@ footer .privacy-policy button{
 .home .home-content .payment-process .payment-process-box h6 span{
     display: none;
 }
-
+.home .home-content .payment-process .payment-process-box h6{
+    margin: auto;
+}
 .home .home-content .down-arrow{
     border: 1px solid white;
     padding: 9px 11px;
@@ -446,8 +448,8 @@ footer .privacy-policy button{
 }
 
 .helperland .row img{
-    height: 320px;
-    max-width: 320px;
+    /* height: 320px;
+    max-width: 320px; */
 }
 
 .helperland .row h3{
@@ -464,12 +466,17 @@ footer .privacy-policy button{
 }
 
 /* blog */
+.blog .blog-max-width{
+    padding: 25px 46px !important;
+}
 .blog .background-img1{
     position: absolute;
+    z-index: -1;
 }
 .blog .background-img2{
     position: absolute;
     right: 0;
+    z-index: -1;
 }
 .blog .row h2{
     font-size: 30px;
@@ -628,12 +635,12 @@ footer .privacy-policy button{
     border: none;
 }
 
-.FAQ .container-max-width .tab-content .accordion-item h2 .collapsed{
+.FAQ .container-max-width .tab-content .accordion-item h3 .collapsed{
     transform: rotate(0 de);
 }
-.FAQ .container-max-width .tab-content .accordion-item h2 button{
+.FAQ .container-max-width .tab-content .accordion-item h3 button{
     padding-left: 0 ;
-    
+    font-weight: bold;
 }
 .FAQ .container-max-width .tab-content .accordion-item .accordion-body{
     font-size: 15px;
@@ -821,7 +828,7 @@ footer .privacy-policy button{
 
 
 /* Contect us start */
-/* 
+
 .contact-us .contact-img .card-img-top{
     width: 34px;
     flex-direction: column;
@@ -844,10 +851,10 @@ footer .privacy-policy button{
     font-size: 16px;
     color: #4f4f4f;
     width: 200px;
-} */
+} 
 
 /* touch us start */
-/* 
+
 .touch-us .touch-headding{
     font-size: 28px;
     font-weight: 400;
@@ -862,12 +869,12 @@ footer .privacy-policy button{
     opacity: 1;
     font-size: 20px;
     color: #FFFFFF;
-} */
+} 
 
 /* touch us end */
 
 /* touch us map start */
-/* 
+ 
 .touch-map .img-1-box{
     position: relative;
     width: 100%;
@@ -881,18 +888,18 @@ footer .privacy-policy button{
     top: 50%;
     left: 50%;
     z-index: 9999;
-} */
+} 
 
 /* touch us map end */
-/* 
+ 
 .contact-us-map{
     background: url('../img/contect_us/group-16.png') no-repeat center;
     height: 400px;
-} */
+}
 /* Contect us end */
 
 /* about us start */
-/* 
+
 .words-1 .text-body{
     max-width: 982px;
     
@@ -902,10 +909,10 @@ footer .privacy-policy button{
 .words-1 .text-body{
     font-size: 16px;
     color: #646464 !important;
-} */
+} 
 /* about us end */
 
-/* 
+
 footer .detaile{    
     border-top: 2px solid #424242;
 }
@@ -913,8 +920,10 @@ footer .detaile p{
     font-size: 14px;
     color: #9BA0A3;
     padding: 27px 0 0 0;
+    text-align: center;
     
 }
+
 .selected{
     
 }
@@ -924,4 +933,4 @@ footer .detaile p{
 }
 .form-select .selected{
     color:#6c757d !important; 
-} */
+} 

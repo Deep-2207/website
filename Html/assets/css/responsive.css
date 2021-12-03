@@ -76,8 +76,14 @@
 
 
 @media (max-width: 768px) {
-    .home .home-content .payment-process .arrow {
-        display: none;
+    .home .home-content .payment-process{
+        flex-direction: column;
+    }
+    .home .home-content .payment-process .arrow img{
+        transform: rotate(90deg);
+    }
+    .home .home-content .payment-process .flip-arrow img{
+        transform: scaleX(-1) rotate(90deg);
     }
 
     .home .home-content .payment-process .payment-process-box {
@@ -103,6 +109,7 @@
 @media (max-width: 576px) {
     .navbar-brand img {
         height: 90px;
+        transition: all 0.3s ease;
     }
 
     .home .home-content{
@@ -148,9 +155,21 @@
     .Why-helperland .helperland-img{
         padding: 30px 0; 
     } 
+    footer .privacy-policy{
+        flex-direction: column;
+        
+    }
+    footer .privacy-policy span{
+        margin-right: 0 !important;
+    }
+
 }
 
 @media (max-width: 420px){
+    .navbar-brand img {
+        height: 60px;
+    }
+
     .home .home-content .payment-process .payment-process-box {
         margin: 0px 10px;
     }
@@ -161,5 +180,6 @@
     .Extra-services .other-services{
         justify-content: center;
     }
+
    
 }
