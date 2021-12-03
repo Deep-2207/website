@@ -122,10 +122,16 @@
             <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
                 
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                        <label class="sr-only" for="inlineFormInputGroupUsername">Mobile number</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">+49</div>
+                          </div>
+                          <input type="text" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Mobile Number">
+                        </div>
                     </div>
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                      <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                     </div>
                 
             </div>
@@ -143,7 +149,7 @@
                 <div class="col-md-12">
                 <div class="form-floating">
                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; width: 100%;"></textarea>
-                    <label for="floatingTextarea2" style="color: #6c757d;">Comments</label>
+                    <label for="floatingTextarea2" style="color: #6c757d;">Message</label>
                   </div>
                 </div>
             </div>
