@@ -23,7 +23,7 @@
 
     .navbar-collapse{
         background-color: #525252;
-        height: 100vh;
+        max-height: 100vh;
     }
 
     .navbar-collapse .navbar-nav{
@@ -36,6 +36,9 @@
 
     .navbar-collapse ul li a{
         display: inline-block;
+    }
+    .sidebar-div-menu{     
+        background: #1d7a8c !important;
     }
 }
 
@@ -71,6 +74,27 @@
     .Why-helperland .Why-helperland-box .card{
         max-width: 377px !important;
     }
+    .background-img1{
+        display: none;
+    }
+    
+    .background-img2{
+        display: none;
+    }
+    .works .process .process-information{
+        order: 2;
+    }
+    .works .process .process-img{
+        order: 1;
+    }
+    .service-provider-navbar{
+        position: absolute;
+        top: 72px;
+        left: 0px;
+        height: 100vh;
+        width: 100vw;
+    }
+    
 
 }
 
@@ -103,6 +127,27 @@
     .touch-us .pt-25{
         padding-top: 25px !important;
     }
+    .works .process .process-information{
+        order: 2;
+        text-align: center;
+    }
+    
+    .sidebar-main{
+        background: none !important ;
+        
+    }
+    .upcomingservice .sidebar-max-width {
+        flex-direction: column;
+    }
+    #example_wrapper{
+        padding-top: 10px;
+    }
+    .sidebar-div-menu {
+        position: absolute;
+        z-index: 1;
+        margin-top: 10px;
+    }
+    
 
 }
 
@@ -161,6 +206,11 @@
     }
     footer .privacy-policy span{
         margin-right: 0 !important;
+    }
+
+    .register-main-box .register-box{
+        max-width: 430px;
+        width: 100%;
     }
 
 }
