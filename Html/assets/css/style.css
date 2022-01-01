@@ -1377,10 +1377,6 @@ footer .privacy-policy button{
     background: #1d7a8c !important;
 }
 
-.sidebar .sidebar-div-menu{
-
-
-}
 .sidebar ul
 {
     flex-direction: column !important;
@@ -1403,22 +1399,31 @@ footer .privacy-policy button{
 .sidebar ul li:hover{
     background-color: #146371;
 }
-.upcomingservice,.customer-service-provider .table{
+.customer-service-provider .table{
     padding-left: 30px !important;
     max-width: 850px !important;
 }
 
-.upcomingservice,.customer-service-provider .dataTables_wrapper{
+.customer-service-provider .dataTables_wrapper{
     margin-left: 30px;
 }
-.upcomingservice,.customer-service-provider .table-data{
+.customer-service-provider .table-data{
     border-bottom: none !important;
 }
-.upcomingservice,.customer-service-provider tr{
+.customer-service-provider tr{
     background-color: #f9f9f9;
 
 }
-
+.upcomingservice .upcoming-service-table{
+    margin-left: 30px;
+    width: 847px !important;
+}
+.upcomingservice .upcoming-service-table th{
+    text-align: center;
+}
+.upcomingservice .upcoming-service-table tr{
+    height: 65px;
+}
 
 /* customrt service provider css start */
 .customer-service-provider .customer-table .sub-headding{
@@ -1511,8 +1516,23 @@ nav .navbar-nav-icone li{
 .admin-body .admin-sidebar .collapse ul li a{
     color: #646464 !important;
 }
+.admin-body .sub-menu{
+    padding: 0;
+}
+.admin-body .sub-menu ul{
+    text-decoration: none;
+}
+.admin-body .sub-menu a{
+    display: block;
+    text-decoration: none;
+}
+.admin-body .sub-menu a .right{
+    float: right;
+    margin-top: 11px;
+}
+
 .admin-body .navbar{
-    width: 272px;
+    min-width: 272px;
     box-shadow: 2px 0px 6px #0000001A;
 }
 .admin-body .side-dashboard .col-auto{
@@ -1528,8 +1548,17 @@ nav .navbar-nav-icone li{
     margin: 0 15px;
 
 }
+.admin-body .side-dashboard .dv-filter .phonenumber-col,button{
+    height: 38px;
+}
+.admin-body .side-dashboard .dv-filter button{
+    margin-bottom: 0px !important;
+}
 .admin-body .side-dashboard .dv-filter .col input{
     min-width: 210px;
+}
+.admin-body .side-dashboard .dv-filter .col .phonenumber-input{
+    min-width: 170px !important;
 }
 .admin-body .side-dashboard .dv-filter .col .phonenumber{
     width: 219px;
@@ -1541,6 +1570,9 @@ nav .navbar-nav-icone li{
 .admin-body .navbar-nav .dropdown select{
     background-image: url('../img/admin-user/sp-arrow-down.png');
     /* transform: rotate(-90deg); */
+}
+.admin-body .admin-data-table .dataTables_wrapper{
+    width: 100% !important;
 }
 /* admin user management css end */
 
