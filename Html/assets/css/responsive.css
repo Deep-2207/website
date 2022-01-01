@@ -31,7 +31,7 @@
     }
 
     .navbar-collapse ul li{
-        margin: 7px;
+        /* margin: 7px; */
     }
 
     .navbar-collapse ul li a{
@@ -40,6 +40,7 @@
     .sidebar-div-menu{     
         background: #1d7a8c !important;
     }
+   
 }
 
 @media (max-width: 991px) {
@@ -94,11 +95,48 @@
         height: 100vh;
         width: 100vw;
     }
-    
+    /* sidebar and navbar css start*/
+        
+        .nav-sidebar-ul{
+            display: flex;
+            text-align: center;
+            border-top: 2px solid #fff;
+        }
+        .sidebar-main{
+            display: none;
+           
+        }
+        
+    /* sidebar and navbar css end*/
 
+    .navbar-nav .profile-icone{
+        display: none;
+    }
+    .navbar-nav .username{
+        display: inline-block !important;
+        color: #fff;
+    }
+    .navbar-nav .logout{
+        
+        background: #1d7a8c;
+        padding: 0 50px;
+        
+
+    }
+    .navbar-nav .logout a{
+        display: inline-block !important;
+    }
+.navbar-nav-icone .profile-icone{
+    display: none;
+}
+/* admin css satrt */
+.admin-body .admin-sidebar .collapse ul{
+    display: flex;
+    flex-direction: column !important;
+  
 }
 
-
+}
 @media (max-width: 768px) {
     .home .home-content .payment-process{
         flex-direction: column;

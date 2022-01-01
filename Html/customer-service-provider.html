@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>service-provider</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+
+    <!-- Data table CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- navbar section start -->
+    <nav class="fixed-top navbar navbar-expand-lg navbar-light navbar-bg-color navbar-height-64">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+            </a>
+            <div class="profile-nav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse service-provider-navbar" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="username d-none" style="user-select: auto;">Welcome,<br>
+                            <b style="user-select: auto;">First Customer</b>
+                          </li>
+                        <li class="nav-item rounded-li">
+                            <a class="nav-link rounded-link bg-btn-29626d" href="#">Book now</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Prices & services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Warranty</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item dropdown profile-icone d-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/img/service-provider-upcoming-service/admin-user.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                <li class="username" style="user-select: auto;">Welcome,<br>
+                                    <b style="user-select: auto;">First Customer</b>
+                                  </li>
+                                
+                                <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">My Setting</a></li>
+                                <li><a class="dropdown-item" href="#">Log Out</a></li>
+                            </ul>
+                          
+                        </li>
+                        <li class="logout"><a class="dropdown-item d-none " href="#">Log Out</a></li>
+                    </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-sidebar-ul">
+                       
+                        <li class="sid-nav-item">
+                            <a class="sid-sid-nav-link" aria-current="page" href="#">Dashbord</a>
+                        </li>
+                        <li class="sid-nav-item">
+                            <a class="sid-nav-link" aria-current="page" href="#">Service History</a>
+                        </li>
+                        <li class="sid-nav-item active">
+                            <a class="sid-nav-link" aria-current="page" href="#">Service Schedule</a>
+                        </li>
+                        <li class="sid-nav-item">
+                            <a class="sid-nav-link" aria-current="page" href="#">Favourite Pros</a>
+                        </li>
+                        <li class="sid-nav-item">
+                            <a class="sid-nav-link" aria-current="page" href="#">Invoices</a>
+                        </li>
+                        <li class="sid-nav-item">
+                            <a class="sid-nav-link" aria-current="page" href="#">Notification</a>
+                        </li>
+                      
+
+                    </ul>
+                </div>
+                <div class="flot-right">
+                    <ul class="navbar-nav-icone">
+
+                        <li class="nav-item dropdown numbaer-notification-main">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/img/service-provider-upcoming-service/icon-notification.png" alt="">
+                            </a>
+                            <div class="numbaer-notification align-items-center">0</div>
+                            <ul class="dropdown-menu dropdown-menu-lg-end notification-ul" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">notification 1</a></li>
+                                <li><a class="dropdown-item" href="#">notification 2</a></li>
+                                <li><a class="dropdown-item" href="#">notification 3</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown profile-icone">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/img/service-provider-upcoming-service/admin-user.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                <li class="username" style="user-select: auto;">Welcome,<br>
+                                    <b style="user-select: auto;">First Customer</b>
+                                  </li>
+                                
+                                <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">My Setting</a></li>
+                                <li><a class="dropdown-item" href="#">Log Out</a></li>
+                            </ul>
+                            <li><a class="dropdown-item d-none logout" href="#">Log Out</a></li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- navbar section end -->
+
+
+    <section class="headding-name text-center p-t-64">
+        <h2 class="headding">
+            Welcome Sandip!
+        </h2>
+    </section>
+
+    <section class="customer-service-provider">
+        <div class="max-width sidebar-max-width">
+            <nav class="navbar-expand-lg sidebar-main">
+
+                <div class="sidebar">
+
+                    <div class="collapse navbar-collapse sidebar-div-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 sidebar-ul" id="sidebar-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Dashbord</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" aria-current="page" href="#">Service History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Service Schedule</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Favourite Pros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Invoices</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Notification</a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+            </nav>
+            <div class="customer-table">
+                <div class="sub-headding">
+                    <h2>Service History</h2>
+                    <button class="Export">Export</button>
+                </div>
+
+                <!-- <table id="example" class="table-data .customer-table mt-10" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Service Details<img alt="" class="sorting-img"></th>
+                            <th>Service Provider <img alt="" class="sorting-img"></th>
+                            <th class="cus-dait">Payment <img alt="" class="sorting-img"></th>
+                            <th>Status <img alt="" class="sorting-img"></th>
+                            <th>Rate SP <img alt="" class="sorting-img"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">17/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                    </tbody>
+
+                </table> -->
+                <table id="example" class="display customer-table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Service Details<img alt="" class="sorting-img"></th>
+                            <th>Service Provider <img alt="" class="sorting-img"></th>
+                            <th class="cus-dait">Payment <img alt="" class="sorting-img"></th>
+                            <th>Status <img alt="" class="sorting-img"></th>
+                            <th>Rate SP <img alt="" class="sorting-img"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center ">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">17/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                         <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">09/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">17/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">20/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-danger status" value="">Cancelled</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                        <tr>
+
+                            <td><img src="assets/img/customer-service/calendar.png" alt="">
+                                <span class="bold">15/04/2018</span>
+                                12:00 - 18:00
+                            </td>
+                            <td>
+                                <div class="media d-flex justify-content-center">
+                                    <img class="align-self-center mr-3" src="assets/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                      Lyum Watsone <br>
+                                      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                                    </div>
+                                  </div>
+                            </td>
+                            <td class="price">€63</td>
+                            <td><button class="btn btn-success status" value="">Completed</button></td>
+                            <td><button class="btn btn-info rate" value="">Rate SP</button></td>
+                        </tr>
+                    </tbody>
+                   
+                </table>
+            </div>
+
+        </div>
+
+
+
+    </section>
+
+
+    <!-- footer start-->
+    <footer>
+        <div class="footer-max-width">
+            <div class="logo">
+                <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+            </div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">TESTIMONIALS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">INSURANCE POLICY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">IMPRESSUM</a>
+                </li>
+            </ul>
+            <div class="socil-icon d-flex flex-wrap justify-content-center">
+                <a href="#" class="mb-2"><img src="./assets/img/home/facebook.svg" alt="facebook"></a>
+                <a href=""><img src="./assets/img/home/instagram.svg" alt="instagram"></a>
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center detaile max-width">
+            <p>©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span> <a href=""> Privacy
+                        Policy </span> </a></p>
+        </div>
+    </footer>
+    <!-- footer end-->
+    <!-- JS -->
+    <script src="./assets/js/main.js"></script>
+    <!-- JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+    <!-- Data Table -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        "columnDefs": [
+            { "orderable": false, "targets": 4 }
+        ],
+        "bInfo": false, // hide showing entries
+        "bFilter": false, //hide Search bar
+        "pagingType": "full_numbers",
+    } );
+} );
+
+    </script>
+</body>
+
+</html>

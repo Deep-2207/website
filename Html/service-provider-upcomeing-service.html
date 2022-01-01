@@ -44,17 +44,59 @@
                 </li>
                
             </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-sidebar-ul">
+                <li class="sid-nav-item">
+                  <a class="sid-sid-nav-link" aria-current="page" href="#">Dashbord</a>
+                </li>
+                <li class="sid-nav-item">
+                  <a class="sid-nav-link" aria-current="page" href="#">New Service</a>
+                </li>
+                <li class="sid-nav-item active">
+                  <a class="sid-nav-link" aria-current="page" href="#">upcoming Service</a>
+                </li>
+                <li class="sid-nav-item">
+                  <a class="sid-nav-link" aria-current="page" href="#">Service Schedule</a>
+                </li>
+                <li class="sid-nav-item">
+                  <a class="sid-nav-link" aria-current="page" href="#">Service History</a>
+                </li>
+                <li class="sid-nav-item">
+                  <a class="sid-nav-link" aria-current="page" href="#">My Ratings</a>
+                </li><li class="sid-nav-item">
+                  <a class="sid-nav-link" aria-current="page" href="#">Block Customer</a>
+                </li>
+  
+              </ul>
         </div>
         <div class="flot-right">
             <ul class="navbar-nav-icone">
-                <li class="nav-item numbaer-notification-main">
-                    
-                    <a class="nav-link" href="#"><img src="assets/img/service-provider-upcoming-service/icon-notification.png" alt=""></a>
+               
+                <li class="nav-item dropdown numbaer-notification-main">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/img/service-provider-upcoming-service/icon-notification.png" alt="">
+                    </a>
                     <div class="numbaer-notification align-items-center">0</div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><img src="assets/img/service-provider-upcoming-service/admin-user.png" alt=""></a>
-                </li>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="#">notification 1</a></li>
+                      <li><a class="dropdown-item" href="#">notification 2</a></li>
+                      <li><a class="dropdown-item" href="#">notification 3</a></li>
+                    </ul>
+                  </li>
+                
+                <li class="nav-item dropdown profile-icone">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="assets/img/service-provider-upcoming-service/admin-user.png" alt="">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <p class="dropdown-item">
+                      Welcome,<br>
+                      Sandip
+                    </p>
+                     
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </li>
             </ul>
         </div>
     </div>
@@ -69,31 +111,31 @@
 </section>
 <section class="upcomingservice">
     <div class="max-width sidebar-max-width">
-        <nav class="navbar-expand-md sidebar-main">
+        <nav class="navbar-expand-lg sidebar-main">
            
               <div class="sidebar">
               
               <div class="collapse navbar-collapse sidebar-div-menu" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 sidebar-ul" id="sidebar-menu">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Dashbord</a>
+                    <a class="nav-link" aria-current="page" href="#">Dashbord</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">New Service</a>
+                    <a class="nav-link" aria-current="page" href="#">New Service</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" aria-current="page" href="#">upcoming Service</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">upcoming Service</a>
+                    <a class="nav-link" aria-current="page" href="#">Service Schedule</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Service Schedule</a>
+                    <a class="nav-link" aria-current="page" href="#">Service History</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Service History</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">My Ratings</a>
+                    <a class="nav-link" aria-current="page" href="#">My Ratings</a>
                   </li><li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Block Customer</a>
+                    <a class="nav-link" aria-current="page" href="#">Block Customer</a>
                   </li>
     
                 </ul>
@@ -108,7 +150,7 @@
                 <tr>
                     <th>Service ID <img  alt="" class="sorting-img"></th>
                     <th>Service data <img  alt="" class="sorting-img"></th>
-                    <th>Customer details <img  alt="" class="sorting-img"></th>
+                    <th class="cus-dait">Customer details <img  alt="" class="sorting-img"></th>
                     <th>Distance <img  alt="" class="sorting-img"></th>
                     <th>Action <img  alt="" class="sorting-img"></th>
                     
@@ -120,7 +162,7 @@
                     <td><img src="assets/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>09/04/2018</span> <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-712.png" alt=""> 12:00 - 18:00
                     </td>
-                    <td>David Bough <br>
+                    <td>deep  <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-15.png" alt=""> Musterstrabe 5,12345 Bonn 
                    
                     </td>
@@ -133,7 +175,7 @@
                     <td><img src="assets/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>09/04/2018</span> <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-712.png" alt=""> 12:00 - 18:00
                     </td>
-                    <td>David Bough <br>
+                    <td>Drashti <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-15.png" alt=""> Musterstrabe 5,12345 Bonn 
                    
                     </td>
@@ -146,7 +188,7 @@
                     <td><img src="assets/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>09/04/2018</span> <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-712.png" alt=""> 12:00 - 18:00
                     </td>
-                    <td>David Bough <br>
+                    <td>Manali <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-15.png" alt=""> Musterstrabe 5,12345 Bonn 
                    
                     </td>
@@ -159,7 +201,7 @@
                     <td><img src="assets/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>09/04/2018</span> <br>
                         <img src="assets/img/service-provider-upcoming-service/layer-712.png" alt=""> 12:00 - 18:00
                     </td>
-                    <td>David Bough <br>
+                    <td>chintan<br>
                         <img src="assets/img/service-provider-upcoming-service/layer-15.png" alt=""> Musterstrabe 5,12345 Bonn 
                    
                     </td>
@@ -237,8 +279,8 @@
                
             </tbody>
             
-        </table>
-   
+        </table> 
+      
     </div>
     
      
@@ -299,30 +341,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
-      $(document).ready(function() {
-    $('#example').DataTable( {
-        "order": [[ 3, "desc" ]],
-        "bPaginate": false, //hide pagination
-        "bFilter": false, //hide Search bar
-        "bInfo": false, // hide showing entries
-        
-    } );
-} );
+     
 
 
-
-// $('#example').dataTable({
-//     "bProcessing": true,
-//     "sAutoWidth": false,
-//     "bDestroy":true,
-//     "sPaginationType": "bootstrap", // full_numbers
-//     "iDisplayStart ": 10,
-//     "iDisplayLength": 10,
-//"bPaginate": false, //hide pagination
- //   "bFilter": false, //hide Search bar
-//     "bInfo": false, // hide showing entries
-// })
-//     </script>
+ </script>
     
 </body>
 </html>
