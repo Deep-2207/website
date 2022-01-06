@@ -20,12 +20,58 @@
         margin-top: 7px;
         margin-bottom: 7px;
     }
-
+/* 
     .navbar-collapse{
         background-color: #525252;
         max-height: 100vh;
-    }
-
+    } */
+    .navbar-collapse{
+    position: fixed;
+    right: -250px;
+    height: 100%;
+    width: 250px;
+    top: 0;
+    background: #fff;
+    box-shadow: none;
+    z-index: 10;
+    transition: all .3s ease;
+    overflow: auto;
+}
+.show{
+    right: 0px;
+   
+}
+.show .navbar-nav{
+    align-items: flex-start !important;
+    border-bottom: 1px solid #e1e1e1;
+    transition: all .5s ease;
+}
+.show .nav-item .nav-link{
+    font-size: 16px;
+    line-height: 24px;
+    border: none;
+    background-color: white;
+    padding: 0px;
+    margin: 0px;
+    background: 0 0!important;
+    color: #646464!important;
+    padding: 8px 20px !important;
+    
+} 
+.show .social-icone-ul{
+    list-style-type: none;
+    display: block !important;
+}
+.show .social-icone-ul li{
+    list-style-type: none;
+    
+}
+.show .social-icone-ul li a{
+    padding: 0 15px !important;
+}
+.show .social-icone-ul li a img{
+    height: 20px;
+}
     .navbar-collapse .navbar-nav{
         align-items: center;
     }
@@ -40,6 +86,77 @@
     .sidebar-div-menu{     
         background: #1d7a8c !important;
     }
+    .admin-sidebar{
+        display: none;
+    }
+     .sidebar-collapse-ul{
+        display: inline-block !important;
+    }
+    .admin-body .side-dashboard .dv-filter .col{
+        text-align: center;
+        min-width: 219px;
+    }
+    .sidebar-collapse-dv{
+        background-color: #fff;
+        max-height: 100vh;
+        position: absolute;
+        left: 0px;
+        top: 69px;
+    }
+    .sidebar-collapse-dv .sidebar-collapse-ul{
+        padding-top:10px ;
+    }
+    .sidebar-collapse-dv .sidebar-collapse-ul li a{
+        color: black !important;
+        text-decoration: none;
+    }
+    .navbar .profile-nav {
+        flex-flow: row-reverse;
+    }
+    .navbar .backblack.open {
+        visibility: visible;
+        opacity: .5;
+        display: block;
+    }
+     /* sidebar and navbar css start*/
+        
+     .nav-sidebar-ul{
+        display: flex !important;
+        text-align: center;
+        border-top: 2px solid #fff;
+    }
+   
+    
+    .navbar .navbar-nav li a {
+        color: #646464!important;
+    }
+    .navbar-nav-icone .profile-icone{
+        display: none;
+    }
+    .nav-sidebar-ul .username{
+        text-align: left !important;
+        border-bottom: 1px solid #e1e1e1 !important;
+        border-radius: 0px !important;
+        width: 100%;
+        padding: 10px 20px !important;
+        color: #646464!important;
+    }
+    .sidebar-main{
+        display: none;  
+    }
+    nav .navbar-nav-icone li{
+        border-right: 1px solid #e1e1e1 !important;
+        border-left: none !important;
+        padding-right: 10px !important;
+    }
+    .navbar .nav-sidebar-ul .sid-nav-item a:hover{
+        color: #1d7a8c!important;
+    }
+    .admin-body .admin-data-table tr {
+        min-height: 300px !important;
+    }
+/* sidebar and navbar css end*/
+
    
 }
 
@@ -88,31 +205,18 @@
     .works .process .process-img{
         order: 1;
     }
-    .service-provider-navbar{
+    /* .service-provider-navbar{
         position: absolute;
         top: 72px;
         left: 0px;
         height: 100vh;
         width: 100vw;
     }
-    /* sidebar and navbar css start*/
-        
-        .nav-sidebar-ul{
-            display: flex;
-            text-align: center;
-            border-top: 2px solid #fff;
-        }
-        .sidebar-main{
-            display: none;
-           
-        }
-        
-    /* sidebar and navbar css end*/
-
+    */
     .navbar-nav .profile-icone{
         display: none;
     }
-    .navbar-nav .username{
+    /* .navbar-nav .username{
         display: inline-block !important;
         color: #fff;
     }
@@ -125,19 +229,80 @@
     }
     .navbar-nav .logout a{
         display: inline-block !important;
-    }
-.navbar-nav-icone .profile-icone{
-    display: none;
-}
+    } */
+    
 /* admin css satrt */
 .admin-body .admin-sidebar .collapse ul{
     display: flex;
     flex-direction: column !important;
   
 }
+#example_wrapper {
+    width: 100% !important;
+    /* border: 1px solid #E1E1E1; */
+    border: 1px solid transparent;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#example_wrapper thead {
+    display: none;
+}
+#example_wrapper tbody tr{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e1e1e1;
+    margin: 10px;
+}
+#example_wrapper tbody tr td{
+    border: 1px solid transparent !important;
+}
+
+#example {
+    width: 100% !important;
+    /* border: 1px solid #E1E1E1; */
+    border: 1px solid transparent;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#example thead {
+    display: none;
+}
+#example tbody{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+#example tbody tr{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e1e1e1;
+    margin: 10px;
+    width: 100%;
+    
+}
+
+#example tbody tr td{
+    border: 1px solid transparent !important;
+    padding: 5px;
+}
+
 
 }
 @media (max-width: 768px) {
+
+
+    .max-width{
+        
+        padding: 0px 30px;
+    }
+    
+   
+
+
+    .section .headding {
+        font-size: 40px;
+    }
     .home .home-content .payment-process{
         flex-direction: column;
     }
@@ -151,9 +316,14 @@
     .home .home-content .payment-process .payment-process-box {
         margin: 0px 20px;
     }
-
+    .home .home-content .home-text h2 {
+        font-size: 45px;
+    }
     .home .home-content .payment-process .payment-process-box h6 span {
         display: inline-block;
+    }
+    .blog .row h2 {
+        font-size: 40px;
     }
     .contact-us .contact-img{
         flex-direction: column;
@@ -185,14 +355,39 @@
         z-index: 1;
         margin-top: 10px;
     }
-    
+    #example_wrapper .bottom {
+        flex-direction: column !important;
+    }
+    /* css for the service provider css */
+
 
 }
 
 @media (max-width: 576px) {
+    .max-width{
+        
+        padding: 0px 15px !important;
+    }
+    section .headding {
+        font-size: 35px;
+    }
+    section .headding-star{
+        font-size: 30px;
+    }
+    
+    section .headding-star::before{
+        bottom: -18px;
+    }
+    
+    section .headding-star::after{
+        bottom: -30px;
+    }
     .navbar-brand img {
         height: 90px;
         transition: all 0.3s ease;
+    }
+    .helperland .row h3 {
+        font-size: 24px;
     }
 
     .home .home-content{
@@ -211,7 +406,9 @@
     .home .home-content .home-text ul li {
         font-size: 14px;
     }
-
+    .home .home-content .home-text h2 {
+        font-size: 35px;
+    }
     .home .home-content .button button {
         padding: 8px 20px;
         font-size: 14px;
@@ -268,6 +465,8 @@
     .Extra-services .other-services{
         justify-content: center;
     }
-
+.admin-body{
+    margin-top: 20px;
+}
    
 }
