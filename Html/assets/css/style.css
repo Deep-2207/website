@@ -873,6 +873,9 @@ footer .privacy-policy button{
     border-radius: 50%;
     color: #FFFFFF00;
 }
+.homePage .flot-right{
+    /* display: none ; */
+}
 .blog-max-width .fw-bold {
     font-size: 30px;
 }
@@ -1650,6 +1653,8 @@ nav .navbar-nav-icone li{
 }
 .admin-body .admin-dashboard .side-dashboard tr td .dropdown-menu{
     min-height: 78px !important;
+    right: 0px !important;
+    top: 5px !important;
 }
 .admin-body .admin-dashboard .side-dashboard .sub-headding button{
     font-size: 14px;
@@ -1864,7 +1869,13 @@ nav .navbar-nav-icone li{
     top: -12px;
     right: 25px;
 }
+.admin-data-table .dropdown-menu{
+    inset: auto !important;
+}
+.admin-data-table .dropdown-menu a{
 
+    line-height: normal !important;
+}
 /* admin user management css end */ 
 
 

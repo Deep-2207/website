@@ -42,7 +42,7 @@ $(document).ready(function () {
   });
   ///hide navubar when click outside
   document.addEventListener("click", (evt) => {
-    const navbar = document.getElementById("navbar-collapse");
+    const navbar = document.getElementById("navbarSupportedContent");
     let targetElement = evt.target;
 
     do {
