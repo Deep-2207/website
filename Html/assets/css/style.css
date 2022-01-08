@@ -1911,6 +1911,7 @@ nav .navbar-nav-icone li{
 input[type="date"]{
     position: relative;
     padding-left: 35px;
+    padding-right: 0px !important;
 }
 
 input[type="date"]::-webkit-inner-spin-button,

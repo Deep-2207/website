@@ -137,4 +137,22 @@ $('.backblack').click(function () {
       document.getElementById("privacy-policy").style.setProperty('display', 'none', 'important')
      
     });
+
+
+    //bluer function for the time date
+    $("#txtFromDate").blur(function () {
+      if (!$("#txtFromDate").val()) {
+          $('#txtFromDate').attr('type', 'text');
+      } else {
+          $('#txtFromDate').attr('type', 'date');
+      }
+  });
+
+  $("#txtToDate").blur(function () {
+      if (!$("#txtToDate").val()) {
+          $('#txtToDate').attr('type', 'text');
+      } else {
+          $('#txtToDate').attr('type', 'date');
+      }
+  });
 });
