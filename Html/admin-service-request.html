@@ -191,43 +191,49 @@
                 <form class="requestmanagement">
                     <div class="form-row align-items-center d-flex justify-content-center dv-filter">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Service ID">
+                            <input type="text" class="form-control width-110" placeholder="Service ID">
                         </div>
                         <div class="col form-group">
 
-                            <select id="inputState" class="form-select">
+                            <select id="inputState" class="form-select width-127">
                                 <option disabled selected>Customer</option>
                                 <option>...</option>
                             </select>
                         </div>
                         <div class="col form-group drop-service-provider">
 
-                            <select id="inputState" class="form-select">
+                            <select id="inputState" class="form-select width-152">
                                 <option disabled selected>Service Provider</option>
                                 <option>...</option>
                             </select>
                         </div>
                         <div class="col form-group">
 
-                            <select id="inputState" class="form-select">
+                            <select id="inputState" class="form-select width-120">
                                 <option disabled selected>Status</option>
                                 <option>...</option>
                             </select>
                         </div>
-                        <div class="col datetime-placeholder">
-                            <input type="date" class="form-control" placeholder="From Date">
+                        <div class="col datetime">
+                            <!-- <input type="text" placeholder="From Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                            <input type="text" id="txtFromDate" placeholder="From Date" onfocus="(this.type='date')" class="calender-icon form-control input-element width-135">
+                            <!-- <input type="date" class="form-control input-element width-135" id=""> -->
+                        </div>
+                        <div class="col datatime">
+                            <!-- <input type="text" placeholder="To Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                            <input type="text" placeholder="To Date" class="calender-icon form-control input-element width-135" onfocus="(this.type='date')">
+                        <!-- <input type="date" class="form-control input-element width-135" id=""> -->
+
+                        </div>
+                       
+            
+                        
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary mb-2 admin-submit width-84">Submit</button>
                         </div>
                         <div class="col">
-                            <input type="date" class="form-control" placeholder="To Date">
-                        </div>
-
-
-
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary mb-2 admin-submit">Submit</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-light mb-2">clear</button>
+                            <button type="submit" class="btn btn-light mb-2 width-84">clear</button>
                         </div>
                     </div>
                 </form>

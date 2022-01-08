@@ -50,6 +50,24 @@ html{
     margin: auto;
     padding: 20px ;
 }
+.width-110{
+    width: 110px !important;
+}
+.width-127{
+    width: 127px !important;
+}
+.width-152{
+    width: 152px !important;
+}
+.width-120{
+    width: 120px !important;
+}
+.width-135{
+    width: 135px !important;
+}
+.width-84{
+    width: 84px !important;
+}
 section{
     padding: 40px 0px;
 }
@@ -1875,6 +1893,34 @@ nav .navbar-nav-icone li{
 .admin-data-table .dropdown-menu a{
 
     line-height: normal !important;
+}
+.admin-dashboard .side-dashboard .datetime{
+    width: 135px;
+}
+.admin-dashboard .side-dashboard .datetime input::after{
+    content: url("../img/admin-user/add.png");
+}
+
+.calender-icon{
+    background: transparent url(../img/admin-user/icon-calendar-blue.png) 9px center no-repeat!important;
+    position: relative;
+    z-index: 1;
+    padding-left: 37px;
+}
+
+input[type="date"]{
+    position: relative;
+    padding-left: 35px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../img/admin-user/icon-calendar-blue.png) 9px center no-repeat!important;
+    left: -25px;
+    /* padding-left: 0px !important; */
+    position: absolute;
+    z-index: 999;
 }
 /* admin user management css end */ 
 
