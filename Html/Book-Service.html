@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Book-Service - Helperland</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/logo/favicon_img.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <!-- navbar section start -->
+  <nav class="fixed-top navbar navbar-expand-xl navbar-light navbar-bg-color">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span> <i class="fa fa-bars" style="font-size:30px;color:white"></i></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link rounded-link bg-btn-29626d" href="#">Book now</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link rounded-link" href="Prices.html">Prices & services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Warranty</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="home.html#blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contect.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link rounded-link bg-btn-29626d" href="#">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link rounded-link bg-btn-29626d" href="#">Become a Helper</a>
+          </li>
+        </ul>
+        <ul class="social-icone-ul d-none p-0">
+          <li class="nav-item social-icon ms-2">
+
+            <a href="#" class="mb-2"><img src="assets/img/logo/facebook-f-brands.svg" alt="facebook"></a>
+            <a href=""><img src="assets/img/logo/instagram-brands.svg" alt="instagram"></a>
+
+          </li>
+        </ul>
+      </div>
+      <div class="backblack"></div>
+    </div>
+  </nav>
+  <!-- navbar section end -->
+
+
+
+  <section class="first-img">
+    <img src="assets/img/Book-Service/book-service-banner.jpg" alt="">
+  </section>
+
+
+  <section class="Book-service pt-0" id="FAQ">
+    <div class="max-width-1170 pt-0">
+      <div class="row justify-content-center text-center">
+        <div class="col-12 mb-90" style="position: relative;">
+          <h2 class="headding-star">Set Up your cleaning services</h2>
+        </div>
+      </div>
+
+      <div class="book-service-body row">
+
+        <div class="container container-max-width mb-60 col-md-8">
+          <ul class="nav nav-pills mb-30 col-md-12" id="pills-tab" role="tablist">
+            <li class="nav-item col b-l-1 b-b-1" role="presentation">
+              <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-setup"
+                type="button" role="tab" aria-controls="pills-home" aria-selected="true"><img
+                  src="assets/img/Book-Service/setup-service.png" alt="" class="setup-img"> <span>Setup Service</span>
+              </button>
+            </li>
+            <li class="nav-item col b-l-1 b-b-1" role="presentation">
+              <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-paln"
+                type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
+                  src="assets/img/Book-Service/schedule.png" alt="" class="schedule-img"> <span> Schedule & Plan</span>
+              </button>
+            </li>
+            <li class="nav-item col b-l-1 b-b-1" role="presentation">
+              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-details"
+                type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
+                  src="assets/img/Book-Service/details.png" alt="" class="details-img"> <span> Your Details
+                </span></button>
+            </li>
+            <li class="nav-item col b-l-1 b-b-1" role="presentation">
+              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-payment"
+                type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
+                  src="assets/img/Book-Service/payment.png" alt="" class="payment-img"> <span> Make Payment
+                </span></button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade" id="pills-setup" role="tabpanel" aria-labelledby="pills-home-tab">
+              <div class="row">
+                <div class="col-md-12">
+                    <h6 class="fw-bold">Enter your Postal Code</h6>
+                    <input type="text" name="" id="" class="form-control mb-3 me-3">
+                    <button class="btn btncontinue">Check Availability</button>
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade show active" id="pills-paln" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <div class="plan-body">
+                <div class="quantity">
+                  <h2>Select number of rooms and bath</h2>
+                  <div class="quantuty-type row">
+                    <div class="form-group">
+
+                      <select class="form-select" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+
+                      <select class="form-select" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+                <hr class="m-tb-30">
+
+                <div class="timedate">
+                  <div class="card-body">
+                    <div class="headding">
+                      When do you need the cleaner?
+                    </div>
+                    <div class="datetime">
+                      <div class="datetime">
+                        <!-- <input type="text" placeholder="From Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                        <input type="date" id="txtFromDate" class="calender-icon form-control input-element width-135">
+                        <!-- <input type="date" class="form-control input-element width-135" id=""> -->
+                      </div>
+                      <div class="form-group">
+
+                        <select class="form-select" id="exampleFormControlSelect1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-body">
+                    <div class="headding">
+                      How long do you need your cleaner to stay?
+                    </div>
+
+                    <div class="time">
+
+                      <div class="form-group">
+
+                        <select class="form-select" id="exampleFormControlSelect1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <hr class="m-tb-30">
+                <div class="extra-services">
+                  <h2>Extra-services</h2>
+                  <div class="extra-services-icone p-tb-15">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="cabinets">
+                      <label class="custom-control-label" for="cabinets">
+                        <div class="icone-box">
+                          <!-- <div class="img-container"> -->
+                          <img src="assets/img/prices/3.png" alt="forma-1" class="img-size">
+                          <!-- </div> -->
+                        </div>
+                        <span class="extra-service-name">Inside cabinets</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="fridge">
+                      <label class="custom-control-label" for="fridge">
+                        <div class="icone-box">
+
+                          <img src="assets/img/prices/5.png" alt="group-22" class="img-size">
+
+                        </div>
+                        <span class="extra-service-name">Inside fridge</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="oven">
+                      <label class="custom-control-label" for="oven">
+                        <div class="icone-box">
+
+                          <img src="assets/img/prices/4.png" alt="group-22" class="img-size">
+
+                        </div>
+                        <span class="extra-service-name">Inside oven</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="Laundry">
+                      <label class="custom-control-label" for="Laundry">
+                        <div class="icone-box">
+
+                          <img src="assets/img/prices/2.png" alt="group-22" class="img-size">
+
+                        </div>
+                        <span class="extra-service-name">Laundry wash & dry</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="windows">
+                      <label class="custom-control-label" for="windows">
+                        <div class="icone-box">
+
+                          <img src="assets/img/prices/1.png" alt="group-22" class="img-size">
+
+                        </div>
+                        <span class="extra-service-name">Interior windows</span>
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <hr class="m-tb-30">
+
+                <div class="comments mb-30">
+
+                  <div class="form-group">
+                    <label for="comment" class="mb-10">Comment</label>
+                    <textarea class="form-control" id="comment" rows="3" placeholder="Comments"
+                      maxlength="500"></textarea>
+                  </div>
+                </div>
+
+                <div class="pets">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                      I have pets at home
+                    </label>
+                  </div>
+                </div>
+
+                <hr class="m-tb-30">
+
+                <div class="continue text-right text-small-center">
+                  <button class="btn btn-primary btn-lg btncontinue">Continue</button>
+                </div>
+
+              </div>
+            </div>
+            <!-- </div> -->
+            <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-home-tab">
+              Your Details
+            </div>
+            <div class="tab-pane fade " id="pills-payment" role="tabpanel" aria-labelledby="pills-home-tab">
+              Make Payment
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+          <div class="card mb-30">
+            <h2 class="card-header">Payment summary</h2>
+            <div class="card-body">
+
+              <p class="timedate">11/01/2022 08:00</p>
+              <p class="bed-bath">1 bed, 1 bath</p>
+
+            </div>
+            <div class="card-body">
+              <p class="c-6464">Duration</p>
+              <p class="tmp-time">Basic <span class="text-right">3hrs</span></p>
+              <p class="tmp-time extra">inside cabinets(extra) <span class="text-right">30min</span></p>
+              <hr>
+              <p class="total-time">Total Service Time <span>3.5hrs</span></p>
+            </div>
+            <div class="card-body">
+              <p class="singal-charg">Per cleaning <span>$87</span></p>
+              <p class="singal-charg">Discount <span>-$27</span></p>
+            </div>
+            <div class="card-body total-payment">
+              <p class="total-charg">Total payment <span>$63</span> </p>
+
+              <p class="effective-price">Effective Price <span>$50.4</span> </p>
+              <p class="bounce"><span class="text-danger">*</span> you will save 20% according to §35a EStG.</p>
+            </div>
+            <h2 class="card-footer"><img src="assets/img/Book-Service/smiley.png" alt="">See what is always included
+            </h2>
+          </div>
+          <div class="FAQ">
+            <div class="headding text-center">
+              Questions..?
+            </div>
+            <div class="accordion accordion-flush mb-3" id="accordionExample">
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="headingOne">
+                  
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Which Helperland professional will come to my place?
+                  </button>
+                </h3>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    ans no- 1
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Which Helperland professional will come to my place?
+                  </button>
+                </h3>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    ans no- 2
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Which Helperland professional will come to my place?
+                  </button>
+                </h3>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    ans no- 3
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="headingfour">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                    Which Helperland professional will come to my place?
+                  </button>
+                </h3>
+                <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    ans no- 4
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="for-more">
+              <a href="#" class="formorehelp">For More Help</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- section newsleter -->
+  <section class="newsletter pt-0">
+    <div class="newsletter">
+      <div class="text-center mb-4">
+        <h4>GET OUR NEWSLETTER</h4>
+      </div>
+      <div class="text-center">
+        <input type="text" name="email" placeholder="YOUR EMAIL" class="mb-3">
+        <button type="submit" class="ms-2">Submit</button>
+      </div>
+    </div>
+  </section>
+  <!-- section newsletter end -->
+
+
+  <!-- footer start-->
+  <footer>
+    <div class="footer-max-width">
+      <div class="logo">
+        <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+      </div>
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" href="home.html">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">ABOUT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">TESTIMONIALS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="faq.html">FAQS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">INSURANCE POLICY</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">IMPRESSUM</a>
+        </li>
+      </ul>
+      <div class="social-icon d-flex flex-wrap justify-content-center">
+        <a href="#" class="mb-2"><img src="./assets/img/home/facebook.svg" alt="facebook"></a>
+        <a href=""><img src="./assets/img/home/instagram.svg" alt="instagram"></a>
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-center detaile max-width">
+      <p>©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span> <a href=""> Privacy Policy
+        </span> </a></p>
+    </div>
+  </footer>
+  <!-- footer end-->
+
+
+  <!-- JS -->
+  <script src="./assets/js/main.js"></script>
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

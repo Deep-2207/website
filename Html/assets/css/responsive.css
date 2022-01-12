@@ -175,6 +175,9 @@
         width: 25px;
     height: 16px;
     }
+    .book-service-body .nav-link span{
+        display: block;
+    }
 /* sidebar and navbar css end*/
 
    
@@ -309,6 +312,9 @@
 .admin-body .admin-data-table{
     min-width: auto !important;
 }
+.Book-service .container-max-width  .nav-item button span{
+    display: none;
+}
 
 }
 @media (max-width: 768px) {
@@ -380,9 +386,12 @@
     #example_wrapper .bottom {
         flex-direction: column !important;
     }
+    .extra-services .extra-services-icone{
+        justify-content: space-around;
+    }
     /* css for the service provider css */
 
-
+   
 }
 
 @media (max-width: 576px) {
@@ -490,5 +499,11 @@
 .admin-body{
     margin-top: 20px;
 }
-   
+.text-small-center{
+    text-align: center;
+}
+.book-service-body .time{
+    padding-top: 15px !important;
+} 
+
 }
