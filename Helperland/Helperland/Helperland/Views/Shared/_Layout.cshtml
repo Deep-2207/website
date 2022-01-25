@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Helperland</title>
+    <link rel="icon" type="image/x-icon" href="~/img/logo/favicon_img.png">
+
+    @*Bootstrap Css*@
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    @*custome css*@
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+    @*Jquery*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+    <div class="scroll-up-btn top-arrow">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <div class="scroll-up-btn message-box">
+        <img src="~/img/home/layer-598.png" alt="message" class="img-fluid">
+
+    </div>
+
+    <!-- Navbar start-->
+
+    <nav class=" navbar fixed-top navbar-expand-xl navbar-light @(ViewBag.page ==  "home"? "homePage" : "navbar-bg-color" )">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/img/logo/white-logo-transparent-background.png" alt="" class="desktop-brand-img">
+
+            </a>
+            <div class="profile-nav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span> <i class="fa fa-bars" style="font-size:30px;color:white"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area="" asp-controller="" asp-action="">
+                                @if (ViewBag.page == "home")
+                                {
+                                    <spna>Book a Cleaner</spna>
+                                }
+                                else
+                                {
+                                    <spna>Book now</spna>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="home" asp-action="prices">
+
+                                @if (ViewBag.page == "home")
+                                {
+                                    <spna>Prices</spna>
+                                }
+                                else
+                                {
+                                    <spna>Prices & services</spna>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+
+                                @if (ViewBag.page == "home")
+                                {
+                                    <spna> Our Guarantee</spna>
+                                }
+                                else
+                                {
+                                    <spna>Warranty</spna>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="home" asp-action="contectus">
+                                Contact
+
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d")"  asp-area="" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area="" asp-controller="" asp-action="">Become a Helper</a>
+                        </li>
+                        <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? "d-xl-block" : "" )">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="" asp-action="" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag"
+                                     class="county-flag">
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">
+                                        <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag"
+                                             class="county-flag">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">
+                                        <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag"
+                                             class="county-flag">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <ul class="social-icone-ul d-none p-0">
+                        <li class="nav-item social-icon d-flex">
+
+                            <a asp-area="" asp-controller="" asp-action="" class="mb-2"><img src="~/img/logo/facebook-f-brands.svg" alt="facebook"></a>
+                            <a asp-area="" asp-controller="" asp-action=""><img src="~/img/logo/instagram-brands.svg" alt="instagram"></a>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="backblack"></div>
+
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    @RenderBody()
+    <section class="pt-0 @(ViewBag.page ==  "home"? "bg-color-pal-grey" : "" )">
+        <div class="newsletter">
+            <div class="text-center mb-4">
+                <h4>GET OUR NEWSLETTER</h4>
+            </div>
+            <div class="text-center">
+                <input type="text" name="email" placeholder="YOUR EMAIL" class="mb-3">
+                <button type="submit" class="ms-2">Submit</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- footer start-->
+    <footer>
+        <div class="footer-max-width">
+            <div class="logo">
+                <a asp-controller="home" asp-action="index"><img src="~/img/logo/white-logo-transparent-background.png" alt=""></a>
+            </div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="home" asp-action="index">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="home" asp-action="about">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">TESTIMONIALS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="home" asp-action="faq">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">INSURANCE POLICY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="" asp-action="">IMPRESSUM</a>
+                </li>
+            </ul>
+            <div class="social-icon d-flex flex-wrap justify-content-center">
+                <a href="#" class="mb-2"><img src="~/img/home/facebook.svg" alt="facebook"></a>
+                <a href=""><img src="~/img/home/instagram.svg" alt="instagram"></a>
+            </div>
+        </div>
+        <div class="privacy-policy d-flex align-items-center" id="privacy-policy">
+            <p class="mb-0 ms-auto">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi ipsa laborum excepturi maiores.
+
+            </p>
+            <span class="me-auto">Privacy Policy</span>
+            <button class="me-2" id="btnprivacy-policy">OK</button>
+        </div>
+    </footer>
+
+    <!-- footer end-->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    123
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    123
+                </div>
+            </div>
+        </div>
+        </di
+
+
+
+        @*Custome JS*@
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/main.js"></script>
+
+
+        @*Bootsrap JS*@
+        <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+
+        @RenderSection("Scripts", required: false)
+
+
+        @*Fontawesome Cdn*@
+        <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+
+
+
+
+</body>
+</html>
+
