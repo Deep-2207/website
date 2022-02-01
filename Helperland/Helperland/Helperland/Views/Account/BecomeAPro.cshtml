@@ -1,0 +1,122 @@
+﻿@model CreateAccountViewModel
+@{
+    ViewData["Title"] = "BecomeAProvider";
+}
+<section class="service-provider p-0" id="service-provider">
+    <div class="container register-main-box">
+        <div class="register-box">
+            <div class="max-width-430">
+                <div class="touch-headding text-center font-weight-bold">
+                    Register Now!
+                </div>
+                <div class="row row-cols-1 row-cols-md-1 g-4 mt-0 flex-column">
+                    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                    <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">Mobile number</label>
+                    <div class="input-group p-0">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">+49</div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroupmobilenumber"
+                               placeholder="Mobile Number">
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                    <input type="password" class="form-control" placeholder="Conform Password"
+                           aria-label="Conform Password">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Send me newsletters from Helperland
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            I accept <span><a href=""> terms and conditions & privacy policy </a></span>
+                        </label>
+                    </div>
+                    <!-- <div class="text-center button-submit">
+                        <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
+                    </div> -->
+
+                    <div class="text-center button">
+                        <button class="">
+                            Get Started <img src="~/img/service-provider/arrow-white.png"
+                                             alt="right arrow">
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="text-center p-44">
+            <a href="#works">
+                <img src="~/img/home/shape-1.svg" alt="down-arrow" class="down-arrow">
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- section 2 start -->
+<section class="works" id="works">
+    <img src="assets/img/home/blog/blog-left-bg.png" alt="" class="background-img1">
+    <img src="assets/img/home/blog/blog-right-bg.png" alt="" class="background-img2">
+    <div class="max-width-788">
+        <div class="headding">
+            <h2 class="headding text-center">How To works</h2>
+        </div>
+        <div class="process">
+            <div class="row row-cols-1 row-cols-md-1 g-4 mt-0">
+                <div class="col-md-7 col-lg-7 d-flex justify-content-center flex-column mb-3 process-information">
+                    <h2 class="fw-bold">Register yourself</h2>
+
+                    <p>
+                        Provide your basic information to register <br>
+                        yourself as a service provider.
+                    </p>
+                    <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
+                </div>
+                <div class="col-md-4 col-lg-5 d-flex justify-content-center mb-3 process-img">
+                    <img src="~/img/service-provider/group-18.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-1 g-4 mt-0">
+                <div class="col-md-4 col-lg-5 d-flex justify-content-center mb-3 process-img process-img-2">
+                    <img src="~/img/service-provider/group 18-2-works.png" alt="" class="img-fluid">
+                </div>
+                <div class="col-md-7 col-lg-7 d-flex justify-content-center flex-column mb-3 process-information">
+                    <h2 class="fw-bold">Get service requests</h2>
+
+                    <p>
+                        You will get service requests from <br>
+                        customes depend on service area and profile.
+                    </p>
+                    <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
+                </div>
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-1 g-4 mt-0">
+                <div class="col-md-7 col-lg-7 d-flex justify-content-center flex-column mb-3 process-information">
+                    <h2 class="fw-bold">Complete service</h2>
+
+                    <p>
+                        Accept service requests from your customers <br>
+                        and complete your work.
+                    </p>
+                    <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
+                </div>
+                <div class="col-md-4 col-lg-5 d-flex justify-content-center mb-3 process-img">
+                    <img src="~/img/service-provider/group-18-3.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- section 2 end -->

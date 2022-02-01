@@ -1,4 +1,4 @@
-﻿
+﻿@model ContactViewModel
 @{
     ViewData["Title"] = "Contect-Us Page";
 }
@@ -58,75 +58,79 @@
         <div class="touch-headding text-center">
             Get in touch with us
         </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+        <form asp-controller="home" asp-action="contact" enctype="multipart/form-data">
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
 
-            <div class="col">
-                <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                <div class="col">
+                    <input asp-for="firstname" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                    <span asp-validation-for="firstname" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <input type="text" asp-for="lastname" class="form-control" placeholder="Last name" aria-label="Last name">
+                </div>
+
             </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
-            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
 
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                <div class="col">
 
-            <div class="col">
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">+49</div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">+49</div>
+                        </div>
+                        <input asp-for="mobileno" type="text" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Mobile Number">
+                        <span asp-validation-for="mobileno" class="text-danger"></span>
                     </div>
-                    <input type="text" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Mobile Number">
+                </div>
+                <div class="col">
+                    <input asp-for="email" type="text" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                <div class="col-md-12">
+
+                    <select class="form-select" asp-for="subject" aria-label="Default select example">
+                      
+                        <option value="General">
+                            General
+                        </option>
+                        <option value="Inquiry">
+                            Inquiry
+                        </option>
+                        <option value="Renewal">
+                            Renewal
+                        </option>
+                        <option value="Revocation">
+                            Revocation
+                        </option>
+                    </select>
                 </div>
             </div>
-            <div class="col">
-                <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
-
-            </div>
-
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
-            <div class="col-md-12">
-
-                <select class="form-select" aria-label="Default select example">
-                    <option value="" hidden>-- Please Select Subject --</option>
-                    <option value="General">
-                        General
-                    </option>
-                    <option value="Inquiry">
-                        Inquiry
-                    </option>
-                    <option value="Renewal">
-                        Renewal
-                    </option>
-                    <option value="Revocation">
-                        Revocation
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
-            <div class="col-md-12">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; width: 100%;"></textarea>
-                    <label for="floatingTextarea2" style="color: #6c757d;">Message</label>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <textarea asp-for="message" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; width: 100%;"></textarea>
+                        <label asp-for="message" style="color: #6c757d;">Message</label>
+                        <span asp-validation-for="message" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
-            <div>
-                <label class="form-label attchment">Attchment</label>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                <div>
+                    <label class="form-label attchment">Attchment</label>
 
-                <label class="upload" for="formFileLg">Upload</label>
-                <input class="form-control-lg d-none" id="formFileLg" type="file" placeholder="Upload">
-                <label id="filename"></label>
+                    <label class="upload" for="formFileLg" >Upload</label>
+                    <input asp-for="attachment" class="form-control-lg" id="formFileLg" type="file" hidden >
+                    <label id="filename"></label>
+                </div>
             </div>
-        </div>
 
-        <div class="text-center mt-17">
-            <button type="submit" class="btn btn-primary text-center submit-btn">Submit</button>
-        </div>
-
+            <div class="text-center mt-17">
+                <button type="submit" class="btn btn-primary text-center submit-btn">Submit</button>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -138,3 +142,5 @@
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2525.274682710308!2d7.130329051387604!3d50.73339407941482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bee13f0afebfb1%3A0x7caeb94f4c1042fc!2sK%C3%B6nigswinterer%20Str.%20116%2C%2053227%20Bonn%2C%20Germany!5e0!3m2!1sen!2sin!4v1643083702948!5m2!1sen!2sin" width="1560" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 </section>
+
+<partial name="_NewsLetter" />

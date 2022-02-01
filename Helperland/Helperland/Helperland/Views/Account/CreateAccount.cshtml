@@ -1,0 +1,73 @@
+﻿@model CreateAccountViewModel
+
+@{
+    ViewBag.Title = "Create An Account";
+}
+<section class="touch-us p-t-94" id="touch-us">
+    <div class="max-width-614">
+        <div class="row justify-content-center text-center">
+            <div class="col-12 mb-5" style="position: relative;">
+                <h2 class="headding-star">Create an account</h2>
+            </div>
+        </div>
+        <form asp-controller="Account" asp-action="CreateAccount" enctype="multipart/form-data">
+            <div class="alert alert-success alert-dismissible fade m-0 @(TempData["Message"] == null ? "d-none " : "show" )" role="alert">
+
+                @TempData["Message"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+
+                <div class="col">
+                    <input asp-for="firstname" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                    <span asp-validation-for="firstname" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <input type="text" asp-for="lastname" class="form-control" placeholder="Last name" aria-label="Last name">
+                    <span asp-validation-for="lastname" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                <div class="col">
+                    <input asp-for="email" type="text" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="col">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">+49</div>
+                        </div>
+                        <input asp-for="mobileno" type="text" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Mobile Number">
+                        <span asp-validation-for="mobileno" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0 mb-3">
+
+                <div class="col">
+
+                    
+                        <input asp-for="Password" type="password" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    
+                </div>
+                <div class="col">
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="mb-1 form-check ms-2">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">I have read the <a href="#">privacy policy</a>.</label>
+            </div>
+
+            <div class="text-center mt-17">
+                <button type="submit" class="btn btn-primary text-center submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>

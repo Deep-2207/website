@@ -200,6 +200,10 @@ section {
     padding-top: 43px;
 }
 
+.p-t-94 {
+    padding-top: 94px;
+}
+
 .p-tb-10 {
     padding: 5px 0 !important;
 }
@@ -927,11 +931,12 @@ footer {
     .modal-content .modal-body {
         padding: 25px;
     }
+
         .modal-content .modal-body input[type=text],
         .modal-content .modal-body input[type=password] {
             height: 46px;
-          
         }
+
             .modal-content .modal-body input[type=text]:focus,
             .modal-content .modal-body input[type=password]:focus {
                 border-color: #1d798c;
@@ -939,10 +944,10 @@ footer {
                 box-shadow: none;
             }
 
-            .modal-content .modal-body .email,
-            .modal-content .modal-body .password {
-                position: relative;
-            }
+        .modal-content .modal-body .email,
+        .modal-content .modal-body .password {
+            position: relative;
+        }
 
             .modal-content .modal-body .email img,
             .modal-content .modal-body .password img {
@@ -959,14 +964,17 @@ footer {
             background: #1d7a8c !important;
             border-color: #fff !important;
             border-radius: 40px;
-            width:100%;
+            width: 100%;
         }
+
         .modal-content .modal-body a {
             color: #1d7a8c;
         }
-            .modal-content .modal-body a:hover{
-                color:#1890ca !important;
+
+            .modal-content .modal-body a:hover {
+                color: #1890ca !important;
             }
+
         .modal-content .modal-body .btnlogin:hover {
             background-color: #146371 !important;
         }
@@ -987,14 +995,14 @@ footer {
     }
 
 
-        /*login model end*/
-        /* -- Common Style end */
-        /* Home Page Start */
-        /* home Section Start */
-        .home {
-            min-height: 100vh;
-            /* height: 100vh; */
-        }
+/*login model end*/
+/* -- Common Style end */
+/* Home Page Start */
+/* home Section Start */
+.home {
+    min-height: 100vh;
+    /* height: 100vh; */
+}
 
     .home .home-content {
         background: url("../img/home/group-35.png") no-repeat center;
@@ -1595,13 +1603,23 @@ footer {
 }
 
 
-.touch-us .form-select {
+.touch-us input {
     height: 46px;
     font-size: 16px;
     color: #798289 !important;
 }
-/* touch us end */
 
+.touch-us .input-group-text {
+    height: 46px;
+}
+
+.touch-us .form-control:focus,
+.touch-us .form-select:focus {
+    border-color: #1d798c;
+    outline: 0;
+    box-shadow: none;
+}
+/* touch us end */
 /* touch us map start */
 
 .touch-map .img-1-box {
@@ -1620,8 +1638,24 @@ footer {
     z-index: 9999;
 }
 
-/* touch us map end */
+.touch-us .form-check input {
+    height: 1em;
+}
+.touch-us .form-check:focus{
+    border-color: #1d798c;
+    outline: 0;
+    box-shadow: none;
+}
 
+.touch-us .form-check-input:checked {
+    background-color: #1d798c;
+    border-color: #1d798c;
+}
+.touch-us .form-check a {
+    text-decoration: none;
+    color: #1d798c;
+}
+/* touch us map end */
 .contact-us-map {
     /*background: url('../img/contect_us/group-16.png') no-repeat center;*/
     /*height: 400px;*/
