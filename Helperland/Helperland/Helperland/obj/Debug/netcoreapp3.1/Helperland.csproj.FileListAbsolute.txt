@@ -83,7 +83,6 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
-F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
@@ -160,3 +159,7 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\CreateAccount.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_NewsLetter.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\ServiceHistory.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceProvider.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\UserManagement.cshtml.g.cs

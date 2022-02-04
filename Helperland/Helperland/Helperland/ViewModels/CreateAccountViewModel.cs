@@ -1,4 +1,5 @@
 ﻿using Helperland.Data;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,8 +18,10 @@ namespace Helperland.ViewModels
         [Required]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Phone Number is not Valid")]
         public string mobileno { get; set; }
+
         [Required]
         [EmailAddress(ErrorMessage = "Email is not Valid")]
+        [Remote(action: "IsEmailInUse", controller: "Account")]
         public string email { get; set; }
 
         [Required]

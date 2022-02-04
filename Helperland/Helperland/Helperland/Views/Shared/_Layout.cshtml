@@ -1,6 +1,4 @@
-﻿@model LoginViewModel
-
-
+﻿@model LoginAndForgotPassword
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +13,9 @@
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
+
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+
 
     @*Jquery*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -94,12 +95,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d")" asp-area="" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                            <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d")" data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area="" asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
                         </li>
-                    
+
                         <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? (ViewBag.provider == "provider" ? "" : "d-xl-block") : "") ">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false" href="#">
@@ -182,24 +183,31 @@
             <span class="me-auto">Privacy Policy</span>
             <button class="me-2" id="btnprivacy-policy">OK</button>
         </div>
+        <div class="d-flex justify-content-center detaile max-width">
+            <p>©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span> <a href=""> Privacy Policy </span> </a></p>
+        </div>
     </footer>
 
     <!-- footer end-->
     <!-- Login Modal Start-->
-    <form method="post" asp-controller="Account" asp-action="login">
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered ">
-                <div class="modal-content">
+
+    <div class="modal" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <form method="post" asp-controller="Account" asp-action="login">
                     <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                         <h3 class="mb-30">Login To Your Account</h3>
-                        @*<span asp-validation-for=""></span>*@
+                        <div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"] == null ? "d-none " : "show" )" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="email">
-                            <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Email"/>
+                            <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Login.Email" />
                             <img src="~/img/home/user-profile.png" />
                         </div>
                         <div class="password">
-                            <input class="form-control mb-3" type="password" placeholder="Password" asp-for="Password"/>
+                            <input class="form-control mb-3" type="password" placeholder="Password" asp-for="Login.Password" />
                             <img src="~/img/home/lock-password.png" />
                         </div>
                         <div class="mb-3 form-check">
@@ -214,21 +222,24 @@
                         </div>
 
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+
+
     <!-- Login Modal End-->
     <!-- forgot Modal End-->
     <div class="modal fade" id="forgotmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h3 class="mb-30">Forgot Password</h3>
-                    <form>
+                <form method="post" asp-controller="Account" asp-action="ForgotPassword">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h3 class="mb-30">Forgot Password</h3>
+
                         <div class="email">
-                            <input class="form-control mb-3" type="text" placeholder="Email" />
+                            <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Forgot.Email" />
 
                         </div>
 
@@ -238,13 +249,14 @@
                             <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal" data-bs-target="#loginModal">Login Now</a>
 
                         </div>
-                    </form>
-                </div>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <!-- forgot Modal End-->
-    <partial name="_ValidationScriptsPartial"></partial>
+    <partial name="_ValidationScriptsPartial" />
     @*Custome JS*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js"></script>
@@ -260,7 +272,28 @@
     @*Fontawesome Cdn*@
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
 
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+    @if (ViewBag.openmodel == true)
+    {
+        <script type="text/javascript">
+            $(window).on('load', function () {
+                $('#loginModal').modal('show');
+            });
+        </script>
+    }
 
+    @if (ViewBag.ForgotPasswordResetLinksend == true)
+    {
+
+        <script>
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Forgot Password',
+                text: 'If provided email is a registered email ID on Helperland, you will receive an email with further instructions on how to reset your password.',
+            })
+        </script>
+    }
 
 
 

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "BecomeAProvider";
 }
+
 <section class="service-provider p-0" id="service-provider">
     <div class="container register-main-box">
         <div class="register-box">
@@ -9,46 +10,66 @@
                 <div class="touch-headding text-center font-weight-bold">
                     Register Now!
                 </div>
-                <div class="row row-cols-1 row-cols-md-1 g-4 mt-0 flex-column">
-                    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
-                    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
-                    <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
-                    <label class="sr-only" for="inlineFormInputGroupUsername">Mobile number</label>
-                    <div class="input-group p-0">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">+49</div>
+                <form method="post" asp-action="BecomeAPro">
+                    <div class="row row-cols-1 row-cols-md-1 g-4 mt-0 flex-column">
+                        <div class="alert alert-success alert-dismissible fade m-0 mt-1 @(TempData["Message"] == null ? "d-none " : "show" )" role="alert">
+                            @TempData["Message"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <input type="text" class="form-control" id="inlineFormInputGroupmobilenumber"
-                               placeholder="Mobile Number">
-                    </div>
-                    <input type="password" class="form-control" placeholder="Password" aria-label="Password">
-                    <input type="password" class="form-control" placeholder="Conform Password"
-                           aria-label="Conform Password">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Send me newsletters from Helperland
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            I accept <span><a href=""> terms and conditions & privacy policy </a></span>
-                        </label>
-                    </div>
-                    <!-- <div class="text-center button-submit">
-                        <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
-                    </div> -->
+                        <div class="p-0">
+                            <input type="text" class="form-control" placeholder="First name" asp-for="firstname" aria-label="First name">
+                            <span asp-validation-for="firstname" class="text-danger"></span>
+                        </div>
+                        <div class="p-0">
+                            <input type="text" class="form-control" placeholder="Last name" asp-for="lastname" aria-label="Last name">
+                            <span asp-validation-for="lastname" class="text-danger"></span>
+                        </div>
+                        <div class="p-0">
+                            <input type="text" class="form-control" placeholder="Email Address" asp-for="email" aria-label="Email Address">
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </div>
+                        <label class="sr-only" for="inlineFormInputGroupUsername">Mobile number</label>
+                        <div class="input-group p-0">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">+49</div>
+                            </div>
+                            <input type="text" class="form-control" asp-for="mobileno" id="inlineFormInputGroupmobilenumber"
+                                   placeholder="Mobile Number">
+                            <span asp-validation-for="mobileno" class="text-danger"></span>
+                        </div>
+                        <div class="p-0">
+                            <input type="password" class="form-control" placeholder="Password" aria-label="Password" asp-for="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="p-0">
+                            <input type="password" class="form-control" placeholder="Conform Password" asp-for="ConfirmPassword"
+                                   aria-label="Conform Password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        @*<div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" asp-for="firstname">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Send me newsletters from Helperland
+                                </label>
+                            </div>*@
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                I accept <span><a href=""> terms and conditions & privacy policy </a></span>
+                            </label>
+                        </div>
+                        <!-- <div class="text-center button-submit">
+                            <a href="#">Read the Post <img src="~/img/home/shape-2.svg" alt="right arrow"></a>
+                        </div> -->
 
-                    <div class="text-center button">
-                        <button class="">
-                            Get Started <img src="~/img/service-provider/arrow-white.png"
-                                             alt="right arrow">
-                        </button>
+                        <div class="text-center button">
+                            <button class="btnregister" type="submit">
+                                Get Started <img src="~/img/service-provider/arrow-white.png"
+                                                 alt="right arrow">
+                            </button>
+                        </div>
                     </div>
-
-
-                </div>
+                </form>
             </div>
 
         </div>

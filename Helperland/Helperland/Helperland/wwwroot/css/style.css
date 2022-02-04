@@ -239,7 +239,9 @@ section {
 .p-lr-20 {
     padding: 0 20px;
 }
-
+.mh-64{
+    min-height:65.9vh;
+}
 .fa-star {
     color: #ecb91c !important;
 }
@@ -544,10 +546,17 @@ option {
 section.bright {
     filter: brightness(0.5);
 }
-
-
+.btnGenderateNewLink {
+    border: 1px solid white;
+    background-color: #00607287;
+    color: white;
+    border-radius: 54px;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 18px 32px;
+    margin-bottom: 60px;
+}
 /* Navbar start*/
-
 .navbar {
     transition: all 0.3s ease;
     padding-right: 0px !important;
@@ -911,8 +920,10 @@ footer {
     max-width: 360px;
     margin: auto;
 }
-
-    .modal-content .btn-close {
+    .modal-content .btn-close:focus {
+        box-shadow: none;
+    }
+    .modal-content .model-colse {
         position: absolute;
         top: 0;
         right: 0;
@@ -1716,7 +1727,7 @@ footer {
             text-decoration: none;
         }
 
-        .service-provider .register-box button {
+        .service-provider .register-box .btnregister {
             user-select: auto;
             height: 43px;
             width: 166px;
@@ -1738,9 +1749,26 @@ footer {
         color: #FFFFFF00;
     }
 
-.work {
-    min-height: 100vh;
-}
+
+    .service-provider .register-box input[type=text],
+    .service-provider .register-box  input[type=password] {
+        height: 46px;
+    }
+
+        .service-provider .register-box input[type=text]:focus,
+        .service-provider .register-box input[type=password]:focus {
+            border-color: #1d798c;
+            outline: 0;
+            box-shadow: none;
+        }
+
+    .service-provider .register-box .input-group-text{
+        height:46px;
+    }
+
+    .work {
+        min-height: 100vh;
+    }
 
 .works .background-img1 {
     position: absolute;

@@ -1,8 +1,10 @@
-﻿using Helperland.Data;
+﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Models;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,20 +19,24 @@ namespace Helperland.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HelperlandContext _helperlandContext;
+        private readonly IConfiguration configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public HomeController(ILogger<HomeController> logger,
                                  IHostingEnvironment hostingEnvironment,
-                                 HelperlandContext helperlandContext)
+                                 HelperlandContext helperlandContext,
+                                 IConfiguration configuration)
         {
             _logger = logger;
             this._helperlandContext = helperlandContext;
+            this.configuration = configuration;
             this._hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
         {
             ViewBag.page = "home";
+           
             return View();
         }
 
@@ -55,17 +61,19 @@ namespace Helperland.Controllers
         {
             return View();
         }
+       
         [HttpPost]
         public IActionResult Contact(ContactViewModel model)
         {
             if (ModelState.IsValid)
             {
-                string filename = null;
+                string filepath = "";
+                string filename = "";
                 if (model.attachment != null)
                 {
                     string UploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "upload\\contact-us-attachment");
                     filename = Guid.NewGuid().ToString() + "_" + model.attachment.FileName;
-                    string filepath = Path.Combine(UploadsFolder, filename);
+                    filepath = Path.Combine(UploadsFolder, filename);
                     //model.Photo.CopyTo(new FileStream(filepath, FileMode.Create));
 
                     using (var fileStream = new FileStream(filepath, FileMode.Create))
@@ -85,8 +93,22 @@ namespace Helperland.Controllers
                 };
                 _helperlandContext.Add(Newcontact);
                 _helperlandContext.SaveChanges();
-                return RedirectToAction();
+                
 
+                EmailModel emailmodel = new EmailModel
+                {
+                    From = "",
+                    To = "",
+                    Subject = Newcontact.Subject,
+                    Body = Newcontact.Message,
+                    Attachment =  filepath  /*Newcontact.UploadFileName*/
+                };
+
+                MailHelper mailhelp = new MailHelper(configuration);
+
+                mailhelp.SendContectUs(emailmodel);
+
+                return RedirectToAction();
             }
             return View();
         }

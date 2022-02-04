@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"] - Helperland</title>
+    <link rel="icon" type="image/x-icon" href="~/img/logo/favicon_img.png">
+
+    @*Bootstrap Css*@
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    @*custome css*@
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+
+
+    @*Jquery*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <!-- navbar section start -->
+    <nav class="fixed-top navbar navbar-expand-xl navbar-light admin-navbar-bg-color navbar-height-60">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span> <i class="fa fa-bars" style="font-size:30px;color:white"></i></span>
+            </button>
+            <h2 class="headding">
+                Helperland
+            </h2>
+            <div class="collapse navbar-collapse sidebar-collapse-dv" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto d-none sidebar-collapse-ul">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Service Management </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Role Management</a>
+                    </li>
+
+                    <li class='nav-link sub-menu drop-1'>
+                        <a href='#Coupon'>Coupon Code Management<div class='fa fa-caret-down right'></div></a>
+                        <ul>
+                            <li><a href='#settings'>Coupon Codes</a></li>
+                            <li><a href='#settings'>Usage History</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Escalation Management</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Service Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Service Provider</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User Management</a>
+                    </li>
+
+                    <li class='nav-link sub-menu drop-2'>
+                        <a href='#Coupon'>Finance Module<div class='fa fa-caret-down right'></div></a>
+                        <ul>
+                            <li><a href='#settings'>All Transactions</a></li>
+                            <li><a href='#settings'>Generate Payment</a></li>
+                            <li><a href='#settings'> Customer Invoices</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Zip Code Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Rating Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inquiry Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Newsletter Management</a>
+                    </li>
+
+                    <li class='nav-link sub-menu drop-3'>
+                        <a href='#Coupon'>Content Management<div class='fa fa-caret-down right'></div></a>
+                        <ul>
+                            <li><a href='#settings'>Blog</a></li>
+                            <li><a href='#settings'>FAQs</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="backblack"></div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-admin">
+                <li class="admin-username" style="user-select: auto;">
+                    <img src="~/img/admin-user/admin-user.png" alt="">
+                    James Smith
+                </li>
+                <li class="logout-btn" style="user-select: auto;">
+                    <a href=""><img src="~/img/admin-user/logout.png" alt=""></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <!-- navbar section end -->
+    <div>
+        @RenderBody()
+    </div>
+
+
+    <!-- footer start-->
+    <footer>
+        <div class="footer-max-width">
+            <div class="logo">
+                <img src="~/img/logo/white-logo-transparent-background.png" alt="">
+            </div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">TESTIMONIALS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">INSURANCE POLICY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">IMPRESSUM</a>
+                </li>
+            </ul>
+            <div class="social-icon d-flex flex-wrap justify-content-center">
+                <a href="#" class="mb-2"><img src="~/img/home/facebook.svg" alt="facebook"></a>
+                <a href=""><img src="~/img/home/instagram.svg" alt="instagram"></a>
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center detaile max-width">
+            <p>
+                ©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span>
+                    <a href="">
+                        Privacy
+                        Policy
+                </span> </a>
+            </p>
+        </div>
+    </footer>
+    <!-- footer end-->
+   
+
+       
+    <partial name="_ValidationScriptsPartial" />
+    @*Custome JS*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+
+
+    @*Bootsrap JS*@
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+
+    @*Fontawesome Cdn*@
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                "bInfo": false, // hide showing entries
+                "bFilter": false, //hide Search bar
+            });
+        });
+   
+    </script>
+</body>
+</html>

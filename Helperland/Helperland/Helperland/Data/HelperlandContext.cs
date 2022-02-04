@@ -251,6 +251,12 @@ namespace Helperland.Data
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsRegisteredUser).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -268,6 +274,8 @@ namespace Helperland.Data
                 entity.Property(e => e.TaxNo).HasMaxLength(50);
 
                 entity.Property(e => e.UserProfilePicture).HasMaxLength(200);
+
+                entity.Property(e => e.WorksWithPets).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ZipCode).HasMaxLength(20);
             });
