@@ -87,25 +87,25 @@
         <div class="container container-max-width mb-60 col-md-8">
           <ul class="nav nav-pills mb-30 col-md-12" id="pills-tab" role="tablist">
             <li class="nav-item col b-l-1 b-b-1" role="presentation">
-              <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-setup"
+              <button class="nav-link btnhome" id="pills-setup" data-bs-toggle="pill" data-bs-target="#pills-setup"
                 type="button" role="tab" aria-controls="pills-home" aria-selected="true"><img
                   src="assets/img/Book-Service/setup-service.png" alt="" class="setup-img"> <span>Setup Service</span>
               </button>
             </li>
             <li class="nav-item col b-l-1 b-b-1" role="presentation">
-              <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-paln"
+              <button class="nav-link btnpaln" id="pills-paln" data-bs-toggle="pill" data-bs-target="#pills-paln"
                 type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
                   src="assets/img/Book-Service/schedule.png" alt="" class="schedule-img"> <span> Schedule & Plan</span>
               </button>
             </li>
             <li class="nav-item col b-l-1 b-b-1" role="presentation">
-              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-details"
-                type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
-                  src="assets/img/Book-Service/details.png" alt="" class="details-img"> <span> Your Details
+              <button class="nav-link btnprofile active" id="pills-profile" data-bs-toggle="pill" data-bs-target="#pills-details" type="button" role="tab" aria-controls="pills-profile"
+                aria-selected="false"><img src="assets/img/Book-Service/details.png" alt="" class="details-img"> <span>
+                  Your Details
                 </span></button>
             </li>
             <li class="nav-item col b-l-1 b-b-1" role="presentation">
-              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-payment"
+              <button class="nav-link btnpayment" id="pills-payment" data-bs-toggle="pill" data-bs-target="#pills-payment"
                 type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img
                   src="assets/img/Book-Service/payment.png" alt="" class="payment-img"> <span> Make Payment
                 </span></button>
@@ -115,13 +115,13 @@
             <div class="tab-pane fade" id="pills-setup" role="tabpanel" aria-labelledby="pills-home-tab">
               <div class="row">
                 <div class="col-md-12">
-                    <h6 class="fw-bold">Enter your Postal Code</h6>
-                    <input type="text" name="" id="" class="form-control mb-3 me-3">
-                    <button class="btn btncontinue">Check Availability</button>
+                  <h6 class="fw-bold">Enter your Postal Code</h6>
+                  <input type="text" name="" id="" class="form-control mb-3 me-3">
+                  <button class="btn btncontinue">Check Availability</button>
                 </div>
+              </div>
             </div>
-            </div>
-            <div class="tab-pane fade show active" id="pills-paln" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade " id="pills-paln" role="tabpanel" aria-labelledby="pills-profile-tab">
               <div class="plan-body">
                 <div class="quantity">
                   <h2>Select number of rooms and bath</h2>
@@ -292,8 +292,104 @@
               </div>
             </div>
             <!-- </div> -->
-            <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-home-tab">
-              Your Details
+            <div class="tab-pane fade show active" id="pills-details" role="tabpanel" aria-labelledby="pills-home-tab">
+              <div class="Address-list">
+                <h2 class="headding">
+                  Enter your contact details, so we can serve you in better way!
+                </h2>
+                <div class="Address-list-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                      value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      <p class="d-block m-0"> <span class="point fw-bold">Address: </span> wdwd 44, Tambach-Dietharz
+                        99897
+                      </p>
+
+                      <p class="d-block m-0"> <span class="point fw-bold">Phone number: </span> 9988556644</p>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                      value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      <p class="d-block m-0"> <span class="point fw-bold">Address: </span> wdwd 44, Tambach-Dietharz
+                        99897
+                      </p>
+
+                      <p class="d-block m-0"> <span class="point fw-bold">Phone number: </span> 9988556644</p>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                      value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      <p class="d-block m-0"> <span class="point fw-bold">Address: </span> wdwd 44, Tambach-Dietharz
+                        99897
+                      </p>
+
+                      <p class="d-block m-0"> <span class="point fw-bold">Phone number: </span> 9988556644</p>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="">
+                  <button class="btncontinue d-inline-block btnaddress">+ Add New Address</button>
+
+                </div>
+
+                <div class="newAddress">
+                  <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    <div class="col">
+                      <label for="exampleInputEmail1" class="form-label">Street name</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="Street name">
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1" class="form-label">House number</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="House number">
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    <div class="col">
+                      <label for="exampleInputEmail1" class="form-label">Postal code</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="Postal code">
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputEmail1" class="form-label">City</label>
+                      <select class="form-select" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="City">
+                        <option>--Select City--</option>
+                        <option>--City 1--</option>
+                        <option>--City 2--</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    <div class="col">
+                      <label for="exampleInputEmail1" class="form-label">Phone Number</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">+49</div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroupmobilenumber" placeholder="Mobile Number">
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+                </div>
+
+
+              </div>
             </div>
             <div class="tab-pane fade " id="pills-payment" role="tabpanel" aria-labelledby="pills-home-tab">
               Make Payment
@@ -339,7 +435,7 @@
             <div class="accordion accordion-flush mb-3" id="accordionExample">
               <div class="accordion-item">
                 <h3 class="accordion-header" id="headingOne">
-                  
+
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Which Helperland professional will come to my place?

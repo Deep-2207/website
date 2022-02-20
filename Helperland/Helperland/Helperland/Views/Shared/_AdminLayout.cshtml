@@ -11,7 +11,8 @@
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
-
+    <!-- Data table CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
 
 
@@ -98,7 +99,7 @@
                     James Smith
                 </li>
                 <li class="logout-btn" style="user-select: auto;">
-                    <a href=""><img src="~/img/admin-user/logout.png" alt=""></a>
+                    <a asp-action="logout" asp-controller="account"><img src="~/img/admin-user/logout.png" alt=""></a>
                 </li>
             </ul>
 
@@ -154,9 +155,9 @@
         </div>
     </footer>
     <!-- footer end-->
-   
 
-       
+
+
     <partial name="_ValidationScriptsPartial" />
     @*Custome JS*@
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -166,7 +167,7 @@
     @*Bootsrap JS*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     @RenderSection("Scripts", required: false)
 
 
@@ -182,7 +183,7 @@
                 "bFilter": false, //hide Search bar
             });
         });
-   
+
     </script>
 </body>
 </html>

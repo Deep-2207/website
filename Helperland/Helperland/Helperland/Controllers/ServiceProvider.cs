@@ -1,4 +1,4 @@
-﻿
+﻿using Helperland.Core;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
+    [CookiesHelper]
     public class ServiceProvider : Controller
     {
-        public IActionResult Index()
+        public IActionResult ServiceProviderView()
         {
             return View();
         }

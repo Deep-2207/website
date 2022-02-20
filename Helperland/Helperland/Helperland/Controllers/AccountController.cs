@@ -4,11 +4,13 @@ using Helperland.Enums;
 using Helperland.Models;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
+    [CookiesHelper]
     public class AccountController : Controller
     {
         private readonly HelperlandContext _helperlandContext;
@@ -96,9 +99,24 @@ namespace Helperland.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult login(LoginViewModel model)
+        {
+            //if (model.IsRemember == true)
+            //{
+            //    CookieOptions cookieOptions = new CookieOptions();
+            //    cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMinutes(20));
+            //    //cookieOptions.Domain = 
+
+            //    HttpContext.Response.Cookies.Append("Email", model.Email, cookieOptions);
+            //    //HttpContext.Response.Cookies.Append("Password", model.Password, cookieOptions);
+            //}
+            return View();
+        }
+
 
         [HttpPost]
-        [Route("home/index")]
+        //[Route("home/index")]
         public async Task<IActionResult> login(LoginAndForgotPassword model)
         {
             if (ModelState.IsValid)
@@ -107,14 +125,41 @@ namespace Helperland.Controllers
                 User user = await _helperlandContext.Users.FirstOrDefaultAsync(x => x.Email == model.Login.Email && x.Password == model.Login.Password);
                 if (user != null && user.IsApproved == true)
                 {
+                    if (model.Login.IsRemember == true)
+                    {
+                        CookieOptions cookieOptions = new CookieOptions();
+                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                        HttpContext.Response.Cookies.Append("EmailId", user.Email);
+                        //HttpContext.Response.Cookies.Append("Password", user.Password);
+                    }
+
+                    SessionUser sessionUser = new SessionUser()
+                    {
+                        UserID = user.UserId,
+                        UserName = user.FirstName + " " + user.LastName,
+                        UserType = ((UserTypeEnum)user.UserTypeId).ToString()
+                    };
+                    HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
+
+                  
+
+
                     //return RedirectToAction("index", "Home");
                     if (user.UserTypeId == (int)UserTypeEnum.Customer)
                     {
-                        return RedirectToAction("ServiceHistory", "Customer");
+                        if (TempData["BookService"] != "")
+                        {
+                            return RedirectToAction("Book_Services", "Home");
+                        }
+                        else
+                        {
+                            return RedirectToAction("ServiceHistory", "Customer");
+                        }
+                        
                     }
                     else if (user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
                     {
-                        return RedirectToAction("ServiceProvider", "ServiceProvider");
+                        return RedirectToAction("ServiceProviderView", "ServiceProvider");
                     }
                     else
                     {
@@ -134,7 +179,7 @@ namespace Helperland.Controllers
 
             ViewBag.page = "home";
             ViewBag.openmodel = true;
-            return View("~/Views/home/index.cshtml", model);
+           return View("~/Views/home/index.cshtml",model);
 
 
         }
@@ -160,6 +205,8 @@ namespace Helperland.Controllers
                 return Json($"Email {email} is already in use");
             }
         }
+
+
         [HttpPost]
         public IActionResult ForgotPassword(LoginAndForgotPassword model)
         {
@@ -273,6 +320,26 @@ namespace Helperland.Controllers
                 _helperlandContext.SaveChanges();
             }
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            foreach (var cookie in Request.Cookies.Keys) {
+                Response.Cookies.Delete(cookie);
+            }
+            
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "home");
+           
+        }
+        public IActionResult Book_Services()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Book_Services(BookService model)
+        {
+            return View(model);
         }
     }
 }

@@ -16,7 +16,6 @@ $(document).ready(function () {
     $("html").animate({ scrollTop: 0 });
   });
 
-
   var posts = $(".accordion");
 
   // $(".container-max-width .control .buttons").click(function () {
@@ -33,9 +32,8 @@ $(document).ready(function () {
     $(window).scroll(function () {
       if (this.scrollY > 20) {
         $(".navbar .navbar-collapse").removeClass("show");
-       
       }
-      if($("body").click()){
+      if ($("body").click()) {
         $(".navbar .navbar-collapse").removeClass("show");
       }
     });
@@ -46,15 +44,13 @@ $(document).ready(function () {
     let targetElement = evt.target;
 
     do {
-        if (targetElement == navbar) {
-            
-            return;
-        }
-        
-        targetElement = targetElement.parentNode;
+      if (targetElement == navbar) {
+        return;
+      }
+
+      targetElement = targetElement.parentNode;
     } while (targetElement);
     $("#navbarSupportedContent").removeClass("show");
-    
   });
 
   var items = document.querySelectorAll("#sidebar-menu li"),
@@ -82,28 +78,25 @@ $(document).ready(function () {
   //brightnetion body
   // $(".navbar-toggler").click(function () {
   //   $(".admin-body").toggleClass("bright");
-    // $("section").toggleClass("bright");
+  // $("section").toggleClass("bright");
   // });
 
-
-//collapse(hide navbar) when scrolling
-$(document).ready(function () {
-  $(window).scroll(function () {
-
+  //collapse(hide navbar) when scrolling
+  $(document).ready(function () {
+    $(window).scroll(function () {
       $(".navbar .navbar-collapse").removeClass("show");
-      $('.backblack').removeClass("open");
-
+      $(".backblack").removeClass("open");
+    });
   });
-});
 
-//black backgroung on open side navbar
-$('.navbar-toggler').click(function () {
-  $('.backblack').addClass("open");
-});
-$('.backblack').click(function () {
-  $(".navbar .navbar-collapse").removeClass("show");
-  $('.backblack').removeClass("open");
-});
+  //black backgroung on open side navbar
+  $(".navbar-toggler").click(function () {
+    $(".backblack").addClass("open");
+  });
+  $(".backblack").click(function () {
+    $(".navbar .navbar-collapse").removeClass("show");
+    $(".backblack").removeClass("open");
+  });
 
   //admin sub-menu
 
@@ -131,28 +124,52 @@ $('.backblack').click(function () {
   //   $("footer .privacy-policy").toggleClass("unvisibal");
   // });
 
- 
-    $("#btnprivacy-policy").click(function(){
-      // $("footer .privacy-policy").hide();
-      document.getElementById("privacy-policy").style.setProperty('display', 'none', 'important')
-     
-    });
+  $("#btnprivacy-policy").click(function () {
+    // $("footer .privacy-policy").hide();
+    document
+      .getElementById("privacy-policy")
+      .style.setProperty("display", "none", "important");
+  });
 
-
-    //bluer function for the time date
-    $("#txtFromDate").blur(function () {
-      if (!$("#txtFromDate").val()) {
-          $('#txtFromDate').attr('type', 'text');
-      } else {
-          $('#txtFromDate').attr('type', 'date');
-      }
+  //bluer function for the time date
+  $("#txtFromDate").blur(function () {
+    if (!$("#txtFromDate").val()) {
+      $("#txtFromDate").attr("type", "text");
+    } else {
+      $("#txtFromDate").attr("type", "date");
+    }
   });
 
   $("#txtToDate").blur(function () {
-      if (!$("#txtToDate").val()) {
-          $('#txtToDate').attr('type', 'text');
-      } else {
-          $('#txtToDate').attr('type', 'date');
-      }
+    if (!$("#txtToDate").val()) {
+      $("#txtToDate").attr("type", "text");
+    } else {
+      $("#txtToDate").attr("type", "date");
+    }
   });
+
+  $(".btnaddress").click(function () {
+    $(this).addClass(" d-none");
+    $(".newAddress").addClass(".d-block");
+  });
+
+  $('#pills-setup').click(function () {
+    console.log("home btn clicke");
+    $('#pills-setup').addClass('active');
+    
+  })
+  // $('.book-service-body .nav-pills .btnpaln').click(function () {
+  //   console.log("paln btn clicke");
+  //   $('.book-service-body .nav-pills .btnpaln').addClass('active');
+  // })
+  // $('.book-service-body .nav-pills .btnprofile').click(function () {
+  //   console.log("profile btn clicke");
+  //   $('.book-service-body .nav-pills .btnprofile').addClass('active');
+  // })
+  // $('.book-service-body .nav-pills .btnpayment').click(function () {
+  //   console.log("payment btn clicke");
+  //   $('.book-service-body .nav-pills .btnpayment').addClass('active');
+  // })
+
+
 });

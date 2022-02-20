@@ -1,6 +1,15 @@
-﻿@model LoginAndForgotPassword
+﻿@{ var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    } }
+
+@model LoginAndForgotPassword
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,10 +25,12 @@
 
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
 
-
+    <!-- Data table CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     @*Jquery*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
+
 <body>
 
     <div class="scroll-up-btn top-arrow">
@@ -32,7 +43,8 @@
     </div>
 
     <!-- Navbar start-->
-    <nav class=" navbar fixed-top navbar-expand-xl navbar-light @(ViewBag.page ==  "home"? "homePage" : "navbar-bg-color" )">
+    <nav class=" navbar fixed-top navbar-expand-xl navbar-light @(ViewBag.page ==  "home"? "homePage"
+      : "navbar-bg-color" )">
 
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -46,17 +58,38 @@
                     <span> <i class="fa fa-bars" style="font-size:30px;color:white"></i></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @if (user != null)
+                    {
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-sidebar-ul d-none">
+                            <li class="username" style="user-select: auto;">
+                                Welcome,<br>
+                                <b style="user-select: auto;">First Customer</b>
+                            </li>
+                            <li class="sid-nav-item">
+                                <a class="sid-sid-nav-link" aria-current="page" href="#">Dashbord</a>
+                            </li>
+                            @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                            {
+                                <partial name="CustomerPartialView" />
+                            }
+                            else
+                            {
+                                <partial name="ServiceProviderPartial" />
+                            }
+
+
+                        </ul>
+                    }
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area="" asp-controller="" asp-action="">
+                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )"  asp-area=""
+                               asp-controller="home" asp-action="Book_Services">
                                 @if (ViewBag.page == "home")
                                 {
-                                    <spna>Book a Cleaner</spna>
-                                }
+                                    <spna>Book a Cleaner</spna> }
                                 else
                                 {
-                                    <spna>Book now</spna>
-                                }
+                                    <spna>Book now</spna>}
                             </a>
                         </li>
                         <li class="nav-item">
@@ -64,12 +97,10 @@
 
                                 @if (ViewBag.page == "home")
                                 {
-                                    <spna>Prices</spna>
-                                }
+                                    <spna>Prices</spna> }
                                 else
                                 {
-                                    <spna>Prices & services</spna>
-                                }
+                                    <spna>Prices & services</spna>}
                             </a>
                         </li>
                         <li class="nav-item">
@@ -77,12 +108,10 @@
 
                                 @if (ViewBag.page == "home")
                                 {
-                                    <spna> Our Guarantee</spna>
-                                }
+                                    <spna> Our Guarantee</spna> }
                                 else
                                 {
-                                    <spna>Warranty</spna>
-                                }
+                                    <spna>Warranty</spna>}
                             </a>
                         </li>
                         <li class="nav-item">
@@ -94,61 +123,126 @@
 
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d")" data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area="" asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
-                        </li>
 
-                        <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? (ViewBag.provider == "provider" ? "" : "d-xl-block") : "") ">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                        @if (user == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d" )"
+                                   data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area=""
+                                   asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
+                            </li>
+                        }
+                        <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? (ViewBag.provider=="provider" ? ""
+                : "d-xl-block" ) : "" ) ">
+                            <a class=" nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag"
-                                     class="county-flag">
+                                <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag" class="county-flag">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag"
-                                             class="county-flag">
+                                        <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag" class="county-flag">
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag"
-                                             class="county-flag">
+                                        <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag" class="county-flag">
                                     </a>
                                 </li>
                             </ul>
                         </li>
 
                     </ul>
+
+
+
                     <ul class="social-icone-ul d-none p-0">
                         <li class="nav-item social-icon d-flex">
 
-                            <a asp-area="" asp-controller="" asp-action="" class="mb-2"><img src="~/img/logo/facebook-f-brands.svg" alt="facebook"></a>
-                            <a asp-area="" asp-controller="" asp-action=""><img src="~/img/logo/instagram-brands.svg" alt="instagram"></a>
+                            <a asp-area="" asp-controller="" asp-action="" class="mb-2">
+                                <img src="~/img/logo/facebook-f-brands.svg"
+                                     alt="facebook">
+                            </a>
+                            <a asp-area="" asp-controller="" asp-action="">
+                                <img src="~/img/logo/instagram-brands.svg"
+                                     alt="instagram">
+                            </a>
 
                         </li>
                     </ul>
                 </div>
                 <div class="backblack"></div>
+                @if (user != null)
+                {
+                    <div class="flot-right">
+                        <ul class="navbar-nav-icone">
 
+                            <li class="nav-item dropdown numbaer-notification-main">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <img src="~/img/service-provider-upcoming-service/icon-notification.png" alt="">
+                                </a>
+                                <div class="numbaer-notification align-items-center">0</div>
+                                <ul class="dropdown-menu dropdown-menu-lg-end notification-ul" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">notification 1</a></li>
+                                    <li><a class="dropdown-item" href="#">notification 2</a></li>
+                                    <li><a class="dropdown-item" href="#">notification 3</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown profile-icone">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <img src="~/img/service-provider-upcoming-service/admin-user.png" alt="">
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                    <li class="username" style="user-select: auto;">
+                                        Welcome,<br>
+                                        <b style="user-select: auto;">@sessionUser.UserName</b>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="#">My Setting</a></li>
+                                    <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Log Out</a></li>
+                                </ul>
+
+
+
+                            </li>
+                            <li><a class="dropdown-item d-none logout" asp-action="Logout" asp-controller="Account">Log Out</a></li>
+                        </ul>
+                    </div>}
             </div>
         </div>
     </nav>
     <!-- Navbar end-->
+    @*@if (user != null)
+        {
+        <section class="headding-name text-center p-t-64">
+          <h2 class="headding">
+            Welcome, <span>@sessionUser.UserName</span>
+          </h2>
+        </section>
+        }*@
+
 
 
     @RenderBody()
+
+
 
 
     <!-- footer start-->
     <footer>
         <div class="footer-max-width">
             <div class="logo">
-                <a asp-controller="home" asp-action="index"><img src="~/img/logo/white-logo-transparent-background.png" alt=""></a>
+                <a asp-controller="home" asp-action="index">
+                    <img src="~/img/logo/white-logo-transparent-background.png"
+                         alt="">
+                </a>
             </div>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
@@ -184,7 +278,11 @@
             <button class="me-2" id="btnprivacy-policy">OK</button>
         </div>
         <div class="d-flex justify-content-center detaile max-width">
-            <p>©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span> <a href=""> Privacy Policy </span> </a></p>
+            <p>
+                ©2018 Helperland. All rights reserved. &nbsp;&nbsp;Terms and Conditions | <span>
+                    <a href=""> Privacy Policy
+                </span> </a>
+            </p>
         </div>
     </footer>
 
@@ -198,9 +296,10 @@
                     <div class="modal-body">
                         <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                         <h3 class="mb-30">Login To Your Account</h3>
-                        <div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"] == null ? "d-none " : "show" )" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"]==null
+                ? "d-none" : "show" )" role="alert">
                             @TempData["ErrorMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="submit" class="btn-close" id="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         <div class="email">
                             <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Login.Email" />
@@ -211,14 +310,16 @@
                             <img src="~/img/home/lock-password.png" />
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" asp-for="Login.IsRemember">
                             <label class="form-check-label" for="exampleCheck1">Remember me</label>
                         </div>
-                        <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login">Login</button>
+                        <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login" onclick="btncanclemodel()">Login</button>
 
                         <div class="text-center">
-                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal" data-bs-target="#forgotmodel">Forgot Password</a>
-                            <span>Don't have an account? </span> <a asp-controller="Account" asp-action="CreateAccount" class="text-decoration-none">Create an account</a>
+                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
+                               data-bs-target="#forgotmodel">Forgot Password</a>
+                            <span>Don't have an account? </span> <a asp-controller="Account" asp-action="CreateAccount"
+                                                                    class="text-decoration-none">Create an account</a>
                         </div>
 
                     </div>
@@ -246,7 +347,8 @@
                         <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login">Send</button>
 
                         <div class="text-center">
-                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal" data-bs-target="#loginModal">Login Now</a>
+                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
+                               data-bs-target="#loginModal">Login Now</a>
 
                         </div>
 
@@ -255,17 +357,18 @@
             </div>
         </div>
     </div>
+
     <!-- forgot Modal End-->
     <partial name="_ValidationScriptsPartial" />
     @*Custome JS*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js"></script>
-
+    <script type="text/javascript" src="~/js/BookService/BookService.js"></script>
 
     @*Bootsrap JS*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     @RenderSection("Scripts", required: false)
 
 
@@ -284,9 +387,7 @@
 
     @if (ViewBag.ForgotPasswordResetLinksend == true)
     {
-
         <script>
-            
             Swal.fire({
                 icon: 'success',
                 title: 'Forgot Password',
@@ -294,8 +395,5 @@
             })
         </script>
     }
-
-
-
 </body>
 </html>

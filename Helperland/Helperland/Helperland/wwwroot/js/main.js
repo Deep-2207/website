@@ -170,4 +170,22 @@ $(document).ready(function () {
             $(this).addClass("active");
         }
     });
+   
+
+    //$('.navbar ul li').click(function () {
+    //    $(this).addClass('activat').siblings().removeClass('activat');
+    //})
+
 });
+
+
+
+//function btnclose() {
+//    alert('HELLO 1');
+//    //$.ajax({
+//    //    url: '/Home/index',
+//    //})
+//    alert('HE;LLO');
+
+//    onclick = "$('#modal_id').modal('hide');"
+//}
