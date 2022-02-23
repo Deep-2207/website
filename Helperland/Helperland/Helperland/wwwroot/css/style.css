@@ -1011,6 +1011,11 @@ footer {
         box-shadow: none;
     }
 
+.modal .btnlogin:focus {
+    border-color: #1d798c;
+    outline: 0;
+    box-shadow: none;
+}
 
 /*login model end*/
 /* -- Common Style end */
@@ -2616,6 +2621,15 @@ input[type="date"] {
         font-weight: 700;
     }
 
+.Book-service .form-check-input:checked[type=checkbox]:focus {
+    border-color: #1d798c;
+    outline: 0;
+    box-shadow: none;
+   
+}
+.Book-service .form-check-input:checked {
+    background-color:#1D7A8C;
+}
 .book-service-body .effective-price {
     line-height: 25px;
 }
@@ -2710,6 +2724,7 @@ input[type="date"] {
 .book-service-body .accordion .accordion-button:focus {
     border: none;
     box-shadow: none;
+
 }
 
 .book-service-body .FAQ .accordion-button {

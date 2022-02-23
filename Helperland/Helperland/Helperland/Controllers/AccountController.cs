@@ -99,96 +99,99 @@ namespace Helperland.Controllers
             }
             return View();
         }
-        [HttpGet]
-        public IActionResult login(LoginViewModel model)
-        {
-            //if (model.IsRemember == true)
-            //{
-            //    CookieOptions cookieOptions = new CookieOptions();
-            //    cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMinutes(20));
-            //    //cookieOptions.Domain = 
 
-            //    HttpContext.Response.Cookies.Append("Email", model.Email, cookieOptions);
-            //    //HttpContext.Response.Cookies.Append("Password", model.Password, cookieOptions);
-            //}
-            return View();
-        }
 
 
         [HttpPost]
-        //[Route("home/index")]
-        public async Task<IActionResult> login(LoginAndForgotPassword model)
+        public JsonResult login([FromBody] LoginViewModel model)
         {
-            if (ModelState.IsValid)
+
+
+            //User user = await _helperlandContext.Users.FindAsync(x => x.Email == model.Email && x.Password == model.Password);
+            User user = _helperlandContext.Users.Where(x => x.Email == model.Email && x.Password == model.Password).FirstOrDefault();
+            if (user != null && user.IsApproved == true)
             {
-                //User user = await _helperlandContext.Users.FindAsync(x => x.Email == model.Email && x.Password == model.Password);
-                User user = await _helperlandContext.Users.FirstOrDefaultAsync(x => x.Email == model.Login.Email && x.Password == model.Login.Password);
-                if (user != null && user.IsApproved == true)
+                if (model.IsRemember == true)
                 {
-                    if (model.Login.IsRemember == true)
-                    {
-                        CookieOptions cookieOptions = new CookieOptions();
-                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
-                        HttpContext.Response.Cookies.Append("EmailId", user.Email);
-                        //HttpContext.Response.Cookies.Append("Password", user.Password);
-                    }
-
-                    SessionUser sessionUser = new SessionUser()
-                    {
-                        UserID = user.UserId,
-                        UserName = user.FirstName + " " + user.LastName,
-                        UserType = ((UserTypeEnum)user.UserTypeId).ToString()
-                    };
-                    HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
-
-                  
-
-
-                    //return RedirectToAction("index", "Home");
-                    if (user.UserTypeId == (int)UserTypeEnum.Customer)
-                    {
-                        if (TempData["BookService"] != "")
-                        {
-                            return RedirectToAction("Book_Services", "Home");
-                        }
-                        else
-                        {
-                            return RedirectToAction("ServiceHistory", "Customer");
-                        }
-                        
-                    }
-                    else if (user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
-                    {
-                        return RedirectToAction("ServiceProviderView", "ServiceProvider");
-                    }
-                    else
-                    {
-                        return RedirectToAction("UserManagement", "Admin");
-                    }
+                    CookieOptions cookieOptions = new CookieOptions();
+                    cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                    HttpContext.Response.Cookies.Append("EmailId", user.Email);
+                    //HttpContext.Response.Cookies.Append("Password", user.Password);
                 }
-                else if (user != null && user.IsApproved == false)
+
+                SessionUser sessionUser = new SessionUser()
                 {
-                    TempData["ErrorMessage"] = "You have not yet received approval by the Admin";
+                    UserID = user.UserId,
+                    UserName = user.FirstName + " " + user.LastName,
+                    UserType = ((UserTypeEnum)user.UserTypeId).ToString()
+                };
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
+
+                if (user.UserTypeId == (int)UserTypeEnum.Customer)
+                {
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "Customer/ServiceHistory" });
+                }
+                else if (user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
+                {
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "ServiceProvider/ServiceProviderView" });
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Invalid USername and Password";
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "Admin/UserManagement" });
+
                 }
 
             }
+            else if (user != null && user.IsApproved == false)
+            {
+                return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Still Admin can not accept your Request" });
+            }
+            else
+            {
+                return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Invalid UserName and Password" });
+            }
 
-            ViewBag.page = "home";
-            ViewBag.openmodel = true;
-           return View("~/Views/home/index.cshtml",model);
+            // return Json(new SingleEntity<LoginViewModel> { Result = model,Status="OK", ErrorMessage=""});
+        }
 
+        [HttpPost]
+        public JsonResult forgotpassword([FromBody] ForgotViewModel model)
+        {
+            User user = _helperlandContext.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+            if (user != null)
+            {
+                var plaintextbytes = System.Text.Encoding.UTF8.GetBytes(user.Password);
+                var OldPassword = System.Convert.ToBase64String(plaintextbytes);
+
+                string input = model.Email + "_!_" + DateTime.Now.ToString() + "_!_" + OldPassword;
+
+
+                var protector = _dataProtectionProvider.CreateProtector(_key);
+                string encrypt = protector.Protect(input);
+
+                EmailModel emailModel = new EmailModel
+                {
+                    To = model.Email,
+                    Subject = "Helperland Reset Password",
+                    Body = "Your reset link is" + "<a  href ='" + "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt
+                    //Body =  "<a href = '" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt + "' > Reset Password </ a > "
+                    //Body = string.Format("Click <a href='{0}'>here</a> to login", this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt)
+                };
+
+                MailHelper mailhelper = new MailHelper(_configuration);
+
+                mailhelper.Send(emailModel);
+                return Json(new SingleEntity<ForgotViewModel> { Result = model, Status = "OK", ErrorMessage = "" });
+            }
+            else
+            {
+                return Json(new SingleEntity<ForgotViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter the Registrated Email" });
+            }
 
         }
 
-        //[HttpGet]
-        //public IActionResult ResetPassword()
-        //{
-        //    return View();
-        //}
+
+
 
         [HttpPost]
         [HttpGet]
@@ -207,43 +210,6 @@ namespace Helperland.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult ForgotPassword(LoginAndForgotPassword model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = _helperlandContext.Users.Where(x => x.Email == model.Forgot.Email).FirstOrDefault();
-                if (user != null)
-                {
-                    var plaintextbytes = System.Text.Encoding.UTF8.GetBytes(user.Password);
-                    var OldPassword = System.Convert.ToBase64String(plaintextbytes);
-
-                    string input = model.Forgot.Email + "_!_" + DateTime.Now.ToString() + "_!_" + OldPassword;
-
-
-                    var protector = _dataProtectionProvider.CreateProtector(_key);
-                    string encrypt = protector.Protect(input);
-
-                    EmailModel emailModel = new EmailModel
-                    {
-                        To = model.Forgot.Email,
-                        Subject = "Helperland Reset Password",
-                        Body = "Your reset link is" + "<a  href ='" + "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt
-                        //Body =  "<a href = '" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt + "' > Reset Password </ a > "
-                        //Body = string.Format("Click <a href='{0}'>here</a> to login", this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt)
-                    };
-
-                    MailHelper mailhelper = new MailHelper(_configuration);
-
-                    mailhelper.Send(emailModel);
-                }
-                ViewBag.ForgotPasswordResetLinksend = true;
-                ViewBag.page = "home";
-                //  TempData["data"] = "send";
-                return View("~/Views/Home/index.cshtml");
-            }
-            return View();
-        }
 
 
         public IActionResult ResetPassword(string token)
@@ -254,7 +220,7 @@ namespace Helperland.Controllers
                 {
                     CheckPassword(token);
                     return View();
-                    
+
 
                 }
             }
@@ -324,13 +290,14 @@ namespace Helperland.Controllers
 
         public IActionResult Logout()
         {
-            foreach (var cookie in Request.Cookies.Keys) {
+            foreach (var cookie in Request.Cookies.Keys)
+            {
                 Response.Cookies.Delete(cookie);
             }
-            
+
             HttpContext.Session.Clear();
             return RedirectToAction("index", "home");
-           
+
         }
         public IActionResult Book_Services()
         {

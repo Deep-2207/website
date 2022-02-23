@@ -25,7 +25,7 @@ namespace Helperland.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly HelperlandContext _helperlandContext;
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration _configuration;
         private readonly ICityRepository _cityRepostiory;
         private readonly IUserAddressRepository _userAddressRepository;
         private readonly IServiceRequestExtraRepository _serviceRequestExtraRepository;
@@ -48,7 +48,7 @@ namespace Helperland.Controllers
         {
             _logger = logger;
             this._helperlandContext = helperlandContext;
-            this.configuration = configuration;
+            this._configuration = configuration;
             this._cityRepostiory = cityRepostiory;
             this._userAddressRepository = userAddressRepository;
             this._serviceRequestExtraRepository = serviceRequestExtraRepository;
@@ -84,6 +84,12 @@ namespace Helperland.Controllers
                 return View();
             }
 
+        }
+
+        public IActionResult homeindex()
+        {
+            ViewBag.page = "home";
+            return View("~/views/home/index.cshtml");
         }
 
         public IActionResult Faq()
@@ -150,7 +156,7 @@ namespace Helperland.Controllers
                     Attachment = filepath  /*Newcontact.UploadFileName*/
                 };
 
-                MailHelper mailhelp = new MailHelper(configuration);
+                MailHelper mailhelp = new MailHelper(_configuration);
 
                 mailhelp.SendContectUs(emailmodel);
 
@@ -161,7 +167,7 @@ namespace Helperland.Controllers
 
         //[SessionHelper(UserTypeEnum.Customer)]
         [HttpGet]
-        public IActionResult Book_Services(LoginAndForgotPassword model)
+        public IActionResult Book_Services()
         {
             var user = HttpContext.Session.GetString("User");
             if (user != null)
@@ -199,23 +205,23 @@ namespace Helperland.Controllers
         //    return (IsUser = false);
 
         //}
-        [HttpPost]
-        public IActionResult Book_Services()
-        {
-            //return View(model);
-            //if(ViewBag.nextpage == true)
-            //{
-            //    return 
-            //}
+        //[HttpPost]
+        //public IActionResult Book_Services()
+        //{
+        //    //return View(model);
+        //    //if(ViewBag.nextpage == true)
+        //    //{
+        //    //    return 
+        //    //}
 
-            return View("Schedule_Plan", "home");
-            //return RedirectToAction("Book_Services", new { t = "pills-profile-tab" });
-        }
-        [HttpPost]
-        public IActionResult Schedule_Plan(LoginAndForgotPassword model)
-        {
-            return View("Details", "home");
-        }
+        //    return View("Schedule_Plan", "home");
+        //    //return RedirectToAction("Book_Services", new { t = "pills-profile-tab" });
+        //}
+        //[HttpPost]
+        //public IActionResult Schedule_Plan(LoginAndForgotPassword model)
+        //{
+        //    return View("Details", "home");
+        //}
 
 
         [HttpPost]
@@ -311,7 +317,7 @@ namespace Helperland.Controllers
                 Mobile = userAddressViewModel.MobileNumber,
                 UserId = Convert.ToInt32(userAddressViewModel.UserID)
             };
-            
+
             userAddress = _userAddressRepository.AddUserAddress(userAddress);
 
             return Json(userAddress);
@@ -335,7 +341,7 @@ namespace Helperland.Controllers
         //    return Json(userAddress);
         //}
         [HttpPost]
-        public JsonResult Completbooking([FromBody] ServiceRequestViewModel model )
+        public JsonResult Completbooking([FromBody] ServiceRequestViewModel model)
         {
             ServiceRequest serviceRequest = new ServiceRequest
             {
@@ -343,21 +349,21 @@ namespace Helperland.Controllers
                 ServiceId = 0,
                 ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate.ToString().Trim() + " " + model.ServiceStarttime.ToString().Trim()),
                 ZipCode = model.ZipCode.ToString().Trim(),
-                ServiceHourlyRate =Convert.ToInt32(model.ServiceHourlyRate),
-                ServiceHours =Convert.ToInt32(model.ServiceHours),
-                ExtraHours =Convert.ToInt32(model.ExtraHours),
+                ServiceHourlyRate = Convert.ToInt32(model.ServiceHourlyRate),
+                ServiceHours = Convert.ToInt32(model.ServiceHours),
+                ExtraHours = Convert.ToDouble(model.ExtraHours),
                 SubTotal = Convert.ToDecimal(model.SubTotal),
-                TotalCost =Convert.ToDecimal(model.TotalCost),
+                TotalCost = Convert.ToDecimal(model.TotalCost),
                 Comments = model.Comments.ToString().Trim(),
                 PaymentDone = false,
                 ServiceProviderId = 1,
                 HasPets = model.HasPets,
-                CreatedDate =DateTime.Now,
+                CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
-               // ModifiedBy = model.UserId,
-               RecordVersion = Guid.NewGuid(),
+                // ModifiedBy = model.UserId,
+                RecordVersion = Guid.NewGuid(),
                 Distance = 25,
-                
+
 
 
             };
@@ -365,7 +371,21 @@ namespace Helperland.Controllers
             model.ServiceRequestID = serviceRequest.ServiceRequestId;
 
             UserAddress userAddress = _userAddressRepository.SelectAddressByID(Convert.ToInt32(model.UserAddressID));
-            
+
+            //    EmailModel emailModel = new EmailModel
+            //    {
+            //        //To = model.Forgot.Email,
+            //       //foreach (var spuser  in model.T)
+            //        Subject = "Helperland Reset Password",
+            //        Body = "Your reset link is" + "<a  href ='" + "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt
+
+
+            //    };
+
+            //MailHelper mailhelper = new MailHelper(_configuration);
+
+            //mailhelper.Send(emailModel);
+
 
             ServiceRequestAddress serviceRequestAddress = new ServiceRequestAddress
             {
@@ -382,10 +402,14 @@ namespace Helperland.Controllers
 
             ServiceRequestExtra serviceRequestExtra = new ServiceRequestExtra
             {
-              
+
                 ServiceRequestId = serviceRequest.ServiceRequestId,
 
             };
+
+           
+
+            
 
 
             foreach (string extraService in model.ExtraservicesName)
@@ -395,12 +419,27 @@ namespace Helperland.Controllers
                 _serviceRequestExtraRepository.Add(serviceRequestExtra);
 
             }
-            
+
+            List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+
+            EmailModel emailModel;
+            foreach (var spsendmail in sp)
+            {
+                emailModel = new EmailModel();
+                emailModel.To = spsendmail.Email;
+                emailModel.Subject = "Service AVailiblity";
+                emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId;
+                ////Body =  "<a href = '" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt + "' > Reset Password </ a > "
+                //Body = string.Format("Click <a href='{0}'>here</a> to login", this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt)
+                MailHelper mailhelper = new MailHelper(_configuration);
+                mailhelper.Send(emailModel);
+            }
+
             return Json(model);
 
         }
 
-            public JsonResult FillCityDropdown(string postalcode)
+        public JsonResult FillCityDropdown(string postalcode)
         {
             List<City> cities = _cityRepostiory.FillCityDropDown(postalcode);
             return Json(cities);

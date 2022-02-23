@@ -7,19 +7,14 @@ var totaltime;
 var _servicehourlyRate = 18;
 
 function checkAvailability() {
+
     var zipcode = document.getElementById('txtzipcode').value.trim();
-    if (zipcode.length == 6) {
+
+    if ($("#txtzipcode").val() == "") {
+        document.getElementById('spn_error_zipcode').innerHTML = "Enter Postal Code";
+    }
+    else if (zipcode.length == 6) {
         $.ajax({
-            //type: 'Post',
-            //url: '/home/CheckPostalCode',
-            //data: { "postalcode": zipcode },
-            //success: function (respo) {
-
-            //},
-            //error: function (respo) {
-            //    alert('error:' + respo.responseText);
-            //}
-
             type: 'Post',
             url: '/home/CheckPostalCode',
             data: { "postalcode": zipcode },
@@ -55,7 +50,7 @@ function checkAvailability() {
 
     }
     else {
-        document.getElementById('spn_error_zipcode').innerHTML = "Enter Postal Code";
+        document.getElementById('spn_error_zipcode').innerHTML = "Enter Valid Postal Code";
     }
 }
 function btnsetuptab() {
@@ -146,7 +141,7 @@ $("#drpselecttime").change(function () {
     // totalpaymentfunc();
     checkingtime();
 });
-
+var tempselecttime;
 $("#ddlselecttime").change(function () {
 
     var inputcheckbox = document.getElementsByClassName("Excheckbox");
@@ -163,10 +158,14 @@ $("#ddlselecttime").change(function () {
     //console.log(temptime);
     console.log($('#ddlselecttime :selected').val());
     console.log(temptime);
+    debugger;
 
-
-    if (temptime > selecttime) {
+    if (totaltime > selecttime) {
         console.log("invalid");
+        tempselecttime = $('#ddlselecttime :selected').val();
+        $('#validtimemodel').modal('show');
+
+
     }
     else {
         console.log("valid");
@@ -178,15 +177,27 @@ $("#ddlselecttime").change(function () {
     tempcheckedcount = 0;
 });
 
-//$('#txtFromDate').change(function () {
-//    //fillServiceDateTimePaymentSummary();
-//    alert("hrllo");
-//});
-//$('#ddlselecttime').change(function () {
-//    //fillServiceDateTimePaymentSummary();
-//    //checkServiceTimeLimit   
-//    alert("hrllo");
-//});
+function btnclearextraservice() {
+    debugger;
+    if (tempselecttime == 3.00) {
+        var inputcheckbox = document.getElementsByClassName("Excheckbox");
+        count = 0
+        for (var i = 0; i <= 4; i++) {
+            if (inputcheckbox[i].checked) {
+                $('.Excheckbox').prop('checked', false); // Unchecks it
+                count++;
+                $("#ex_services").html("");
+            }
+
+        }
+        $("#ddlselecttime").val(3.00);
+        $("#total_time span").html(3.00 + "hrs");
+        $('#validtimemodel').modal('hide');
+    }
+    else {
+        $('#validtimemodel').modal('hide');
+    }
+}
 
 function chnageDate() {
 
@@ -265,16 +276,12 @@ function totalpaymentfunc() {
     $("#total_time span").html(totaltime + 'hrs');
     $("#singal-charg span").html(totalpayment + '€');
     $("#total-charg span").html(totalpayment + '€');
-    /* console.log($("#ddlselecttime [value= " + totaltime + "]").attr('selected', 'true'));*/
-    /*$('select[name="ddlselecttime"]').find(parseFloat('option[value="' + totaltime + '"]')).attr("selected", true);*/
-    /*$('select[name="ddlselecttime"]').find('option[value=' + 122 + ']'.toString().trim()).attr("selected", true);*/
-    //debugger;
-    /*$('select[name="ddlselecttime"]').find('.ddlselecttimevalue[value="' + totaltime + '"]'.toString().trim()).attr("selected", true);*/
+
     $("#ddlselecttime").val(totaltime);
 }
 
 function checktotalExtraservicechecked() {
-    var inputcheckbox = document.getElementsByClassName("Excheckbox");;
+    var inputcheckbox = document.getElementsByClassName("Excheckbox");
     for (var i = 0; i <= 4; i++) {
         if (inputcheckbox[i].checked) {
             ExtraservicedCheckedcount++;
@@ -303,31 +310,6 @@ function checkingtime() {
 
 
 function SaveNewAddress() {
-    debugger;
-
-
-    //if ($("#spnstreetnameerror").html("") != "") {
-    //    $("#spnstreetnameerror").html("Please enter the Streetname").fadeIn(1000);
-    //    if ($("#House_number").html("") != "") {
-    //        $("#spnhousenumbererror").html("Please enter the Housenumber").fadeIn(1000);
-
-    //        if ($("#Phone_Number").html("") != "") {
-    //            $("#spnmobilenumbererror").html("Please enter the MobileNumber").fadeIn(1000);
-    //        }
-    //        else {
-    //            $("#spnmobilenumbererror").html("");
-    //        }
-    //    }
-    //    else {
-    //        $("#spnhousenumbererror").html("");
-    //    }
-    //}
-    //else {
-    //    /* $("#spnstreetnameerror").html("");*/
-
-
-    //    }
-
     if (document.getElementById("Street_name").value.length > 0) {
         document.getElementById("spnstreetnameerror").innerHTML = "";
         if (document.getElementById("House_number").value.length > 0) {
@@ -357,9 +339,7 @@ function SaveNewAddress() {
                         contentType: 'application/json',
                         data: JSON.stringify(newaddress),
                         success: function (resp) {
-                            //   reset addressform
-                            //AddressBox(false);
-                            //FillCustomerAddressList();
+
                             if (resp) {
                                 getalladdressbyuserID(newaddress.userid);
                                 clearnewaddressdetail();
@@ -414,17 +394,8 @@ function FillCityDropdown() {
     })
 }
 
-//$("#EmptyAddress").load(function () {
-//    alert("disable");
-//    $("#btnaddressbookservice").addClass("disabled");
-//});
-//$("#btnaddressbookservice").click(function () {
-//    $("#EmptyAddress").load
-//})
-
 function getalladdressbyuserID(userid) {
-    $("#useraddress")
-        .load('/Home/GetAddressByUserID?userId=' + userid);
+    $("#useraddress").load('/Home/GetAddressByUserID?userId=' + userid);
 }
 function clearnewaddressdetail() {
 
@@ -444,13 +415,10 @@ function btnAddAddresstab() {
     document.getElementById('pills-payment').classList.add("active");
     document.getElementById('pills-profile-tab').classList.add("fill");
     $('#pills-payment-tab').tab('show');
-
-
-
-
 }
+
 function completbooking() {
-    debugger;
+
     var cardNumberRegularExpressionPattern = new RegExp("^[0-9]{16}$");
     var cardExpairedRegularExpressionPattern = new RegExp("^[0-9]{4}$");
     var cardCVCRegularExpressionPattern = new RegExp("^[0-9]{3}$");
@@ -504,7 +472,7 @@ function completbooking() {
     completebooking.serviceDate = $("#txtFromDate").val();
     completebooking.serviceTime = $("#drpselecttime option:selected").text();
     completebooking.servicehourlyRate = _servicehourlyRate;
-    completebooking.serviceHours = (parseFloat($("#ddlselecttime").val()) - (ExtraservicedCheckedcount * 0.5));
+    completebooking.serviceHours = parseFloat($("#ddlselecttime").val());
     completebooking.extraHours = (ExtraservicedCheckedcount * 0.5);
 
     completebooking.extraServicecName = [];
@@ -532,13 +500,13 @@ function completbooking() {
     console.log(ExtraservicedCheckedcount);
     console.log(totaltime);
 
-   
+
 
     if (document.getElementById("spncardnumbervalidation").innerHTML == "" &&
         document.getElementById("spncardexpairedvalidation").innerHTML == "" &&
         document.getElementById("spncardCVCvalidation").innerHTML == "" &&
         document.getElementById("chktermsandcondion").checked) {
-       
+
         $.ajax({
             url: '/Home/Completbooking',
             type: 'post',
@@ -548,15 +516,9 @@ function completbooking() {
             success: function (resp) {
                 console.log(resp)
                 if (resp) {
-                   
                     $("#CompletBooking").modal('show');
                     $("#serviceID").html(resp.ServiceRequestID);
-                   
-
                 }
-               
-
-
             },
             error: function (err) {
                 console.log(err);

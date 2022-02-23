@@ -6,7 +6,7 @@
         sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
     } }
 
-@model LoginAndForgotPassword
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +47,7 @@
       : "navbar-bg-color" )">
 
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="homeindex">
                 <img src="~/img/logo/white-logo-transparent-background.png" alt="" class="desktop-brand-img">
 
             </a>
@@ -82,7 +82,7 @@
                     }
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )"  asp-area=""
+                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area=""
                                asp-controller="home" asp-action="Book_Services">
                                 @if (ViewBag.page == "home")
                                 {
@@ -239,7 +239,7 @@
     <footer>
         <div class="footer-max-width">
             <div class="logo">
-                <a asp-controller="home" asp-action="index">
+                <a asp-controller="home" asp-action="homeindex">
                     <img src="~/img/logo/white-logo-transparent-background.png"
                          alt="">
                 </a>
@@ -292,68 +292,72 @@
     <div class="modal" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
-                <form method="post" asp-controller="Account" asp-action="login">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h3 class="mb-30">Login To Your Account</h3>
-                        <div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"]==null
-                ? "d-none" : "show" )" role="alert">
-                            @TempData["ErrorMessage"]
-                            <button type="submit" class="btn-close" id="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <div class="email">
-                            <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Login.Email" />
-                            <img src="~/img/home/user-profile.png" />
-                        </div>
-                        <div class="password">
-                            <input class="form-control mb-3" type="password" placeholder="Password" asp-for="Login.Password" />
-                            <img src="~/img/home/lock-password.png" />
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" asp-for="Login.IsRemember">
-                            <label class="form-check-label" for="exampleCheck1">Remember me</label>
-                        </div>
-                        <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login" onclick="btncanclemodel()">Login</button>
 
-                        <div class="text-center">
-                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
-                               data-bs-target="#forgotmodel">Forgot Password</a>
-                            <span>Don't have an account? </span> <a asp-controller="Account" asp-action="CreateAccount"
-                                                                    class="text-decoration-none">Create an account</a>
-                        </div>
+                <div class="modal-body">
+                    <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="mb-30">Login To Your Account</h3>
+                    @*<div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"]==null
+                        ? "d-none" : "show" )" role="alert">
+                                @TempData["ErrorMessage"]
+                                <button type="submit" class="btn-close" id="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>*@
 
+                    <div id="dvloginerrormesag"></div>
+
+                    <div class="email mb-3">
+                        <input class="form-control" type="text" placeholder="Email" id="txtloginemail" />
+                        <img src="~/img/home/user-profile.png" />
+                        <span id="spnemailerror" class="text-danger"></span>
                     </div>
-                </form>
+                    <div class="password mb-3">
+                        <input class="form-control" type="password" placeholder="Password" id="txtloginpassword" />
+                        <img src="~/img/home/lock-password.png" />
+                        <span id="spnpassworderror" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="chkIsremember">
+                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                    </div>
+                    <button class="btn btn-primary btn-lg btnlogin mb-2" type="button" title="Login" onclick="btnlogin()">Login</button>
+
+                    <div class="text-center">
+                        <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
+                           data-bs-target="#forgotmodel">Forgot Password</a>
+                        <span>Don't have an account? </span> <a class="text-decoration-none">Create an account</a>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>
 
 
     <!-- Login Modal End-->
-    <!-- forgot Modal End-->
+    @*forgot Modal End*@
     <div class="modal fade" id="forgotmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
-                <form method="post" asp-controller="Account" asp-action="ForgotPassword">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h3 class="mb-30">Forgot Password</h3>
 
-                        <div class="email">
-                            <input class="form-control mb-3" type="text" placeholder="Email" asp-for="Forgot.Email" />
+                <div class="modal-body">
+                    <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="mb-30">Forgot Password</h3>
 
-                        </div>
+                    <div id="dvforgotpassword"></div>
 
-                        <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login">Send</button>
+                    <div class="email mb-3">
+                        <input class="form-control" type="text" id="inpfogEmail" placeholder="Email" />
+                        <span id="spnforgoterror" class="text-danger"></span>
+                    </div>
 
-                        <div class="text-center">
-                            <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
-                               data-bs-target="#loginModal">Login Now</a>
+                    <button class="btn btn-primary btn-lg btnlogin mb-2" type="submit" title="Login" onclick="btnsendforgotrpswdmail()">Send</button>
 
-                        </div>
+                    <div class="text-center">
+                        <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
+                           data-bs-target="#loginModal">Login Now</a>
 
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -363,8 +367,8 @@
     @*Custome JS*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js"></script>
-    <script type="text/javascript" src="~/js/BookService/BookService.js"></script>
-
+   
+    <script src="~/js/Login.js"></script>
     @*Bootsrap JS*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
