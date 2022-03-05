@@ -36,6 +36,10 @@ namespace Helperland
             services.AddScoped<IServiceRequestAddressRepository, ServiceRequestAddressRepository>();
             services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

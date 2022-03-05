@@ -23,10 +23,24 @@ a{
 /* Common Style Start */
 
 
-
+.dt-buttons {
+    display: inline-block;
+    position: absolute;
+    /* -webkit-transform-origin-y: top; */
+    top: -44px;
+    right: 0px;
+}
+.buttons-excel {
+   
+    width: 70px;
+    border-radius: 17px;
+    background-color: #146371;
+    color: #fff;
+}
 .max-width {
     max-width: 1300px;
     margin: auto;
+    /*padding: 0px 46px;*/
     padding: 0px 46px;
 }
 
@@ -239,7 +253,9 @@ section {
 .p-l-5 {
     padding-left: 5px;
 }
-
+.pl-25{
+    padding-left:25px;
+}
 .p-lr-20 {
     padding: 0 20px;
 }
@@ -348,7 +364,7 @@ section .headding-star {
 
 /* databale csss start */
 #example_wrapper {
-    width: 845px !important;
+    width: 956px !important;
     border: 1px solid #E1E1E1;
     margin-left: 30px;
 }
@@ -516,25 +532,54 @@ table.dataTable.display tbody tr {
 .dataTables_wrapper .dataTables_paginate span .paginate_button {
     top: 0px;
 }
-
+table.dataTable thead th {
+    border-bottom: 1px solid #e1e1e1 !important;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid #e1e1e1 !important;
+}
 .bottom .dataTables_length {
     margin-left: 15px;
 }
-/* .navbar-toggler-side{
+.tdclick{
+    position:relative;
+}
+.startid {
+    background: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: #646464 !important;
+}
+.history-table tr th:nth-child(3){
+    width:300px !important;
+}
+.history-table tr th:nth-child(4),
+.history-table tr th:nth-child(6) {
+    width: 100px !important;
+}
+    /* .navbar-toggler-side{
         background-image: url(../img/service-provider/angle-right-solid.svg)!important;
         } */
-/* table.dataTable thead th.sorting_asc,.sorting-img{
+    /* table.dataTable thead th.sorting_asc,.sorting-img{
         background-image: ;
     } */
-/* background-image: url(../images/sort_asc.png) !important; */
-
-/* databale csss start */
-
-
-.newsletter-section {
+    /* background-image: url(../images/sort_asc.png) !important; */
+    /* databale csss start */
+    .newsletter-section {
     padding-top: 0px;
 }
 
+#tbladdresses tbody tr {
+     border-bottom: 2px solid #e1e1e1 !important;
+    
+}
+#tbladdresses tbody tr td{
+    padding:15px !important;
+}
 .bg-btn-29626d {
     background-color: #29626d;
 }
@@ -948,6 +993,7 @@ footer {
     .modal-content .modal-body {
         padding: 25px;
     }
+        
 
         .modal-content .modal-body input[type=text],
         .modal-content .modal-body input[type=password] {
@@ -955,7 +1001,9 @@ footer {
         }
 
             .modal-content .modal-body input[type=text]:focus,
-            .modal-content .modal-body input[type=password]:focus {
+            .modal-content .modal-body input[type=password]:focus,
+            .modal-content .modal-body textarea:focus,
+            .newaddressmodel select:focus {
                 border-color: #1d798c;
                 outline: 0;
                 box-shadow: none;
@@ -1817,7 +1865,7 @@ footer {
 .upcomingservice,
 .customer-service-provider,
 .admin-body {
-    display: flex;
+   /* display: flex;*/
     flex-direction: row !important;
     overflow-x: auto;
 }
@@ -1872,7 +1920,7 @@ footer {
 .customer-service-provider tr {
     background-color: #f9f9f9;
 }
-
+.customer-dashboard 
 .upcomingservice .upcoming-service-table {
     /* margin-left: 30px; */
     width: 843px !important;
@@ -1916,18 +1964,34 @@ footer {
         color: #646464;
     }
 
-    .customer-service-provider .customer-table .sub-headding button {
+    .customer-service-provider .customer-table .sub-headding .Export {
         width: 70px;
         border-radius: 17px;
         background-color: #146371;
         color: #fff;
     }
+        .customer-service-provider .customer-table .sub-headding .Export .extrabtn {
+            padding: 5px;
+            text-decoration: none !important;
+            color: white;
+        }
 
-.customer-service-provider .rate {
-    background: #6DA9B5 0% 0% no-repeat padding-box !important;
-    border-radius: 17px;
-    color: #fff;
-}
+        .customer-service-provider .rate {
+          /*  background: #6DA9B5 0% 0% no-repeat padding-box !important;*/
+            background:#1D7A8C !important;
+            border-radius: 17px;
+            color: #fff;
+        }
+            .customer-service-provider .rate:focus {
+                border-color: #1d798c;
+                
+                outline: 0;
+                box-shadow: none;
+            }
+            .customer-service-provider .btnratedisable {
+                cursor: not-allowed !important;
+                pointer-events: visible !important;
+            }
 
 .customer-service-provider .status-Completed {
     width: 90px;
@@ -1972,6 +2036,10 @@ footer {
 
 .customer-table .media-body {
     margin-left: 10px;
+    text-align: left;
+  
+    display: flex;
+    flex-direction: column;
 }
 
     .customer-table .media-body .fa-star {
@@ -1986,19 +2054,40 @@ footer {
     height: 34px;
     padding: 0 5px;
 }
-/* customrt service provider css end */
-
-
-
-
-
-nav .navbar-nav-icone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
+.btnReschedule {
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px 10px 6px;
+    margin: 2px 0;
+    background: #1d7a8c;
+    border: none !important;
+    color: #fff !important;
+    border-radius:50px;
 }
+.btncancel {
+    background: #ff6b6b;
+    color: #fff !important;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px 10px 6px;
+    margin: 2px 0;
+    border-radius:50px;
+}
+
+.customer-dashboard tr th:nth-child(1) {
+    width: 100px !important;
+}
+    .customer-dashboard tr th:nth-child(2){
+        width:140px !important;
+    }
+    /* customrt service provider css end */
+    nav .navbar-nav-icone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+    }
 
     nav .navbar-nav-icone li {
         list-style: none;
@@ -2957,6 +3046,183 @@ input[type="date"] {
     line-height: 26px;
     font-weight: 400;
 }
+.mysettings li {
+    text-align: center;
+}
+
+    .mysettings li .nav-link {
+        margin: auto;
+        background-color: none;
+        width: 100%;
+        border-bottom: 4px solid #e1e1e1;
+        border-radius: 0px;
+        line-height: 20px;
+        color: #646464 !important;
+    }
+
+    .mysettings li .active {
+        background-color: transparent !important;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #1d798c !important;
+        border-bottom: 4px solid #1d798c;
+    }
+
+.dvmysettings .drpbirth .date {
+    width: 90px;
+}
+
+.dvmysettings .drpbirth .month {
+    width: 170px;
+}
+
+.dvmysettings .drpbirth .year {
+    width: 100px;
+}
+
+.dvmysettings input,
+.dvmysettings select,
+.input-group-text {
+    height: 46px;
+}
+
+    .dvmysettings input:focus,
+    .dvmysettings select:focus {
+        border-color: #1d798c;
+        outline: 0;
+        box-shadow: none;
+    }
+
+.dvmysettings .tab-1 label {
+    font-weight: 700;
+    color: #646464;
+}
+
+.m-tb-15 {
+    margin: 15px 0px !important;
+}
+
+.profile tr th:nth-of-type(1) {
+    width: 100%;
+}
+
+.profile tr td:nth-of-type(1) {
+    text-align: left;
+}
+
+.profile .action {
+    padding: 15px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+    .profile .action a {
+        padding: 6px;
+    }
+
+
+.mysetting-address {
+    border-bottom: none !important;
+    border: 1px solid #e5e5e5 !important;
+}
+
+    .mysetting-address thead tr th {
+        background: #f3f3f3;
+        border-bottom: 2px solid #e1e1e1 !important;
+    }
+
+.btncutom1 {
+    background: #1d7a8c;
+    border: none !important;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff !important;
+    transition: all .3s ease;
+    padding: 11px 25px;
+    border-radius: 50px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.tab-3 label {
+    font-weight: 700;
+    color: #646464;
+}
+
+.settings-newaddress .newAddress {
+    border: 1px solid transparent;
+    background: white;
+}
+
+.newaddressmodel .modal-header {
+    border-bottom: none !important;
+}
+
+    .newaddressmodel .modal-header h5 {
+        font-size: 24px;
+        line-height: 24px;
+        font-weight: 700;
+        color: #323232;
+    }
+
+.newaddressmodel .modal-footer {
+    border-top: none !important;
+}
+
+.newaddressmodel .modal-content {
+    min-width: 600px;
+}
+
+.newaddressmodel .newAddress label {
+    font-weight: 700;
+    color: #646464;
+}
+.mysettngsimg {
+    height: 26px;
+    width: 24px;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: 0 0;
+    margin:auto;
+}
+.mysettings-details-img {
+    background-image: url(../img/customer-service/my-account-details.png);
+}
+.mysettings-address-img {
+    background-image: url(../img/customer-service/my-account-address.png);
+}
+.mysettings-password-img {
+    background-image: url(../img/customer-service/my-account-password.png);
+}
+.mysettngsimg:hover{
+    background-position:0 -26px;
+}
+
+#settingsuseraddress .form-check-input{
+    display: none !important;
+}
+
+#modelserviceprovidername,
+#modelserviceprovidernamerated {
+    font-size: 25px;
+}
+.modal-body .fs1{
+    font-size:20px;
+}
+.modal-header .dvProimgContainer {
+    border-radius: 500px;
+    border: 1px solid #b0b0b0;
+    height: 46px;
+    width: 46px;
+}
+.modal-body label{
+    font-weight:700;
+    display:block;
+}
+.modal-body label span{
+    font-weight: normal;
+}
 /* book services css end */
 footer .detaile {
     border-top: 2px solid #424242;
@@ -3007,4 +3273,28 @@ footer .footer-max-width .nav li a:hover {
 .sidebar-collapse-ul .drop-3.bg-gray {
     background-color: #e1e1e1 !important;
     border-radius: 0px !important;
+}
+
+#rateSPModal .modal-dialog,
+#trmodel .modal-dialog{
+    max-width:100%;
+}
+#rateSPModal .modal-content,
+#trmodel .modal-content {
+    max-width: 750px !important;
+}
+
+.modelprice {
+    font-size: 26px;
+    line-height: 26px;
+    color: #1d7a8c;
+    font-weight: 700 !important;
+    display: inline-block;
+    margin-left: 5px;
+    float:right;
+}
+
+.newaddressmodel select{
+    height:46px;
+
 }

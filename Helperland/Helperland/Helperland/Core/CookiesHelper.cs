@@ -39,7 +39,7 @@ namespace Helperland.Core
 
                     if (_user.UserTypeId == (int)UserTypeEnum.Customer)
                     {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "servicehistory", controller = "customer" });
+                        filterContext.Result = new RedirectToRouteResult(new { action = "Dashboard", controller = "customer" });
                         return;
                     }
 

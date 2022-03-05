@@ -316,6 +316,33 @@
     display: none;
 }
 
+
+/* my settings res[opnsive vss] */
+/* .dvmysettings .settings-details{
+    content: '';
+    background-image: url(..//img/customer-service/my-account-details.png);
+    background-repeat: no-repeat ;
+} */
+.dvmysettings .mysettings-details-img{
+    display: block !important;
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+
+}
+.mysettings li{
+    min-width: 0px;
+}
+
+.dvmysettings .settings-details-name{
+    display: none;
+    
+}
+.dvmysettings .active .mysettings-details-img img{
+    /* margin-top: -26px; */
+    background-position: 0 -26px;
+}
+
 }
 @media (max-width: 768px) {
 
@@ -390,7 +417,10 @@
         justify-content: space-around;
     }
     /* css for the service provider css */
-
+/* my settings responsive */
+.newaddressmodel .modal-content{
+    min-width: 0px !important;
+}
    
 }
 
@@ -505,5 +535,13 @@
 .book-service-body .time{
     padding-top: 15px !important;
 } 
+.drpbirth {
+    flex-direction: column;
+
+}
+.drpbirth select{
+    width: 100% !important;
+    margin: 5px;
+}
 
 }

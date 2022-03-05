@@ -17,14 +17,16 @@ namespace Helperland.ViewModels
         public string HouseNumber { get; set; }
         [JsonPropertyName("City")]
         public string City { get; set; }
-        [JsonPropertyName("inpcurrentpostalcode")]
+        [JsonPropertyName("PostalCode")]
         public string PostalCode { get; set; }
         
-       
-        [JsonPropertyName("PhoneNumber")]
+        [JsonPropertyName("MobileNumber")]
         public string MobileNumber { get; set; }
 
         [JsonPropertyName("userid")]
         public string UserID { get; set; }
+
+        [JsonPropertyName("addressid")]
+        public string Addressid { get; set; }
     }
 }

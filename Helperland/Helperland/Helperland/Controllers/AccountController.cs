@@ -67,7 +67,6 @@ namespace Helperland.Controllers
             return View();
         }
 
-
         public IActionResult BecomeAPro()
         {
             ViewBag.page = "home";

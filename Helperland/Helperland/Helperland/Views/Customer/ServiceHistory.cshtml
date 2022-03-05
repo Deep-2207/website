@@ -1,347 +1,84 @@
 ﻿@{
     Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "ServiceHistory";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+    var compeleted = (int)ServiceStatusEnum.completed;
+    var cancelled = (int)ServiceStatusEnum.Cancel;
 }
 
 <div class="customer-table ">
     <div class="sub-headding p-b-10">
         <h2>Service History</h2>
-        <button class="Export">Export</button>
+        @*<button class="Export">Export</button>*@
     </div>
-
-    <table id="example" class="display customer-table" style="width:100%">
+    <input type="hidden" id="hiddenuserid" value="@sessionUser.UserID" />
+    <input type="hidden" id="hiddenServiceRequestId" value="" />
+    <input type="hidden" id="hiddenserviceproviderid" value="" />
+    <table id="example" class="display customer-table history-table" style="width:100%">
         <thead>
             <tr>
+                <th>Service ID<img alt="" class="sorting-img"></th>
                 <th>Service Details<img alt="" class="sorting-img"></th>
                 <th>Service Provider <img alt="" class="sorting-img"></th>
                 <th class="cus-dait">Payment <img alt="" class="sorting-img"></th>
                 <th>Status <img alt="" class="sorting-img"></th>
                 <th>Rate SP <img alt="" class="sorting-img"></th>
+
             </tr>
         </thead>
         <tbody>
-            <tr>
 
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+            @*<tr>
+                    <td>1</td>
+
+                    <td>
+                        <img src="~/img/customer-service/calendar.png" alt="">
+                        <span class="bold">20/04/2018</span>
+                        12:00 - 18:00
+                    </td>
+                    <td>
+                        <div class="media d-flex justify-content-center ">
+                            <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                            <div class="media-body">
+                                Lyum Watsone <br>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <!-- <td><label class="btn status-Completed" value="">Completed</label></td> -->
-                <td><label class="btn status-Completed" value="">Completed</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
+                    </td>
+                    <td class="price">€63</td>
+                    <td><label class="btn status-Completed" value="">Completed</label></td>
 
-            <tr>
+                    <td><button class="btn rate" value="">Rate SP</button></td>
+                </tr>
 
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <img src="~/img/customer-service/calendar.png" alt="">
+                        <span class="bold">20/04/2018</span>
+                        12:00 - 18:00
+                    </td>
+                    <td>
+                        <div class="media d-flex justify-content-center ">
+                            <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                            <div class="media-body">
+                                Lyum Watsone <br>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <!-- <td><label class="btn status-cancelled" value="">Cancelled</label></td> -->
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
+                    </td>
+                    <td class="price">€63</td>
+                    <td><label class="btn status-cancelled" value="">Cancelled</label></td>
 
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
+                    <td><button class="btn rate" value="">Rate SP</button></td>
+                </tr>*@
 
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-Completed" value="">Completed</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-Completed" value="">Completed</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-Completed" value="">Completed</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
-            <tr>
-
-                <td>
-                    <img src="~/img/customer-service/calendar.png" alt="">
-                    <span class="bold">20/04/2018</span>
-                    12:00 - 18:00
-                </td>
-                <td>
-                    <div class="media d-flex justify-content-center ">
-                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
-                        <div class="media-body">
-                            Lyum Watsone <br>
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star fa-unstar"></i>4
-                        </div>
-                    </div>
-                </td>
-                <td class="price">€63</td>
-                <td><label class="btn status-cancelled" value="">Cancelled</label></td>
-                <td><button class="btn rate" value="">Rate SP</button></td>
-            </tr>
 
 
         </tbody>
@@ -349,8 +86,90 @@
     </table>
 </div>
 
+
+<div class="modal fade" id="rateSPModal" aria-hidden="true" aria-labelledby="rateSPModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><img src="~/img/customer-service/forma-1-copy-19.png"></div>
+                <div>
+                    <label class="fs1 fw-bold" id="modelserviceprovidername"></label>
+                    @*<div>
+                            <span id="rateSPfinal" class="stars-container stars-0">★★★★★</span>
+                            <label class="ps-1" id="lblrateSP">0</label>
+                        </div>*@
+                    <div id="spRating"></div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" value="" id="hiddenserviceproviderid" />
+                <label class="fs1 fw-bold mb-2">Rate your service provider</label>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class=""><label class="mt-2">On time arrival</label></div>
+                    <input id="ontimearrival" class="stardisplay d-none" value="" type="text" title="">
+
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="col-md-4 d-inline-block"><label class="mt-2">Friendly</label></div>
+                    <input id="Friendly" value="" type="text" title="" class="stardisplay d-none">
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="col-md-4"><label class="mt-2">Quality of service</label></div>
+                    <input id="Qualityofservice" value="" type="text" title="" class="stardisplay d-none">
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><label class="mt-2">Feedback on service provider</label></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <textarea class="form-control" id="txtFeedbackToSP"></textarea>
+                    </div>
+                </div>
+                <button class="btnExport mt-2 fw-bold py-2 px-3 btncontinue" id="btnsubmitrating" onclick="submitrating()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rateedspmodel" aria-hidden="true" aria-labelledby="rateSPModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><img src="~/img/customer-service/forma-1-copy-19.png"></div>
+                <div>
+                    <label class="fs1 fw-bold" id="modelserviceprovidernamerated"></label>
+                    @*<div>
+                            <span id="rateSPfinal" class="stars-container stars-0">★★★★★</span>
+                            <label class="ps-1" id="lblrateSP">0</label>
+                        </div>*@
+                    <div id="spRated"></div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                You are already rated this service
+
+                <button class="btnExport mt-2 fw-bold py-2 px-3 btncontinue" id="moelratedok">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section UserLayoutSection{
+    <script src="~/js/Customer/customer.js"></script>
+
     <script>
+        function AppendZero(input) {
+            if (input.length == 1) {
+                return '0' + input;
+            }
+            return input;
+        }
+          /*  $("#rateSPModal .caption-badge").html(0);*/
+
         $(document).ready(function () {
             $('#example').DataTable({
                 "dom": '<"top"i>rt<"bottom"flp><"clear">',
@@ -367,15 +186,348 @@
                 searching: false,
                 info: true,
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 }
+                    { "orderable": false, "targets": 5 }
                 ],
                 "oLanguage": {
                     "sInfo": "Total Records: _TOTAL_"
                 },
-                "dom": '<"top">rt<"bottom"lip><"clear">',
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
                 responsive: true,
-                "order": []
+                "order": [],
+                buttons: {
+                    dom: {
+                        button: {
+                            tag: 'button',
+                            className: ''
+                        }
+                    },
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export',
+                        className: "Export",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        },
+                    }]
+                }
             });
         });
+
+            $(window).on('load', function () {
+
+
+           /* console.log($("#hiddenuserid").val());*/
+
+            var userid = $("#hiddenuserid").val();
+
+            $.ajax({
+                type: 'Post',
+                url: '/customer/loadtable',
+                data: { "userid": userid },
+                success: function (respo) {
+
+                    @*console.log(respo);
+
+                    console.log(@cancelled);
+                    console.log(@compeleted);*@
+
+                    respo.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        /* console.log(element.servicerequestid);*/
+                        //  .append($('<tr>').append($('<td>').append(element.servicerequestid)));
+                        /*console.log(element);*/
+                        date = new Date(element.serviceStartDate);
+                        var d2 = new Date(element.serviceStartDate);
+                        /*console.log(element.servicehours);*/
+                        d2.setMinutes(d2.getMinutes() + (element.serviceHours * 60));
+                        var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
+                        var inputtagdate =  AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
+
+
+                        var totalrating = 0;
+                        var sprating = 0;
+                        var count = 0;
+                        //foreach(rating r in element.ratings)
+                        //{
+                        //    totalrating = totalrating + r.ratings;
+                        //    count++;
+                        //}
+
+                        element.ratings.forEach(function (e) {
+                        /*   console.log("rating of" + e);*/
+                            totalrating = totalrating + e.ratings;
+                            count++;
+
+                        });
+
+                        if (count > 0) {
+                            sprating = Math.round((totalrating / count) * 10) / 10;
+                        }
+                       // console.log(sprating);
+                        var txtname;
+                        var txtcalss;
+                        var ratinginput;
+                        var btnrate;
+
+                        if (element.status == @cancelled) {
+                            txtname = 'Cancel';
+                            txtcalss = 'status-cancelled';
+                            ratinginput = '';
+                            btnrate = 'disabled btnratedisable' ;
+                        }
+                        else {
+                            txtname = 'Completed';
+                            txtcalss = 'status-Completed';
+                            ratinginput = '<div class="d-flex"><img class="align-self-center mr-3" src="..//img/customer-service/forma-1-copy-19.png"> <div class="media-body"> ' + element.serviceProvider.firstName + " " + element.serviceProvider.lastName + '<input required class= "ratingspdashboard"  value = "' + sprating + '" type = "text" title = "" >  </div></div>';
+                            btnrate = '';
+                        }
+
+
+
+
+                        t.row.add([
+                            '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceRequestId +',1)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceRequestId + '</a></span>',
+
+                            '<img src=' + "..//img/customer-service/calendar.png" + ' alt=""><span class="bold">' + inputtagdate + '</span> <br>' + temptime,
+                            ratinginput,
+                            '<span class="price"> ' + element.totalCost + '€' + '</span>',
+                            '<label class= "btn ' + txtcalss + '" value = "" > ' + txtname + '</label> ' + '</td >',
+                            '<button class="btn rate ' + btnrate +' "  value="" onclick="oprnratingmodel(' + element.serviceRequestId + ', ' + sprating + ', ' + element.serviceProviderId + ')" >Rate SP</button></td>',
+
+                            ]).draw(false);
+
+
+                        $(".ratingspdashboard").rating({
+                            min: 0,
+                            max: 5,
+                            step: 0.1,
+                            size: "xs",
+                            stars: "5",
+                            showClear: false,
+                            readonly: true,
+                            starCaptions: function (val) {
+                                return val;
+                            }
+                        });
+
+                        $(".overallstardisplay").rating({
+                            min: 0,
+                            max: 5,
+                            step: 0.1,
+                            size: "xs",
+                            stars: "5",
+                            showClear: false,
+                            readonly: true,
+                            starCaptions: function (val) {
+                                return val;
+                            }
+                        });
+
+
+                        txtname = "";
+                        txtcalss = "";
+                        totalrating = 0;
+                        sprating = 0;
+                        count = 0;
+                        ratinginput = '';
+
+                        @*var _html = '';
+                        _html += '<tr>'
+                        _html += '<td>' + element.serviceRequestId + '</td>';
+                        _html += '<td> <img src=' + "~/img/delete-icon.png"  +'alt=""><span class="bold">' + inputtagdate + '</span>'
+                            + temptime + '</td>';
+                        _html += '<td>' + '<input required id="" class="ratingspdashboard"  value="' + sprating + '" type="text" title="">' + '</td>';
+                        _html += '<td class="price">' + element.totalCost + '€' +  '</td>';
+                        if (element.status == @cancelled) {
+                            _html += '<td ' + '<label class="btn status-cancelled" value="">Cancel</label>' + '</td>';
+                        }
+                        else {
+
+                        }*@
+
+
+                       // $("#example").find('tbody').append(_html);
+
+
+                    });
+
+
+
+
+
+                }
+            });
+
+
+
+
+
+            $('.rb-rating').rating({
+                'showCaption': true,
+                'stars': '3',
+                'min': '0',
+                'max': '3',
+                'step': '1',
+                'size': 'xs',
+                'starCaptions': { 0: 'status:nix', 1: 'status:wackelt', 2: 'status:geht', 3: 'status:laeuft' }
+            });
+                $(".stardisplay").rating({
+                min: 0,
+                max: 5,
+                step: 0.1,
+                size: "xm",
+                stars: "5",
+                showClear: false,
+               /* readonly: true,*/
+                starCaptions: function (val) {
+                    return val;
+                },
+
+            });
+        });
+
+
+            function oprnratingmodel(servicerequestid, sptotalrating, spid) {
+
+
+                var servicerequestid = servicerequestid;
+                var userid = $("#hiddenuserid").val();
+                var serviceontimearrival = $("#ontimearrival").val();
+                var serviceFriendly = $("#Friendly").val();
+                var serviceQualityofservice = $("#Qualityofservice").val();
+
+                console.log(sptotalrating);
+                $("#totalratingofsp").val(sptotalrating.toString());
+                console.log($("#totalratingofsp").val());
+                $("#spRating").html("<input id='totalratingofsp' class='spRating' type='text' value='" + sptotalrating + "' hidden>")
+                $("#spRated").html("<input id='totalratedofsp' class='spRating' type='text' value='" + sptotalrating + "' hidden>");
+                $(".spRating").rating({
+                    min: 0,
+                    max: 5,
+                    step: 0.1,
+                    size: "xs",
+                    stars: "5",
+                    showClear: false,
+                    readonly: true,
+                    starCaptions: function (val) {
+                        return val;
+                    }
+                });
+                $("#hiddenserviceproviderid").val(spid);
+                $("#hiddenServiceRequestId").val(servicerequestid);
+               // console.log(spid + "seviceprovider");
+
+                //console.log(servicerequestid);
+                //console.log(serviceontimearrival);
+                //console.log(serviceFriendly);
+                //console.log(serviceQualityofservice);
+                $.ajax({
+                    type: 'Post',
+                    url: '/customer/ratesp',
+                    data: {
+                        "servicerequestid": servicerequestid,
+                        "userid": userid,
+                        "serviceontimearrival": serviceontimearrival,
+                        "serviceFriendly": serviceFriendly,
+                        "serviceQualityofservice": serviceQualityofservice
+                    },
+                    success: function (respo) {
+
+                     /* console.log(respo);*/
+
+                        if (respo.result.ratingId == 0 && respo.status != "error") {
+                            debugger;
+
+
+                            $("#modelserviceprovidername").html(respo.result.serviceProvider.firstName + respo.result.serviceProvider.lastName);
+
+
+
+                          /*  console.log(sptotalrating);*/
+
+                            $('.rb-rating').rating({
+                                'showCaption': true,
+                                'stars': '3',
+                                'min': '0',
+                                'max': '3',
+                                'step': '1',
+                                'size': 'xs',
+                                'starCaptions': { 0: 'status:nix', 1: 'status:wackelt', 2: 'status:geht', 3: 'status:laeuft' }
+                            });
+                            $(".overallstardisplay").rating({
+                                min: 0,
+                                max: 5,
+                                step: 0.1,
+                                size: "xs",
+                                stars: "5",
+                                showClear: false,
+                                readonly: true,
+                                starCaptions: function (val) {
+                                    return val;
+                                }
+                            });
+                            $('#rateSPModal').modal('show');
+                        }
+                        else if (respo.status != "error"){
+                            $("#modelserviceprovidernamerated").html(respo.result.serviceProvider.firstName + respo.result.serviceProvider.lastName);
+                            $("#rateedspmodel").modal('show');
+                        }
+
+                    }
+                });
+            }
+
+            function submitrating() {
+
+                var one = $("#ontimearrival").val();
+                var two = $("#Friendly").val();
+                var three = $("#Qualityofservice").val();
+
+                var totalrating = Math.round((parseFloat(one) + parseFloat(two) + parseFloat(three)) * 10 / 3) / 10
+
+
+                var userratings = {
+                    serviceRequestId: $("#hiddenServiceRequestId").val(),
+                    ratingTo : $("#hiddenserviceproviderid").val(),
+                     ratingFrom : $("#hiddenuserid").val(),
+                    onTimeArrival: $("#ontimearrival").val(),
+                    friendly: $("#Friendly").val(),
+                    qualityOfService: $("#Qualityofservice").val(),
+                    comments: $("#txtFeedbackToSP").val(),
+                    ratings: totalrating
+
+                };
+
+                $.ajax({
+                    url: '/customer/submitratings',
+                    type: 'post',
+                    data: userratings,
+                    datatype: "json",
+                    cache: false,
+
+                    success: function (resp) {
+
+                        if (resp) {
+                            $('#rateSPModal').modal('hide');
+                            location.reload();
+                        }
+
+                    }
+                });
+
+
+        }
+        $("#moelratedok").click(function () {
+            $("#rateedspmodel").modal("hide");
+        });
     </script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+
 }

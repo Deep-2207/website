@@ -17,9 +17,9 @@ namespace Helperland.ViewModels
         public string ZipCode { get; set; }
 
       
-        [JsonPropertyName("serviceDate")]
+        [JsonPropertyName("serviceStartDate")]
         public string ServiceStartDate { get; set; }
-        [JsonPropertyName("serviceTime")]
+        [JsonPropertyName("serviceStarttime")]
         public string ServiceStarttime { get; set; }
 
         [JsonPropertyName("servicehourlyRate")]
@@ -31,7 +31,7 @@ namespace Helperland.ViewModels
         [JsonPropertyName("extraHours")]
         public Decimal ExtraHours { get; set; }
 
-        [JsonPropertyName("extraServicecName")]
+        [JsonPropertyName("extraservicesName")]
         public string[] ExtraservicesName { get; set; }
 
 
@@ -41,7 +41,7 @@ namespace Helperland.ViewModels
         [JsonPropertyName("totalcost")]
         public Decimal TotalCost { get; set; }
 
-        [JsonPropertyName("comment")]
+        [JsonPropertyName("comments")]
         public string Comments { get; set; }
 
        
@@ -64,7 +64,7 @@ namespace Helperland.ViewModels
         //[JsonPropertyName("StreetName")]
         //public int Distance { get; set; }
 
-        [JsonPropertyName("addressid")]
+        [JsonPropertyName("userAddressID")]
         public string UserAddressID { get; set; }
 
         [JsonPropertyName("paymentdone")]

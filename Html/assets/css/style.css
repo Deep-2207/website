@@ -128,7 +128,7 @@ section .headding{
 }
 .mb-15
 {
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
 }
 .mb-10{
     margin-bottom: 10px !important;
@@ -2349,6 +2349,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     outline: 0;
     box-shadow: none;
 }
+
+
+/* my settings css start */
+
+
+
+/* my settings css end */
+
 /* book services css end */
 
 footer .detaile{

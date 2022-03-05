@@ -14,6 +14,7 @@ function checkAvailability() {
         document.getElementById('spn_error_zipcode').innerHTML = "Enter Postal Code";
     }
     else if (zipcode.length == 6) {
+        $("#loader").addClass("is-active");
         $.ajax({
             type: 'Post',
             url: '/home/CheckPostalCode',
@@ -21,7 +22,7 @@ function checkAvailability() {
             success: function (respo) {
                 if (respo) {
 
-
+                    $("#loader").removeClass("is-active");
                     document.getElementById('pills-home-tab').classList.add("fill");
                     document.getElementById('pills-schedule-tab').classList.remove("disabled");
                     document.getElementById('pills-paln').classList.add("show");
@@ -108,11 +109,12 @@ function btnNewAddress() {
     /*$('#inpcurrentpostalcode').html($("#txtzipcode").val());*/
     $('#inpcurrentpostalcode').val($("#txtzipcode").val());
     /* alert($('#txtzipcode').val());*/
-
+    $("#loader").addClass("is-active");
     $.ajax({
         type: "POST",
         url: "/home/FillCityDropdown",
         success: function (res) {
+            $("#loader").removeClass("is-active");
             $.each(res.d, function (data, value) {
 
                 $("#ddlNationality").append($("<option></option>").val(value.CountryId).html(value.CountryName));
@@ -124,12 +126,37 @@ function btnNewAddress() {
 
 function getDate() {
     var today = new Date();
-    nextday = today.getDate() + 1;
-    document.getElementById("txtFromDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)) + '-' + (nextday);
-
-    $("#ppytime_time").html((nextday) + '-' + ('0' + (today.getMonth() + 1)) + '-' + today.getFullYear() + $("#drpselecttime option:selected").text());
-    $("#txtFromDate").attr("min", (today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)) + '-' + (nextday)));
+    today.setDate(today.getDate() + 1)
+    // nextday = today.getDate() + 1;
+    //document.getElementById("txtFromDate").value = today.getFullYear() + '-' + AppendZero(today.getMonth() + 1) + '-' + AppendZero(today.getDate());
+    //var nowdate = today.getFullYear() + '-' + AppendZero(today.getMonth() + 1).toString() + '-' + AppendZero(today.getDate());
+    var nextDate = today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString());
+    console.log(nextDate);
+    document.getElementById("txtFromDate").value = nextDate;
+    //  console.log(document.getElementById("txtFromDate").value);
+    $("#ppytime_time").html(AppendZero(today.getDate().toString()) + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" +  today.getFullYear().toString() + " " + $("#drpselecttime option:selected").text());
+    $("#txtFromDate").attr("min", (today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString())));
 }
+
+function setdate(inputDate) {
+    const date = new Date(inputDate);
+    document.getElementById("datechange").value = AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + AppendZero(date.getFullYear().toString());
+    return AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + AppendZero(date.getFullYear().toString());
+}
+function AppendZero(input) {
+    if (input.length == 1) {
+        return '0' + input;
+    }
+    return input;
+}
+
+
+
+
+
+
+
+
 
 $("#txtFromDate").change(function () {
     chnagebasictimeanddate();
@@ -211,7 +238,7 @@ function chnageDate() {
 function chnagebasictimeanddate() {
     var chnagedate = new Date($("#txtFromDate").val());
 
-    $("#ppytime_time").html((chnagedate.getDate()) + '-' + ('0' + (chnagedate.getMonth() + 1)) + '-' + chnagedate.getFullYear() + $("#drpselecttime option:selected").text())
+    $("#ppytime_time").html(AppendZero(chnagedate.getDate().toString()) + '-' + AppendZero((chnagedate.getMonth() + 1).toString()) + '-' + chnagedate.getFullYear() + " " + $("#drpselecttime option:selected").text())
 
 
 
@@ -292,7 +319,6 @@ function checktotalExtraservicechecked() {
 }
 
 function checkingtime() {
-
     var time1 = $("#drpselecttime").val();
     var time2 = $("#ddlselecttime").val();
 
@@ -310,6 +336,7 @@ function checkingtime() {
 
 
 function SaveNewAddress() {
+    debugger;
     if (document.getElementById("Street_name").value.length > 0) {
         document.getElementById("spnstreetnameerror").innerHTML = "";
         if (document.getElementById("House_number").value.length > 0) {
@@ -322,16 +349,16 @@ function SaveNewAddress() {
                 }
                 else {
                     document.getElementById("spnmobilenumbererror").innerHTML = "";
-
+                    debugger;
                     var newaddress = {}
                     newaddress.userid = $("#userid").val();
                     newaddress.StreetName = $("#Street_name").val()
                     newaddress.Housenumber = $("#House_number").val();
                     newaddress.City = $("#City").val();
-                    newaddress.inpcurrentpostalcode = $("#inpcurrentpostalcode").val();
-                    newaddress.PhoneNumber = $("#Phone_Number").val();
-                    console.log(newaddress);
-
+                    newaddress.PostalCode = $("#inpcurrentpostalcode").val();
+                    newaddress.MobileNumber = $("#Phone_Number").val();
+                    console.log(newaddress + "new address");
+                    $("#loader").addClass("is-active");
                     $.ajax({
                         url: '/Home/AddCustomerUserAddress',
                         type: 'post',
@@ -339,7 +366,7 @@ function SaveNewAddress() {
                         contentType: 'application/json',
                         data: JSON.stringify(newaddress),
                         success: function (resp) {
-
+                            $("#loader").removeClass("is-active");
                             if (resp) {
                                 getalladdressbyuserID(newaddress.userid);
                                 clearnewaddressdetail();
@@ -382,12 +409,13 @@ function SaveNewAddress() {
 
 function FillCityDropdown() {
     var postalcode = $('#txtzipcode').val();
-
+    $("#loader").addClass("is-active");
     $.ajax({
         type: "POST",
         url: '/home/FillCityDropdown',
         data: { "postalcode": postalcode },
         success: function (respo) {
+            $("#loader").removeClass("is-active");
             $("#City").empty();
             respo.forEach((city) => $('#City').append($("<option></option>").val(city.cityName).html(city.cityName)));
         }
@@ -469,28 +497,29 @@ function completbooking() {
     completebooking.zipcode = $("#txtzipcode").val();
 
     //tab-2
-    completebooking.serviceDate = $("#txtFromDate").val();
-    completebooking.serviceTime = $("#drpselecttime option:selected").text();
+    completebooking.serviceStartDate = $("#txtFromDate").val();
+    completebooking.serviceStarttime = $("#drpselecttime option:selected").text();
     completebooking.servicehourlyRate = _servicehourlyRate;
     completebooking.serviceHours = parseFloat($("#ddlselecttime").val());
     completebooking.extraHours = (ExtraservicedCheckedcount * 0.5);
-
-    completebooking.extraServicecName = [];
+   
+    completebooking.extraservicesName = [];
     $('input[name="Excheckbox"]').each(function () {
         if (this.checked) {
-            completebooking.extraServicecName.push(this.value);
+            completebooking.extraservicesName.push(this.value);
         }
     });
     //  console.log(totaltime);
     totalamount = (parseFloat($("#ddlselecttime option:selected").val()) * _servicehourlyRate);
     completebooking.subtotal = totalamount;
     completebooking.totalcost = totalamount;
-    completebooking.comment = $("#txtcomment").val();
+    completebooking.comments = $("#txtcomment").val();
     completebooking.haspets = $("#chkHasPet").prop('checked');
 
 
+
     //tab-3
-    completebooking.addressid = $('input[name=UserAddress]:checked').attr("id");
+    completebooking.userAddressID = $('input[name=UserAddress]:checked').attr("id");
 
     //tab-4
     completebooking.paymentdone = true;
@@ -499,15 +528,16 @@ function completbooking() {
 
     console.log(ExtraservicedCheckedcount);
     console.log(totaltime);
-
+    console.log(completebooking);
 
 
     if (document.getElementById("spncardnumbervalidation").innerHTML == "" &&
         document.getElementById("spncardexpairedvalidation").innerHTML == "" &&
         document.getElementById("spncardCVCvalidation").innerHTML == "" &&
         document.getElementById("chktermsandcondion").checked) {
-
+        $("#loader").addClass("is-active");
         $.ajax({
+            
             url: '/Home/Completbooking',
             type: 'post',
             dataType: 'json',
@@ -515,9 +545,10 @@ function completbooking() {
             data: JSON.stringify(completebooking),
             success: function (resp) {
                 console.log(resp)
+                $("#loader").removeClass("is-active");
                 if (resp) {
                     $("#CompletBooking").modal('show');
-                    $("#serviceID").html(resp.ServiceRequestID);
+                    $("#serviceID").html(resp.serviceRequestID);
                 }
             },
             error: function (err) {

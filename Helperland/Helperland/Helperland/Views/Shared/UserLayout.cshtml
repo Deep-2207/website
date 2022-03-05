@@ -24,27 +24,86 @@
                 <div class="collapse navbar-collapse sidebar-div-menu" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 sidebar-ul" id="sidebar-menu">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Dashbord</a>
+                            <a class="nav-link" aria-current="page" asp-action="Dashboard" asp-controller="Customer">Dashbord</a>
                         </li>
                         @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
                         {
-                           <partial name="CustomerPartialView" />
+                            <partial name="CustomerPartialView" />
                         }
                         else
                         {
-                            
-                           <partial name="ServiceProviderPartial" />
+
+                            <partial name="ServiceProviderPartial" />
                         }
                     </ul>
                 </div>
             </div>
         </nav>
-       @RenderBody()
+        @RenderBody()
     </div>
 </section>
 
-@section Scripts{ 
+<div class="modal" id="trmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-30">Service Details</h3>
+
+                <label id="d&t">
+                </label>
+                <label class="d-block fw-bold">Duration: <span id="duration" class="fw-normal pl-1"></span><span class="fw-normal">Hrs</span></label>
+                <hr />
+                <label class="d-block">Service Id:<span id="srid" class="fw-normal"></span></label>
+                <label id="">
+                    Extra:
+                    <span class="extraservice" id="extra"></span>
+                </label>
+                <label class="col-md-6">
+                    Net Amount:
+                    <span id="price" class="modelprice"></span><span class="modelprice">€</span>
+                </label>
+
+
+                <hr />
+
+                <label class="">Service Address:<span id="serviceaddress"></span> </label>
+                <label>Phone:<span class="" id="phonenumber"></span> </label>
+                <label>Email:<span class="" id="email"></span> </label>
+
+                <hr />
+
+                <label>Comments<span class="" id="comments"></span> </label>
+                <label id="pet"></label>
+
+
+
+                <div id="btnreschedulejsdashbord">
+
+                </div>
+
+                @*<button class="btn btnReschedule d-inline-block" value="" >Reschedule</button>
+                    <button class="btn btncancel d-inline-block" value="" >Cancel</button>*@
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
     @RenderSection("UserLayoutSection", required: false)
+    <script>
+        $('#sidebar-menu li a').click(function ()
+        {
+            $('#sidebar-menu li').removeClass("active");
+            
+            $("#sidebar-menu li").addClass("active");
+        });
+    </script>
 }
 
 

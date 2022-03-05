@@ -7,7 +7,7 @@
 @if (Model.Any())
 {
     <script type="text/javascript">
-       
+
         $("#btnaddressbookservice").removeClass("disabled");
     </script>
     @foreach (UserAddress address in Model)
@@ -23,6 +23,7 @@
 
                 <p class="d-block m-0"> <span class="point fw-bold">Phone number: </span>@address.Mobile</p>
             </label>
+
         </div>
     }
 }

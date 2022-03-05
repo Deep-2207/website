@@ -44,6 +44,7 @@ namespace Helperland.Models
         public virtual User ServiceProvider { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }
+        
         public virtual ICollection<ServiceRequestAddress> ServiceRequestAddresses { get; set; }
         public virtual ICollection<ServiceRequestExtra> ServiceRequestExtras { get; set; }
     }

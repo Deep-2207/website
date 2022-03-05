@@ -58,12 +58,12 @@ $(document).ready(function () {
 
     for (var i = 0; i < items.length; i++) {
         tab.push(items[i].innerHTML);
-        console.log(tab[i]);
+       
     }
     for (var i = 0; i < items.length; i++) {
         items[i].onclick = function () {
             index = tab.indexOf(this.innerHTML);
-            console.log(index + "COnsole check");
+            /*console.log(index + "COnsole check");*/
         };
     }
 
@@ -178,14 +178,6 @@ $(document).ready(function () {
 
 });
 
-
-
-//function btnclose() {
-//    alert('HELLO 1');
-//    //$.ajax({
-//    //    url: '/Home/index',
-//    //})
-//    alert('HE;LLO');
-
-//    onclick = "$('#modal_id').modal('hide');"
-//}
+$("#btnafterresetpasswordlogin").click(function () {
+    $('#loginModal').modal('show');
+});

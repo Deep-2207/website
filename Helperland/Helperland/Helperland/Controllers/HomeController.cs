@@ -71,7 +71,7 @@ namespace Helperland.Controllers
                 HttpContext.Session.SetString("UserName", _user.FirstName);
 
                 if (_user.UserTypeId == (int)UserTypeEnum.Customer)
-                    return RedirectToAction("servicehistory", "customer");
+                    return RedirectToAction("Dashboard", "customer");
                 else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
                     return RedirectToAction("upcomingservice", "serviceprovider");
                 else
@@ -356,7 +356,7 @@ namespace Helperland.Controllers
                 TotalCost = Convert.ToDecimal(model.TotalCost),
                 Comments = model.Comments.ToString().Trim(),
                 PaymentDone = false,
-                ServiceProviderId = 1,
+                Status = (int)ServiceStatusEnum.New,
                 HasPets = model.HasPets,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
@@ -419,9 +419,10 @@ namespace Helperland.Controllers
                 _serviceRequestExtraRepository.Add(serviceRequestExtra);
 
             }
-
-            List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
-
+                List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+            
+                //List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider && x.WorksWithPets == true).ToList();
+            
             EmailModel emailModel;
             foreach (var spsendmail in sp)
             {

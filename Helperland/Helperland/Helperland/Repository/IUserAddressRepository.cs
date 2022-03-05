@@ -12,5 +12,7 @@ namespace Helperland.Repository
 
         public UserAddress AddUserAddress(UserAddress userAddress);
         public UserAddress SelectAddressByID(int id);
+        public UserAddress UpdateAddress(UserAddress userAddress);
+        public UserAddress DeleteAddress(int id);
     }
 }

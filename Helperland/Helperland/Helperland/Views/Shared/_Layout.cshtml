@@ -19,11 +19,20 @@
     @*Bootstrap Css*@
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
+
+    @*rateing css*@
+
+    <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
+    
+    <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
+
+
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
 
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <link href="~/css/css-loader.css" rel="stylesheet" />
 
     <!-- Data table CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -32,7 +41,7 @@
 </head>
 
 <body>
-
+    <div class="loader loader-default" data-half id="loader"></div>
     <div class="scroll-up-btn top-arrow">
         <i class="fas fa-chevron-up"></i>
     </div>
@@ -66,7 +75,7 @@
                                 <b style="user-select: auto;">First Customer</b>
                             </li>
                             <li class="sid-nav-item">
-                                <a class="sid-sid-nav-link" aria-current="page" href="#">Dashbord</a>
+                                <a class="sid-sid-nav-link" aria-current="page" asp-action="dashboard" asp-controller="customer">Dashboard</a>
                             </li>
                             @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
                             {
@@ -204,8 +213,8 @@
                                         <b style="user-select: auto;">@sessionUser.UserName</b>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">My Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="#">My Setting</a></li>
+                                    <li><a class="dropdown-item" asp-action="dashboard" asp-controller="customer">My Dashboard</a></li>
+                                    <li><a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a></li>
                                     <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Log Out</a></li>
                                 </ul>
 
@@ -323,7 +332,7 @@
                     <div class="text-center">
                         <a href="#" class="forgot text-decoration-none mb-1  d-block" data-bs-toggle="modal"
                            data-bs-target="#forgotmodel">Forgot Password</a>
-                        <span>Don't have an account? </span> <a class="text-decoration-none">Create an account</a>
+                        <span>Don't have an account? </span> <a class="text-decoration-none" asp-action="CreateAccount" asp-controller="Account">Create an account</a>
                     </div>
 
                 </div>
@@ -367,7 +376,7 @@
     @*Custome JS*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js"></script>
-   
+
     <script src="~/js/Login.js"></script>
     @*Bootsrap JS*@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
@@ -378,6 +387,12 @@
 
     @*Fontawesome Cdn*@
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+
+    @*rating js*@
+    
+    <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
+    <script src="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.js"></script>
+
 
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
     @if (ViewBag.openmodel == true)

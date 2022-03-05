@@ -31,7 +31,7 @@ function btnlogin() {
         logindetails.Email = $("#txtloginemail").val();
         logindetails.Password = $("#txtloginpassword").val();
         logindetails.IsRemember = $('#chkIsremember').prop('checked');;
-
+        $("#loader").addClass("is-active");
         $.ajax({
             type: 'post',
             url: '/Account/login',
@@ -45,6 +45,7 @@ function btnlogin() {
                 //AddressBox(false);
                 //FillCustomerAddressList();
                 console.log(resp.status)
+                $("#loader").removeClass("is-active");
 
                 if (resp.status == "OK") {
                     window.location.href = "Http://" + window.location.host + "/" + resp.url;
@@ -79,6 +80,7 @@ function btnsendforgotrpswdmail() {
 
         var forgotpasswordobj = {}
         forgotpasswordobj.email = $("#inpfogEmail").val();
+        $("#loader").addClass("is-active");
         $.ajax({
             type: 'post',
             url: '/Account/forgotpassword',
@@ -86,7 +88,7 @@ function btnsendforgotrpswdmail() {
             contentType: 'application/json',
             data: JSON.stringify(forgotpasswordobj),
             success: function (resp) {
-
+                $("#loader").removeClass("is-active");
                 if (resp.status == "OK") {
                     $('#forgotmodel').modal('hide');
                     forgotswal();

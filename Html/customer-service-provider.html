@@ -221,7 +221,7 @@
                             <td class="price">€63</td>
                             <!-- <td><label class="btn status-Completed" value="">Completed</label></td> -->
                             <td><label class="btn status-Completed" value="">Completed</label></td>
-                            <td><button class="btn rate" value="">Rate SP</button></td>
+                            <td><button class="btn rate" data-bs-toggle="modal" data-bs-target="#rateSPModal"  value="">Rate SP</button></td>
                         </tr>
 
                          <tr>
@@ -522,6 +522,49 @@
 
     </section>
 
+    <div class="modal fade" id="rateSPModal" aria-hidden="true" aria-labelledby="rateSPModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><img src="assets/img/customer-service/forma-1-copy-19.png"></div>
+                <div>
+                    <label class="fs1 fw-bold">Lyum Watson</label>
+                    <div>
+                        <span id="rateSPfinal" class="stars-container stars-0">★★★★★</span>
+                        <label class="ps-1" id="lblrateSP">0</label>
+                    </div>
+                </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label class="fs1 fw-bold mb-2">Rate your service provider</label>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">On time arrival</label></div>
+                    <div class="col-md-4"><label id="rtOnTimeArr" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtOnTimeArr">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">Friendly</label></div>
+                    <div class="col-md-4"><label id="rtFriendly" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtFriendly">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">Quality of service</label></div>
+                    <div class="col-md-4"><label id="rtQltyofSer" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtQltyofSer">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><label class="mt-2">Feedback on service provider</label></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <textarea class="form-control" id="txtFeedbackToSP"></textarea>
+                    </div>
+                </div>
+                <button class="btnExport mt-2 fw-bold py-2 px-3 btncontinue" data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div> 
 
     <!-- footer start-->
     <footer>

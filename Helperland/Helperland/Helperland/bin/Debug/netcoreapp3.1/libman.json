@@ -14,6 +14,9 @@
       "library": "limonte-sweetalert2@11.3.10",
       "destination": "wwwroot/lib/limonte-sweetalert2/"
     },
-   
+    {
+      "library": "bootstrap-star-rating@4.1.2",
+      "destination": "wwwroot/lib/bootstrap-star-rating/"
+    }
   ]
 }

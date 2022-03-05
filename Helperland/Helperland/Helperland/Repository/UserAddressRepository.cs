@@ -33,5 +33,21 @@ namespace Helperland.Repository
         {
             return _helperlandContext.UserAddresses.Where(x => x.AddressId == id).FirstOrDefault();
         }
+        public UserAddress UpdateAddress(UserAddress userAddress)
+        {
+            _helperlandContext.UserAddresses.Update(userAddress);
+            _helperlandContext.SaveChanges();
+            return (userAddress);
+        }
+        public UserAddress DeleteAddress(int addressid)
+        {
+            //_helperlandContext.UserAddresses.Remove(addressid);
+         UserAddress selectedaddress =  _helperlandContext.UserAddresses.Where(x => x.AddressId == addressid).FirstOrDefault();
+            _helperlandContext.UserAddresses.Remove(selectedaddress);
+            _helperlandContext.SaveChanges();
+
+            return (selectedaddress);
+
+        }
     }
 }

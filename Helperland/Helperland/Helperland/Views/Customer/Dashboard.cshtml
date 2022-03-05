@@ -1,0 +1,216 @@
+﻿@model IEnumerable<ServiceRequest>
+@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="customer-table ">
+    <div class="sub-headding p-b-10">
+        <h2>Service Dashboard</h2>
+        <div class="Export w-auto">
+            <a class="extrabtn w-auto" type="button" asp-controller="home" asp-action="Book_Services">New Service Booking</a>
+        </div>
+    </div>
+
+    <table id="example" class="display customer-table customer-dashboard" style="width:100%">
+        <thead>
+            <tr>
+                <th>Service ID<img alt="" class="sorting-img"></th>
+                <th>Service Details<img alt="" class="sorting-img"></th>
+                <th class="text-start">Service Provider <img alt="" class="sorting-img"></th>
+                <th class="cus-dait">Payment <img alt="" class="sorting-img"></th>
+                <th>Action<img alt="" class="sorting-img"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (ServiceRequest service in Model)
+                {
+                    @if (service.Status != (int)ServiceStatusEnum.Cancel && service.Status != (int)ServiceStatusEnum.completed)
+                    {
+                        <tr onclick="modelpopp(@service.ServiceRequestId)" class="cptabletr">
+                            <td class="tdclick"><a onclick="showservicerequestdetailmodel(@service.ServiceRequestId, 0)" class="startid d-flex justify-content-center align-items-center" href="#"> @service.ServiceRequestId </a></td>
+                            <td class="tdclick">
+                                <img src="~/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>@service.ServiceStartDate.Date.ToString("dd-MM-yyyy")</span> <br>
+                                <img src="~/img/service-provider-upcoming-service/layer-712.png" alt="">  @service.ServiceStartDate.TimeOfDay.ToString().Remove(5, 3) -  @(service.ServiceStartDate.AddMinutes(service.ServiceHours * 60).TimeOfDay.ToString().Remove(5, 3))
+
+                            </td>
+                            <td>
+                                @if (service.ServiceProviderId != null)
+                                {
+                                    <div class="media d-flex">
+                                        <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            @service.User.FirstName  @service.User.LastName  <br>
+                                            @{
+                                                decimal totalRating = 0;
+                                                decimal spRating = 0;
+                                                int count = 0;
+                                                foreach (Rating r in service.Ratings)
+                                                {
+                                                    totalRating = totalRating + r.Ratings;
+                                                    count++;
+                                                }
+                                                if (count > 0)
+                                                {
+                                                    spRating = Math.Round((totalRating / count) * 10) / 10;
+                                                }
+                                            }
+                                            <input required id="@service.ServiceProviderId" class="ratingspdashboard" value="@spRating" type="text" title="">
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </td>
+                            <td class="price">@service.TotalCost €</td>
+                            <td class="" id="btnreschedulejs">
+                                <label class="btn btnReschedule" value="" data-toggle="rechedual" onclick="rescheduleservice(@service.ServiceRequestId)">Reschedule</label>
+                                <label class="btn btncancel" value="" onclick="cancelservice(@service.ServiceRequestId)">Cancel</label>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+
+
+        </tbody>
+
+    </table>
+</div>
+
+
+
+
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" >
+    Launch demo modal
+</button>-->
+<!-- Modal -->
+
+
+
+<input id="hiddenServiceRequestId" type="hidden" />
+
+@*reschedual model*@
+
+<div class="modal" id="rechedual" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-30">Reschedule Service</h3>
+
+                <div class="alert alert-danger d-none" id="errormesgrechedual" role="alert">
+
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    <div class="col mt-0">
+                        <label for="datechange" class="form-label">Change Date</label>
+                        <input type="date" class="form-control" id="datechange">
+                    </div>
+                    <div class="col mt-0">
+                        <label for="exampleInputEmail1" class="form-label">Select Time</label>
+                        <select class="form-select" id="drpselecttime">
+
+                            @for (double i = 8; i <= 18; i = (i + 0.5))
+                            {
+
+                                string[] s = i.ToString().Split('.');
+                                <option value="@i">@s[0]: @(s.Length == 2? "30" : "00")</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" onclick="changeservicetime()">Save</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*cancale service*@
+
+<div class="modal" id="cancelservice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-30">Cancel Service</h3>
+
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"> Why do you want to cancel your booking? (We'll forward the justification to your helper.)</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" onclick="cancelservicepost()">Cancel</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section UserLayoutSection{
+    <script src="~/js/Customer/customer.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ],
+
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: false,
+                info: true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ],
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": '<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": []
+            });
+            $('.rb-rating').rating({
+                'showCaption': true,
+                'stars': '3',
+                'min': '0',
+                'max': '3',
+                'step': '1',
+                'size': 'xs',
+                'starCaptions': { 0: 'status:nix', 1: 'status:wackelt', 2: 'status:geht', 3: 'status:laeuft' }
+            });
+            $(".ratingspdashboard").rating({
+                min: 0,
+                max: 5,
+                step: 0.1,
+                size: "xs",
+                stars: "5",
+                showClear: false,
+                readonly: true,
+                starCaptions: function (val) {
+                    return val;
+                },
+
+            });
+        });
+    </script>
+}
