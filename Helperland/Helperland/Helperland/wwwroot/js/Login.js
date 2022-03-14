@@ -39,22 +39,14 @@ function btnlogin() {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(logindetails),
-            //data: { "Email": Email, "Password": Password, "IsRemember": IsRemember }
             success: function (resp) {
-                //   reset addressform
-                //AddressBox(false);
-                //FillCustomerAddressList();
                 console.log(resp.status)
                 $("#loader").removeClass("is-active");
-
                 if (resp.status == "OK") {
                     window.location.href = "Http://" + window.location.host + "/" + resp.url;
-
                 } else {
                     BootstrapAlert("dvloginerrormesag", resp.errorMessage, "danger")
                 }
-
-
             },
             error: function (err) {
                 console.log(err);
@@ -64,8 +56,6 @@ function btnlogin() {
 }
 
 function btnsendforgotrpswdmail() {
-    debugger;
-
     if ($("#inpfogEmail").val() == "") {
         document.getElementById("spnforgoterror").innerHTML = "Please enter the Email"
     }
@@ -77,7 +67,6 @@ function btnsendforgotrpswdmail() {
     }
 
     if (document.getElementById("spnforgoterror").innerHTML == "") {
-
         var forgotpasswordobj = {}
         forgotpasswordobj.email = $("#inpfogEmail").val();
         $("#loader").addClass("is-active");
@@ -92,11 +81,9 @@ function btnsendforgotrpswdmail() {
                 if (resp.status == "OK") {
                     $('#forgotmodel').modal('hide');
                     forgotswal();
-
                 }
                 else {
                     BootstrapAlert("dvforgotpassword", resp.errorMessage, "danger")
-
                 }
             },
             error: function (err) {
@@ -113,6 +100,7 @@ function forgotswal() {
         text: 'If provided email is a registered email ID on Helperland, you will receive an email with further instructions on how to reset your password.',
     })
 }
+
 function BootstrapAlert(id, message, type) {
     var wrapper = document.createElement('div')
     wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'

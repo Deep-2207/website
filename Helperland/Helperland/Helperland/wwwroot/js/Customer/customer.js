@@ -67,7 +67,7 @@ function showservicerequestdetailmodel(id, index) {
         data: { "servicerequestid": id },
         success: function (respo) {
             console.log(respo);
-            debugger;
+         
             document.getElementById("d&t").innerHTML = respo.user.serviceStartDate;
             document.getElementById("duration").innerHTML = respo.user.serviceHours;
             document.getElementById("srid").innerHTML = respo.user.serviceRequestId;
@@ -186,7 +186,7 @@ function changeservicetime() {
                 
             }
             else {
-                debugger;
+              /*  debugger;*/
                 alert("not okay");
                 console.log(respo);
                 $("#errormesgrechedual").removeClass(" d-none")

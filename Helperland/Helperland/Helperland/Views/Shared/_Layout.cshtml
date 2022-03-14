@@ -89,7 +89,9 @@
 
                         </ul>
                     }
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                    {
                         <li class="nav-item">
                             <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area=""
                                asp-controller="home" asp-action="Book_Services">
@@ -101,70 +103,72 @@
                                     <spna>Book now</spna>}
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="home" asp-action="prices">
+                    }
 
-                                @if (ViewBag.page == "home")
-                                {
-                                    <spna>Prices</spna> }
-                                else
-                                {
-                                    <spna>Prices & services</spna>}
-                            </a>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="home" asp-action="prices">
+
+                            @if (ViewBag.page == "home")
+                            {
+                                <spna>Prices</spna> }
+                            else
+                            {
+                                <spna>Prices & services</spna>}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+
+                            @if (ViewBag.page == "home")
+                            {
+                                <spna> Our Guarantee</spna> }
+                            else
+                            {
+                                <spna>Warranty</spna>}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="home" asp-action="contact">
+                            Contact
+
+                        </a>
+                    </li>
+
+                    @if (user == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d" )"
+                               data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-
-                                @if (ViewBag.page == "home")
-                                {
-                                    <spna> Our Guarantee</spna> }
-                                else
-                                {
-                                    <spna>Warranty</spna>}
-                            </a>
+                            <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area=""
+                               asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="home" asp-action="contact">
-                                Contact
-
-                            </a>
-                        </li>
-
-                        @if (user == null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link rounded-link @( ViewBag.page == "home" ? "" : "bg-btn-29626d" )"
-                                   data-bs-target="#loginModal" data-bs-toggle="modal">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link rounded-link @(ViewBag.page ==  "home"? "" : "bg-btn-29626d" )" asp-area=""
-                                   asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
-                            </li>
-                        }
-                        <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? (ViewBag.provider=="provider" ? ""
+                    }
+                    <li class="nav-item dropdown d-none @(ViewBag.page ==  "home"? (ViewBag.provider=="provider" ? ""
                 : "d-xl-block" ) : "" ) ">
-                            <a class=" nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag" class="county-flag">
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag" class="county-flag">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag" class="county-flag">
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <a class=" nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                            <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag" class="county-flag">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag" class="county-flag">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag" class="county-flag">
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                    </ul>
+                </ul>
 
 
 
@@ -214,7 +218,20 @@
                                     </li>
 
                                     <li><a class="dropdown-item" asp-action="dashboard" asp-controller="customer">My Dashboard</a></li>
-                                    <li><a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a></li>
+                                    <li>
+
+                                        <a class="dropdown-item" asp-action="mysettings" asp-controller=@(sessionUser.UserType == (UserTypeEnum.Customer).ToString() ? "customer" : "Serviceprovider" )>My Setting</a>
+
+                                        @*@if (sessionUser.UserType == UserTypeEnum.Customer)
+                                        {
+                                            <a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a>
+                                        }*@
+
+                                    </li>
                                     <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Log Out</a></li>
                                 </ul>
 

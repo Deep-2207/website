@@ -161,7 +161,6 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\UserManagement.cshtml.g.cs
-F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceProviderView.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\Book_Services.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\UserLayout.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerPartialView.cshtml.g.cs
@@ -182,3 +181,9 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\History.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\MySettings.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\NewServiceRequest.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\UpcomingServices.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceHistory.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\BlockCustomer.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\Ratings.cshtml.g.cs

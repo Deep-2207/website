@@ -1,11 +1,11 @@
-﻿///*const { error } = require("jquery");
-
+﻿
 /*global variable*/
 var ExtraservicedCheckedcount = 0;
 var basictime = 3;
 var totaltime;
 var _servicehourlyRate = 18;
 
+/*tab-1*/
 function checkAvailability() {
 
     var zipcode = document.getElementById('txtzipcode').value.trim();
@@ -54,6 +54,8 @@ function checkAvailability() {
         document.getElementById('spn_error_zipcode').innerHTML = "Enter Valid Postal Code";
     }
 }
+
+/*tab - 2*/
 function btnsetuptab() {
     document.getElementById('pills-schedule-tab').classList.add("disabled");
     document.getElementById('pills-profile-tab').classList.add("disabled");
@@ -73,67 +75,22 @@ function btndetailstab() {
     document.getElementById('pills-payment-tab').classList.add("disabled");
 }
 function btntotalservices(userid) {
-    //$ajax({
-    //    type: "post",
-    //    url:
-
-    //})
-
     document.getElementById('pills-details').classList.add("show");
     document.getElementById('pills-details').classList.add("active");
     document.getElementById('pills-schedule-tab').classList.add("fill");
     document.getElementById('pills-profile-tab').classList.remove("disabled");
     $('#pills-profile-tab').tab('show');
 
-
     getalladdressbyuserID(userid);
     FillCityDropdown();
-
-
-}
-
-$(".btnCancel").click(function () {
-    $(".btnaddress").removeClass(" d-none");
-    $(".btnaddress").addClass(" d-block");
-
-    $(".newAddress").addClass(" d-none");
-});
-
-$(".btnaddress").click(function () {
-    $(this).addClass(" d-none");
-    $(".newAddress").removeClass(" d-none");
-    $(".newAddress").addClass(" d-block");
-});
-
-function btnNewAddress() {
-    /*$('#inpcurrentpostalcode').html($("#txtzipcode").val());*/
-    $('#inpcurrentpostalcode').val($("#txtzipcode").val());
-    /* alert($('#txtzipcode').val());*/
-    $("#loader").addClass("is-active");
-    $.ajax({
-        type: "POST",
-        url: "/home/FillCityDropdown",
-        success: function (res) {
-            $("#loader").removeClass("is-active");
-            $.each(res.d, function (data, value) {
-
-                $("#ddlNationality").append($("<option></option>").val(value.CountryId).html(value.CountryName));
-            })
-        }
-
-    });
 }
 
 function getDate() {
     var today = new Date();
     today.setDate(today.getDate() + 1)
-    // nextday = today.getDate() + 1;
-    //document.getElementById("txtFromDate").value = today.getFullYear() + '-' + AppendZero(today.getMonth() + 1) + '-' + AppendZero(today.getDate());
-    //var nowdate = today.getFullYear() + '-' + AppendZero(today.getMonth() + 1).toString() + '-' + AppendZero(today.getDate());
     var nextDate = today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString());
     console.log(nextDate);
     document.getElementById("txtFromDate").value = nextDate;
-    //  console.log(document.getElementById("txtFromDate").value);
     $("#ppytime_time").html(AppendZero(today.getDate().toString()) + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" +  today.getFullYear().toString() + " " + $("#drpselecttime option:selected").text());
     $("#txtFromDate").attr("min", (today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString())));
 }
@@ -143,20 +100,13 @@ function setdate(inputDate) {
     document.getElementById("datechange").value = AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + AppendZero(date.getFullYear().toString());
     return AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + AppendZero(date.getFullYear().toString());
 }
+
 function AppendZero(input) {
     if (input.length == 1) {
         return '0' + input;
     }
     return input;
 }
-
-
-
-
-
-
-
-
 
 $("#txtFromDate").change(function () {
     chnagebasictimeanddate();
@@ -177,12 +127,10 @@ $("#ddlselecttime").change(function () {
         if (inputcheckbox[i].checked) {
             tempcheckedcount++;
         }
-
     }
     temptime = totaltime - (tempcheckedcount * 0.5) + 3;
     selecttime = $('#ddlselecttime :selected').val();
-
-    //console.log(temptime);
+    
     console.log($('#ddlselecttime :selected').val());
     console.log(temptime);
     debugger;
@@ -191,8 +139,6 @@ $("#ddlselecttime").change(function () {
         console.log("invalid");
         tempselecttime = $('#ddlselecttime :selected').val();
         $('#validtimemodel').modal('show');
-
-
     }
     else {
         console.log("valid");
@@ -215,7 +161,6 @@ function btnclearextraservice() {
                 count++;
                 $("#ex_services").html("");
             }
-
         }
         $("#ddlselecttime").val(3.00);
         $("#total_time span").html(3.00 + "hrs");
@@ -254,7 +199,6 @@ $('.Excheckbox').click(function () {
             htmlcontent += '<p class="tmp-time extra" id="ex_">' + inputcheckbox[i].value + ' <span class="text-right">30min</span></p>'
             count++;
         }
-
     }
     //totalcharg = 75 + (13 * count);
     //alert(count);
@@ -265,40 +209,20 @@ $('.Excheckbox').click(function () {
         $("#ex_services").html(' <label class="fw-bold" id="ex">Extras</label>' + htmlcontent);
     }
 
-    // if ($(this).is(":checked")) {
-    ////    //total time
-    //   totaltime += 0.5;
-    ////    //total change
-    ////    /*totalcharg += 13;*/
-    //}
-    //else {
-    //    totaltime -= 0.5;
-    ////    //total change
-    ////     totalcharg -= 9;
-    ////     alert(totaltime);
-    //}
     totalpaymentfunc();
     checkingtime();
 });
 
 
 function totalpaymentfunc() {
-
     totaltime = basictime
-
-
     var totalpayment;
     var inputcheckbox = document.getElementsByClassName("Excheckbox");
     for (var i = 0; i <= 4; i++) {
         if (inputcheckbox[i].checked) {
             totaltime += 0.5;
-
         }
-
         totalpayment = totaltime * _servicehourlyRate;
-
-
-
     }
     $("#total_time span").html(totaltime + 'hrs');
     $("#singal-charg span").html(totalpayment + '€');
@@ -313,9 +237,7 @@ function checktotalExtraservicechecked() {
         if (inputcheckbox[i].checked) {
             ExtraservicedCheckedcount++;
         }
-
     }
-
 }
 
 function checkingtime() {
@@ -334,7 +256,7 @@ function checkingtime() {
     }
 }
 
-
+/*tab -3*/
 function SaveNewAddress() {
     debugger;
     if (document.getElementById("Street_name").value.length > 0) {
@@ -423,20 +345,44 @@ function FillCityDropdown() {
 }
 
 function getalladdressbyuserID(userid) {
-    $("#useraddress").load('/Home/GetAddressByUserID?userId=' + userid);
+    debugger;
+    console.log($("#txtzipcode").val());
+    $("#useraddress").load('/Home/GetAddressByUserID?userId=' + userid + '&postalcode=' + $("#txtzipcode").val());
 }
-function clearnewaddressdetail() {
 
+$(".btnCancel").click(function () {
+    $(".btnaddress").removeClass(" d-none");
+    $(".btnaddress").addClass(" d-block");
+    $(".newAddress").addClass(" d-none");
+});
+
+$(".btnaddress").click(function () {
+    $(this).addClass(" d-none");
+    $(".newAddress").removeClass(" d-none");
+    $(".newAddress").addClass(" d-block");
+});
+
+function btnNewAddress() {
+    $('#inpcurrentpostalcode').val($("#txtzipcode").val());
+    $("#loader").addClass("is-active");
+    $.ajax({
+        type: "POST",
+        url: "/home/FillCityDropdown",
+        success: function (res) {
+            $("#loader").removeClass("is-active");
+            $.each(res.d, function (data, value) {
+
+                $("#ddlNationality").append($("<option></option>").val(value.CountryId).html(value.CountryName));
+            })
+        }
+    });
+}
+
+function clearnewaddressdetail() {
     document.getElementById("Street_name").value = "";
     document.getElementById("House_number").value = "";
     document.getElementById("Phone_Number").value = "";
-
 }
-
-//tab 4
-//$("btnselectedaddress").click(function () {
-//    $('#pills-payment-tab').tab('show');
-//});
 
 function btnAddAddresstab() {
     document.getElementById('pills-payment').classList.add("show");
@@ -445,6 +391,8 @@ function btnAddAddresstab() {
     $('#pills-payment-tab').tab('show');
 }
 
+//tab 4
+
 function completbooking() {
 
     var cardNumberRegularExpressionPattern = new RegExp("^[0-9]{16}$");
@@ -452,7 +400,6 @@ function completbooking() {
     var cardCVCRegularExpressionPattern = new RegExp("^[0-9]{3}$");
     if ($("#cardnumber").val() == "") {
         document.getElementById("spncardnumbervalidation").innerHTML = "Please enter the Cardnumber";
-
     }
     else if (!cardNumberRegularExpressionPattern.test($("#cardnumber").val())) {
         document.getElementById("spncardnumbervalidation").innerHTML = "Please enter the valid number(16 digit)";
@@ -460,7 +407,6 @@ function completbooking() {
     else {
         document.getElementById("spncardnumbervalidation").innerHTML = "";
     }
-
 
     if ($("#cardexpaired").val() == "") {
         document.getElementById("spncardexpairedvalidation").innerHTML = "Please enter the cardexpired";

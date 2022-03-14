@@ -1,0 +1,213 @@
+﻿@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "Upcoming Services";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+
+
+<div class="customer-table  newservicerequest">
+   
+    <input type="hidden" id="hiddenuserid" value="@sessionUser.UserID" />
+    <input type="hidden" id="hiddenServiceRequestId" value="" />
+    <input type="hidden" id="hiddenserviceproviderid" value="" />
+    <table id="example" class="display customer-table history-table" style="width:100%">
+        <thead>
+            <tr>
+                <th>Service ID <img alt="" class="sorting-img"></th>
+                <th>Service data <img alt="" class="sorting-img"></th>
+                <th class="cus-dait">Customer details <img alt="" class="sorting-img"></th>
+                <th>Payment <img alt="" class="sorting-img"></th>
+                <th>Distance  <img alt="" class="sorting-img"></th>
+                @*<th>Time conflict <img alt="" class="sorting-img"></th>*@
+                <th class="action">Action <img alt="" class="sorting-img"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+
+    </table>
+</div>
+
+
+@section UserLayoutSection{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ],
+
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: false,
+                info: true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ],
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": [],
+                buttons: {
+                    dom: {
+                        button: {
+                            tag: 'button',
+                            className: ''
+                        }
+                    },
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export',
+                        className: "Export",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        },
+                    }]
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            UpcomingService();
+        });
+        function UpcomingService() {
+
+            $.ajax({
+                url: '/serviceprovider/upcomingservice',
+                type: 'post',
+                success: function (respo) {
+                    console.log(respo);
+                    respo.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        date = new Date(element.servicestartdate);
+                      
+                        var d2 = new Date(element.servicestartdate);
+                        d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
+                        var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
+                        var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
+
+                        t.row.add([
+                            '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceid + ',2)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceid + '</a></span>',
+                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
+                            element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.serviceaddressstrretname + ' ' + element.serviceaddresshousenumber + ' <br> ' + element.servicereqestpostalcode + ' ' + element.servicereqestcity,
+                            '<span class="price"> ' + element.payment + '€' + '</span>',
+                            '',
+                            '<button id="completed' + element.serviceid + '" class="btn btn-Accept btn-rounded-17 me-1" onclick="Completed(' + element.serviceid + ')" value="Completed">Completed</button><button class="btn btn-danger btn-rounded-17" onclick="Cancel(' + element.serviceid + ')" value="Cancel">Cancel</button>'
+                        ]).draw(false);
+                        console.log();
+                        var date1 = d2;
+                        var date2 = new Date();
+
+                        if (date1.getTime() > date2.getTime()) {
+                           
+
+                            $("#completed" + element.serviceid).addClass(" d-none");
+                        }
+                        else {
+
+                            $("#completed" + element.serviceid).removeClass(" d-none");
+                        }
+                    });
+                }
+            });
+        }
+        function AppendZero(input) {
+            if (input.length == 1) {
+                return '0' + input;
+            }
+            return input;
+        }
+        function Completed(serviceid) {
+            $.ajax({
+                url: '/serviceprovider/Completed',
+                type: 'post',
+                data: { 'serviceid': serviceid },
+                success: function (respo) {
+                    console.log(respo);
+                    location.reload();
+                }
+            });
+        }
+        function Cancel(serviceid) {
+
+            $.ajax({
+                url: '/serviceprovider/Cancel',
+                type: 'post',
+                data: { 'serviceid': serviceid },
+                success: function (respo) {
+                    console.log(respo);
+                    location.reload();
+                }
+            });
+        }
+        function showservicerequestdetailmodel(id, index) {
+            $("#trserviceprovidermodel").modal("show");
+            $("#hiddenServiceRequestId").val(id);
+            console.log($("#hiddenServiceRequestId").val(id));
+
+            $.ajax({
+                type: 'Post',
+                url: '/ServiceProvider/dispaydataformtheserviceid',
+                data: { "servicerequestid": id },
+                success: function (respo) {
+                    console.log(respo);
+                  
+                    document.getElementById("serviceproviderd&t").innerHTML = respo.user.serviceStartDate;
+                    document.getElementById("serviceproviderduration").innerHTML = respo.user.serviceHours;
+                    document.getElementById("serviceprovidersrid").innerHTML = respo.user.serviceRequestId;
+                    document.getElementById("serviceproviderextra").innerHTML = respo.serviceRequestExtraName;
+                    document.getElementById("serviceproviderprice").innerHTML = respo.user.totalCost;
+                    document.getElementById("customername").innerHTML = respo.user.user.firstName + " " + respo.user.user.lastName;
+                    document.getElementById("serviceproviderserviceaddress").innerHTML = respo.user.serviceRequestAddresses[0].addressLine1 +
+                        respo.user.serviceRequestAddresses[0].addressLine2 + '<br>' +
+                        respo.user.serviceRequestAddresses[0].postalCode +
+                        respo.user.serviceRequestAddresses[0].city;
+                    document.getElementById("serviceproviderphonenumber").innerHTML = respo.user.serviceRequestAddresses[0].mobile;
+                    document.getElementById("serviceprovideremail").innerHTML = respo.user.serviceRequestAddresses[0].email;
+                    document.getElementById("serviceprovidercomments").innerHTML = respo.user.comments;
+                    $("#btnaccept").html('<button id="srcompleted' + respo.user.serviceRequestId + '" class="btn btn-Accept btn-rounded-17 me-1" onclick="Completed(' + respo.user.serviceRequestId + ')" value="Completed">Completed</button><button class="btn btn-danger btn-rounded-17" onclick="Cancel(' + respo.user.serviceRequestId + ')" value="Cancel">Cancel</button>');
+
+                    var d2 = new Date(respo.user.serviceStartDate);
+                    var date1 = d2;
+                    var date2 = new Date();
+
+                    if (date1.getTime() > date2.getTime()) {
+                       
+
+                        $("#srcompleted" + respo.user.serviceRequestId).addClass(" d-none");
+                    }
+                    else {
+
+                        $("#srcompleted" + respo.user.serviceRequestId).removeClass(" d-none");
+                    }
+                        var inputDate = respo.user.serviceStartDate;
+                    const date = new Date(inputDate);
+                    var inputTagDate = date.getFullYear().toString() + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + AppendZero(date.getDate().toString());
+
+                    console.log(inputTagDate);
+
+                    $("#datechange").val(inputTagDate);
+                   
+                },
+                error: function (respo) {
+                    alert('error:' + respo.responseText);
+                }
+            });
+
+        }
+    </script>
+}

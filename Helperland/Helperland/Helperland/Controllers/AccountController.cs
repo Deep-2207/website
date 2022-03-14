@@ -73,6 +73,7 @@ namespace Helperland.Controllers
             ViewBag.provider = "provider";
             return View();
         }
+
         [HttpPost]
         public IActionResult BecomeAPro(CreateAccountViewModel model)
         {
@@ -88,7 +89,8 @@ namespace Helperland.Controllers
                     Password = model.Password,
                     CreatedDate = DateTime.Now,
                     UserTypeId = (int)UserTypeEnum.ServiceProvider,
-                    IsApproved = false
+                    IsApproved = false,
+                    UserProfilePicture = "/img/service-provider/avatar-hat.png"
                 };
 
                 _helperlandContext.Add(user);
@@ -104,8 +106,6 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult login([FromBody] LoginViewModel model)
         {
-
-
             //User user = await _helperlandContext.Users.FindAsync(x => x.Email == model.Email && x.Password == model.Password);
             User user = _helperlandContext.Users.Where(x => x.Email == model.Email && x.Password == model.Password).FirstOrDefault();
             if (user != null && user.IsApproved == true)
@@ -122,7 +122,8 @@ namespace Helperland.Controllers
                 {
                     UserID = user.UserId,
                     UserName = user.FirstName + " " + user.LastName,
-                    UserType = ((UserTypeEnum)user.UserTypeId).ToString()
+                    UserType = ((UserTypeEnum)user.UserTypeId).ToString(),
+                    Email = model.Email
                 };
                 HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
 
@@ -132,12 +133,11 @@ namespace Helperland.Controllers
                 }
                 else if (user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
                 {
-                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "ServiceProvider/ServiceProviderView" });
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "ServiceProvider/NewServiceRequest" });
                 }
                 else
                 {
                     return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = "", URL = "Admin/UserManagement" });
-
                 }
 
             }
@@ -173,8 +173,7 @@ namespace Helperland.Controllers
                     To = model.Email,
                     Subject = "Helperland Reset Password",
                     Body = "Your reset link is" + "<a  href ='" + "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt
-                    //Body =  "<a href = '" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt + "' > Reset Password </ a > "
-                    //Body = string.Format("Click <a href='{0}'>here</a> to login", this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt)
+                   
                 };
 
                 MailHelper mailhelper = new MailHelper(_configuration);
@@ -188,9 +187,6 @@ namespace Helperland.Controllers
             }
 
         }
-
-
-
 
         [HttpPost]
         [HttpGet]

@@ -17,5 +17,7 @@ namespace Helperland.Repository
         Rating AddRatings(Rating rating);
 
         User UpdateUserDetils(User user);
+
+      
     }
 }

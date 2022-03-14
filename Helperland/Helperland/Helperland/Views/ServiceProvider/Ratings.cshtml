@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "Service History";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+
+<div class="customer-table  newservicerequest ratings">
+   
+    <input type="hidden" id="hiddenuserid" value="@sessionUser.UserID" />
+    <input type="hidden" id="hiddenServiceRequestId" value="" />
+    <input type="hidden" id="hiddenserviceproviderid" value="" />
+    <div class="category ml-30 mb-3">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>All</option>
+            <option value="1">Excellent</option>
+            <option value="2">Very Good</option>
+            <option value="3">Good</option>
+            <option value="4">Poor</option>
+            <option value="5">Very Poor</option>
+        </select>
+    </div>
+    <table id="example" class="display customer-table history-table" style="width:100%">
+        <thead>
+            <tr>
+                <th class="d-none">Service ID <img alt="" class="sorting-img"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+           
+        </tbody>
+    </table>
+</div>
+
+
+@section UserLayoutSection{
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: false,
+                info: true,
+
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": [],
+                
+            });
+        });
+
+        $(document).ready(function () {
+            loaddata();
+        });
+
+        function loaddata() {
+            $.ajax({
+                url: '/serviceprovider/getservicereated',
+                type: 'post',
+
+                success: function (respo) {
+                    $('#example').DataTable().clear();
+                    console.log(respo);
+
+                    respo.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        date = new Date(element.servistartdateandtime);
+
+                        var d2 = new Date(element.servistartdateandtime);
+                        d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
+                        var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
+                        var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
+
+
+                        t.row.add([
+                            '<div class="box"><div class= "d-flex innerbox" ><div class="colume-1">' + element.servicereqestid + ' <br />' + element.customername1 + element.customername2 + '</div><div class="colume-2">' +
+                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br>' +
+                            '<img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime +
+                            '</div>' +
+                            '<div class="colume-3">' +
+                            'ratings: <br> <input required class= "ratingspdashboard"  value = "' + element.rating + '" type = "text" title = "" >' +
+                            '</div>' +
+                            '</div>' +
+                            '<hr / class="m-0">' +
+                            '<div class="commentbox float-left mt-2">' +
+                            '<span class="bold"> comment :-   </span>'+ "  " + element.comment +
+                            '</div>' +
+                            '</div>'
+                        ]).draw(false);
+
+                        $(".ratingspdashboard").rating({
+                            min: 0,
+                            max: 5,
+                            step: 0.1,
+                            size: "xs",
+                            stars: "5",
+                            showClear: false,
+                            readonly: true,
+                            starCaptions: function (val) {
+                                if (val == '5' && val > '4') {
+                                    val = "Excellent";
+                                    return val;
+                                }
+                                else if (val > '3' && val <= '4') {
+                                    val = "Very Good";
+                                    return val;
+                                }
+                                else if (val > '2' && val <= '3') {
+                                    val = "Good";
+                                    return val;
+                                }
+                                else if (val > '1' && val <= '2') {
+                                    val = "Poor";
+                                    return val;
+                                }
+                                else {
+                                    val = "Very Poor";
+                                    return val;
+                                }
+                                // return val;
+                            }
+                        });
+
+                    });
+
+                }
+            });
+        }
+        function AppendZero(input) {
+            if (input.length == 1) {
+                return '0' + input;
+            }
+            return input;
+        }
+    </script>
+}

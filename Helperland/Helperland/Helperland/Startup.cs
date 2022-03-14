@@ -37,6 +37,7 @@ namespace Helperland
             services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IServiceProviderRepository, ServiceproviderRepository>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

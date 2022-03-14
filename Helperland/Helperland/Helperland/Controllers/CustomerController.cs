@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace Helperland.Controllers
 {
     [CookiesHelper]
+    [SessionHelper(userType: UserTypeEnum.Customer)]
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
@@ -58,21 +59,13 @@ namespace Helperland.Controllers
             return View(services);
         }
 
-        //public double CalculateAverageRating()
-        //{
-        //    var 
-        //    return Convert.ToDouble(Ratings);
-        //}
-
-
-
+       
         public JsonResult dispaydataformtheserviceid(int servicerequestid)
         {
-
-
             var user = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();
             user.ServiceRequestExtras = _helperlandContext.ServiceRequestExtras.Where(x => x.ServiceRequestId == servicerequestid).ToList();
             user.ServiceRequestAddresses = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == servicerequestid).ToList();
+            user.User = _helperlandContext.Users.Where(x => x.UserId == user.UserId).FirstOrDefault();
             // user.User = _helperlandContext.Users.Where(x=>x.)
 
             String serviceRequestExtraName = "";
@@ -92,9 +85,6 @@ namespace Helperland.Controllers
 
             }
 
-
-
-
             //return Json(user);
             var result = new { user, serviceRequestExtraName };
             return Json(result);
@@ -107,6 +97,7 @@ namespace Helperland.Controllers
 
             return Json(user);
         }
+
         [HttpPost]
         public JsonResult changeservicetimedate(int servicerequestid, string changedate, string chanhgetime)
         {
@@ -114,9 +105,6 @@ namespace Helperland.Controllers
             ServiceRequest serviceRequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();
 
             List<ServiceRequest> serviceproviderrequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceRequest.ServiceProviderId).ToList();
-
-
-
             DateTime newdatetime = Convert.ToDateTime(changedate + " " + chanhgetime);
             DateTime newdatetimewithservicehours = newdatetime.AddMinutes(serviceRequest.ServiceHours * 60);
             //DateTime newtime = Convert.ToDateTime(chanhgetime);
@@ -135,10 +123,6 @@ namespace Helperland.Controllers
             {
                 if (timecheck.ServiceRequestId != servicerequestid)
                 {
-                    //if (newdatetime == timecheck.ServiceStartDate)
-                    //{
-                    //    break;
-                    //}
                     if (timecheck.ServiceStartDate <= newdatetimewithservicehours && newdatetime <= timecheck.ServiceStartDate.AddMinutes(timecheck.ServiceHours * 60))
                     {
                         serviceRequestConflict = false;
@@ -151,7 +135,6 @@ namespace Helperland.Controllers
                     {
                         serviceRequestConflict = true;
                     }
-
                 }
             }
 
@@ -253,8 +236,6 @@ namespace Helperland.Controllers
 
             User user = _customerRepository.GetUSerbyloginid(model.UserId);
 
-
-
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
            
@@ -263,8 +244,6 @@ namespace Helperland.Controllers
             user.ModifiedDate = DateTime.Now;
             user.ModifiedBy = model.UserId;
             user.LanguageId = model.LanguageId;
-
-
 
             _customerRepository.UpdateUserDetils(user);
 
@@ -293,12 +272,7 @@ namespace Helperland.Controllers
             return Json(model);
         }
 
-        //public JsonResult Getaddress(int userid)
-        //{
-        //    List<UserAddress> address = _userAddressRepository.GetAllAddress(userid);
-        //    return Json(address);
-        //}
-
+       
         [HttpPost]
         public JsonResult getcutomeraddress()
         {
@@ -318,6 +292,12 @@ namespace Helperland.Controllers
         public JsonResult GetAddressDetialsbyid(int addressid)
         {
             return Json(_userAddressRepository.SelectAddressByID(addressid));
+        }
+        [HttpPost]
+        public JsonResult GetAddressDetialsbyUserid(int userid)
+        {
+            UserAddress add = _userAddressRepository.SelectAddressByID(userid);
+            return Json(add);
         }
 
         [HttpPost]

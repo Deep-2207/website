@@ -16,7 +16,7 @@ body {
     overflow: auto !important;
 }
 
-a{
+a {
     text-decoration: none !important;
 }
 
@@ -30,13 +30,22 @@ a{
     top: -44px;
     right: 0px;
 }
+
 .buttons-excel {
-   
     width: 70px;
     border-radius: 17px;
     background-color: #146371;
     color: #fff;
 }
+
+.max-width-1400 {
+    max-width: 1400px;
+    margin: auto;
+    /*padding: 0px 46px;*/
+    padding: 0px 46px;
+    width: 100%;
+}
+
 .max-width {
     max-width: 1300px;
     margin: auto;
@@ -253,15 +262,21 @@ section {
 .p-l-5 {
     padding-left: 5px;
 }
-.pl-25{
-    padding-left:25px;
+.pl-0{
+    padding-left:0px !important;
 }
+.pl-25 {
+    padding-left: 25px;
+}
+
 .p-lr-20 {
     padding: 0 20px;
 }
-.mh-64{
-    min-height:65.9vh;
+
+.mh-64 {
+    min-height: 65.9vh;
 }
+
 .fa-star {
     color: #ecb91c !important;
 }
@@ -364,7 +379,8 @@ section .headding-star {
 
 /* databale csss start */
 #example_wrapper {
-    width: 956px !important;
+    /*width: 956px !important;*/
+    width: 100%;
     border: 1px solid #E1E1E1;
     margin-left: 30px;
 }
@@ -532,18 +548,23 @@ table.dataTable.display tbody tr {
 .dataTables_wrapper .dataTables_paginate span .paginate_button {
     top: 0px;
 }
+
 table.dataTable thead th {
     border-bottom: 1px solid #e1e1e1 !important;
 }
+
 table.dataTable.no-footer {
     border-bottom: 1px solid #e1e1e1 !important;
 }
+
 .bottom .dataTables_length {
     margin-left: 15px;
 }
-.tdclick{
-    position:relative;
+
+.tdclick {
+    position: relative;
 }
+
 .startid {
     background: none;
     position: absolute;
@@ -554,32 +575,35 @@ table.dataTable.no-footer {
     text-decoration: none;
     color: #646464 !important;
 }
-.history-table tr th:nth-child(3){
-    width:300px !important;
+
+.history-table tr th:nth-child(3) {
+    width: 300px !important;
 }
+
 .history-table tr th:nth-child(4),
 .history-table tr th:nth-child(6) {
     width: 100px !important;
 }
-    /* .navbar-toggler-side{
+/* .navbar-toggler-side{
         background-image: url(../img/service-provider/angle-right-solid.svg)!important;
         } */
-    /* table.dataTable thead th.sorting_asc,.sorting-img{
+/* table.dataTable thead th.sorting_asc,.sorting-img{
         background-image: ;
     } */
-    /* background-image: url(../images/sort_asc.png) !important; */
-    /* databale csss start */
-    .newsletter-section {
+/* background-image: url(../images/sort_asc.png) !important; */
+/* databale csss start */
+.newsletter-section {
     padding-top: 0px;
 }
 
 #tbladdresses tbody tr {
-     border-bottom: 2px solid #e1e1e1 !important;
-    
+    border-bottom: 2px solid #e1e1e1 !important;
 }
-#tbladdresses tbody tr td{
-    padding:15px !important;
-}
+
+    #tbladdresses tbody tr td {
+        padding: 15px !important;
+    }
+
 .bg-btn-29626d {
     background-color: #29626d;
 }
@@ -595,6 +619,7 @@ option {
 section.bright {
     filter: brightness(0.5);
 }
+
 .btnGenderateNewLink {
     border: 1px solid white;
     background-color: #00607287;
@@ -721,12 +746,14 @@ section.bright {
         font-size: 30px;
         color: white;
     }
-.navbar .nav-sidebar-ul .sid-nav-item{
-    padding:0px 20px;
+
+.navbar .nav-sidebar-ul .sid-nav-item {
+    padding: 0px 20px;
 }
-.navbar .nav-sidebar-ul .sid-nav-item a {
-    text-decoration: none;
-}
+
+    .navbar .nav-sidebar-ul .sid-nav-item a {
+        text-decoration: none;
+    }
 
 .navbar .backblack {
     position: fixed;
@@ -971,9 +998,11 @@ footer {
     max-width: 360px;
     margin: auto;
 }
+
     .modal-content .btn-close:focus {
         box-shadow: none;
     }
+
     .modal-content .model-colse {
         position: absolute;
         top: 0;
@@ -993,7 +1022,7 @@ footer {
     .modal-content .modal-body {
         padding: 25px;
     }
-        
+
 
         .modal-content .modal-body input[type=text],
         .modal-content .modal-body input[type=password] {
@@ -1003,7 +1032,11 @@ footer {
             .modal-content .modal-body input[type=text]:focus,
             .modal-content .modal-body input[type=password]:focus,
             .modal-content .modal-body textarea:focus,
-            .newaddressmodel select:focus {
+            .newaddressmodel select:focus,
+            .newservicerequest .sub-headding #chkpet:focus,
+            .btn-tomato:focus,
+            .btn-Accept:focus,
+            .btnlightgreen:focus {
                 border-color: #1d798c;
                 outline: 0;
                 box-shadow: none;
@@ -1711,7 +1744,8 @@ footer {
 .touch-us .form-check input {
     height: 1em;
 }
-.touch-us .form-check:focus{
+
+.touch-us .form-check:focus {
     border-color: #1d798c;
     outline: 0;
     box-shadow: none;
@@ -1721,6 +1755,7 @@ footer {
     background-color: #1d798c;
     border-color: #1d798c;
 }
+
 .touch-us .form-check a {
     text-decoration: none;
     color: #1d798c;
@@ -1810,7 +1845,7 @@ footer {
 
 
     .service-provider .register-box input[type=text],
-    .service-provider .register-box  input[type=password] {
+    .service-provider .register-box input[type=password] {
         height: 46px;
     }
 
@@ -1821,13 +1856,13 @@ footer {
             box-shadow: none;
         }
 
-    .service-provider .register-box .input-group-text{
-        height:46px;
+    .service-provider .register-box .input-group-text {
+        height: 46px;
     }
 
-    .work {
-        min-height: 100vh;
-    }
+.work {
+    min-height: 100vh;
+}
 
 .works .background-img1 {
     position: absolute;
@@ -1865,10 +1900,14 @@ footer {
 .upcomingservice,
 .customer-service-provider,
 .admin-body {
-   /* display: flex;*/
+    /* display: flex;*/
     flex-direction: row !important;
     overflow-x: auto;
 }
+
+    .customer-service-provider .customer-table {
+        width: 100%;
+    }
 
     .upcomingservice, .customer-service-provider .sidebar-max-width {
         display: flex;
@@ -1920,24 +1959,25 @@ footer {
 .customer-service-provider tr {
     background-color: #f9f9f9;
 }
-.customer-dashboard 
+
+.customer-dashboard
 .upcomingservice .upcoming-service-table {
     /* margin-left: 30px; */
     width: 843px !important;
 }
 
-    .upcomingservice .upcoming-service-table th {
-        text-align: center;
-        border-bottom: 1px solid #e1e1e1 !important;
-        padding: 15px !important;
-        background-color: #F9F9F9 !important;
-    }
+.upcomingservice .upcoming-service-table th {
+    text-align: center;
+    border-bottom: 1px solid #e1e1e1 !important;
+    padding: 15px !important;
+    background-color: #F9F9F9 !important;
+}
 
-    .upcomingservice .upcoming-service-table tr {
-        /* height: 65px; */
-        min-width: 65px;
-        background: none !important;
-    }
+.upcomingservice .upcoming-service-table tr {
+    /* height: 65px; */
+    min-width: 65px;
+    background: none !important;
+}
 
 .upcomingservice .bottom {
     display: none !important;
@@ -1957,6 +1997,7 @@ footer {
     display: flex;
     justify-content: space-between;
     margin-left: 30px;
+    flex-wrap: wrap;
 }
 
     .customer-service-provider .customer-table .sub-headding h2 {
@@ -1970,28 +2011,30 @@ footer {
         background-color: #146371;
         color: #fff;
     }
+
         .customer-service-provider .customer-table .sub-headding .Export .extrabtn {
             padding: 5px;
             text-decoration: none !important;
             color: white;
         }
 
-        .customer-service-provider .rate {
-          /*  background: #6DA9B5 0% 0% no-repeat padding-box !important;*/
-            background:#1D7A8C !important;
-            border-radius: 17px;
-            color: #fff;
-        }
-            .customer-service-provider .rate:focus {
-                border-color: #1d798c;
-                
-                outline: 0;
-                box-shadow: none;
-            }
-            .customer-service-provider .btnratedisable {
-                cursor: not-allowed !important;
-                pointer-events: visible !important;
-            }
+.customer-service-provider .rate {
+    /*  background: #6DA9B5 0% 0% no-repeat padding-box !important;*/
+    background: #1D7A8C !important;
+    border-radius: 17px;
+    color: #fff;
+}
+
+    .customer-service-provider .rate:focus {
+        border-color: #1d798c;
+        outline: 0;
+        box-shadow: none;
+    }
+
+.customer-service-provider .btnratedisable {
+    cursor: not-allowed !important;
+    pointer-events: visible !important;
+}
 
 .customer-service-provider .status-Completed {
     width: 90px;
@@ -2037,7 +2080,6 @@ footer {
 .customer-table .media-body {
     margin-left: 10px;
     text-align: left;
-  
     display: flex;
     flex-direction: column;
 }
@@ -2054,6 +2096,7 @@ footer {
     height: 34px;
     padding: 0 5px;
 }
+
 .btnReschedule {
     font-size: 14px;
     line-height: 18px;
@@ -2062,8 +2105,9 @@ footer {
     background: #1d7a8c;
     border: none !important;
     color: #fff !important;
-    border-radius:50px;
+    border-radius: 50px;
 }
+
 .btncancel {
     background: #ff6b6b;
     color: #fff !important;
@@ -2071,23 +2115,24 @@ footer {
     line-height: 18px;
     padding: 8px 10px 6px;
     margin: 2px 0;
-    border-radius:50px;
+    border-radius: 50px;
 }
 
 .customer-dashboard tr th:nth-child(1) {
     width: 100px !important;
 }
-    .customer-dashboard tr th:nth-child(2){
-        width:140px !important;
-    }
-    /* customrt service provider css end */
-    nav .navbar-nav-icone {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0px;
-        margin: 0px;
-    }
+
+.customer-dashboard tr th:nth-child(2) {
+    width: 140px !important;
+}
+/* customrt service provider css end */
+nav .navbar-nav-icone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
 
     nav .navbar-nav-icone li {
         list-style: none;
@@ -2472,6 +2517,7 @@ input[type="date"] {
     color: #646464 !important;
     border-radius: 0px !important;
 }
+
 .Book-service .btncheckavailability {
     background: #1d7a8c;
     border: none !important;
@@ -2521,21 +2567,21 @@ input[type="date"] {
             content: url("../img/Book-Service/payment-white.png");
         }
 
-    .Book-service .container-max-width .nav-item .fill .setup-img {
-        content: url("../img/Book-Service/setup-service-white.png");
-    }
+        .Book-service .container-max-width .nav-item .fill .setup-img {
+            content: url("../img/Book-Service/setup-service-white.png");
+        }
 
-    .Book-service .container-max-width .nav-item .fill .schedule-img {
-        content: url("../img/Book-Service/schedule-white.png");
-    }
+        .Book-service .container-max-width .nav-item .fill .schedule-img {
+            content: url("../img/Book-Service/schedule-white.png");
+        }
 
-    .Book-service .container-max-width .nav-item .fill .details-img {
-        content: url("../img/Book-Service/details-white.png");
-    }
+        .Book-service .container-max-width .nav-item .fill .details-img {
+            content: url("../img/Book-Service/details-white.png");
+        }
 
-    .Book-service .container-max-width .nav-item .fill .payment-img {
-        content: url("../img/Book-Service/payment-white.png");
-    }
+        .Book-service .container-max-width .nav-item .fill .payment-img {
+            content: url("../img/Book-Service/payment-white.png");
+        }
 
 .book-service-body .quantity h2 {
     font-size: 16px;
@@ -2611,31 +2657,30 @@ input[type="date"] {
 .tab-content input {
     max-width: 350px;
     display: inline-block;
-
 }
+
     .tab-content input[type=text],
-    .tab-content select
-    {
-        height:46px;
-    }
-        .tab-content input:focus, .tab-content select:focus, .tab-content textarea:focus{
-        border-color: #1d798c;
-        
-        outline: 0;
-        box-shadow: none;
+    .tab-content select {
+        height: 46px;
     }
 
-
-        .btncontinue {
-            font-size: 20px;
-            line-height: 24px;
-            font-weight: 700;
-            padding: 15px 34px;
-            background: #1d7a8c !important;
-            border-radius: 50px;
-            border: none !important;
-            color: #fff !important;
+        .tab-content input:focus, .tab-content select:focus, .tab-content textarea:focus {
+            border-color: #1d798c;
+            outline: 0;
+            box-shadow: none;
         }
+
+
+.btncontinue {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    padding: 15px 34px;
+    background: #1d7a8c !important;
+    border-radius: 50px;
+    border: none !important;
+    color: #fff !important;
+}
 
 .book-service-body .timedate {
     display: flex;
@@ -2714,11 +2759,12 @@ input[type="date"] {
     border-color: #1d798c;
     outline: 0;
     box-shadow: none;
-   
 }
+
 .Book-service .form-check-input:checked {
-    background-color:#1D7A8C;
+    background-color: #1D7A8C;
 }
+
 .book-service-body .effective-price {
     line-height: 25px;
 }
@@ -2813,7 +2859,6 @@ input[type="date"] {
 .book-service-body .accordion .accordion-button:focus {
     border: none;
     box-shadow: none;
-
 }
 
 .book-service-body .FAQ .accordion-button {
@@ -2886,8 +2931,8 @@ input[type="date"] {
 /*.book-service-body .Address-list-item .form-check-input:checked[type=radio] {
     background-image: none;
 }*/
-.book-service-body .Address-list-item .form-check-input{
-    position:relative;
+.book-service-body .Address-list-item .form-check-input {
+    position: relative;
 }
 
     .book-service-body .Address-list-item .form-check-input:checked[type=radio]::after {
@@ -2902,7 +2947,8 @@ input[type="date"] {
         border-radius: 12px;
         border-color: #1d7a8c !important;
     }
-    }
+
+}
 
 .book-service-body .Address-list .btnaddress {
     padding: 10px 15px;
@@ -2923,7 +2969,7 @@ input[type="date"] {
     border-radius: 3px;
     margin-bottom: 20px;
     background: #f8f8f8;
-    display:none;
+    display: none;
 }
 
     .newAddress input,
@@ -2939,28 +2985,30 @@ input[type="date"] {
             box-shadow: none;
         }
 
-    .newAddress .btnsave{
-        background:#1d798c;
-        color:white;
+    .newAddress .btnsave {
+        background: #1d798c;
+        color: white;
     }
 
-    .btn-rounded {
-        border: 1px solid;
-        border-color: #c6c6c6;
-        color: #666;
-        transition: all .3s ease;
-        background: 0 0;
-        font-size: 16px;
-        line-height: 24px;
-        padding: 10px 25px;
-        border-radius: 50px;
-        width: 102px;
-    }
-.btnaction{
-    display:flex;
+.btn-rounded {
+    border: 1px solid;
+    border-color: #c6c6c6;
+    color: #666;
+    transition: all .3s ease;
+    background: 0 0;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 25px;
+    border-radius: 50px;
+    width: 102px;
 }
+
+.btnaction {
+    display: flex;
+}
+
 .newAddress.block {
-    display:block !important;
+    display: block !important;
 }
 
 /*payment*/
@@ -2968,35 +3016,42 @@ input[type="date"] {
     font-size: 16px;
     font-weight: 700;
 }
+
 .payment input[type=text] {
     height: 46px;
 }
+
 .payment .input-group .card-number {
-    position:relative;
+    position: relative;
 }
+
 .payment .payment-card img {
     height: 25px;
     position: absolute;
     top: 12px;
     left: 10px;
 }
-.payment .payment-card .card-number{
-    padding-left:50px;
+
+.payment .payment-card .card-number {
+    padding-left: 50px;
 }
+
     .payment .payment-card .card-number:focus {
-        box-shadow:#1D7A8C;
+        box-shadow: #1D7A8C;
         outline: 0;
         box-shadow: none;
     }
-    .payment .payment-card .month-year {
-        width: 80px;
-        position: absolute;
-        top: 1px;
-        right: 70px;
-        border: 0px;
-        /* padding: 1px; */
-        height: 44px;
-    }
+
+.payment .payment-card .month-year {
+    width: 80px;
+    position: absolute;
+    top: 1px;
+    right: 70px;
+    border: 0px;
+    /* padding: 1px; */
+    height: 44px;
+}
+
 .payment .payment-card .CC {
     position: absolute;
     top: 1px;
@@ -3005,34 +3060,40 @@ input[type="date"] {
     height: 44px;
     width: 60px;
 }
+
     .payment .payment-card .CC:focus,
     .payment .payment-card .month-year:focus {
         outline: 0;
         box-shadow: none;
     }
 
-.payment .btnsave{
-    border-color:#1D7A8C;
-    color:#1D7A8C;
+.payment .btnsave {
+    border-color: #1D7A8C;
+    color: #1D7A8C;
 }
-.payment .accept-card{
-    float:right;
+
+.payment .accept-card {
+    float: right;
 }
-    .payment .accept-card p{
-        margin:0px;
-        font-size:10px;
+
+    .payment .accept-card p {
+        margin: 0px;
+        font-size: 10px;
     }
+
     .payment .accept-card img {
         height: 25px
     }
- 
-    /*model css input bookservice*/
-.successmodel .modal-header{
-    border-bottom:none;
+
+/*model css input bookservice*/
+.successmodel .modal-header {
+    border-bottom: none;
 }
-.successmodel .modal-footer{
-    border-top:none;
+
+.successmodel .modal-footer {
+    border-top: none;
 }
+
 .img-box-successmodel {
     display: inline-block;
     background: #67b644;
@@ -3040,12 +3101,14 @@ input[type="date"] {
     border-radius: 500px;
     margin-bottom: 25px;
 }
+
 .successmessage {
     margin: 0 0 20px;
     font-size: 22px;
     line-height: 26px;
     font-weight: 400;
 }
+
 .mysettings li {
     text-align: center;
 }
@@ -3178,28 +3241,33 @@ input[type="date"] {
     font-weight: 700;
     color: #646464;
 }
+
 .mysettngsimg {
     height: 26px;
     width: 24px;
     background-repeat: no-repeat;
     background-size: 24px;
     background-position: 0 0;
-    margin:auto;
+    margin: auto;
 }
+
 .mysettings-details-img {
     background-image: url(../img/customer-service/my-account-details.png);
 }
+
 .mysettings-address-img {
     background-image: url(../img/customer-service/my-account-address.png);
 }
+
 .mysettings-password-img {
     background-image: url(../img/customer-service/my-account-password.png);
 }
-.mysettngsimg:hover{
-    background-position:0 -26px;
+
+.mysettngsimg:hover {
+    background-position: 0 -26px;
 }
 
-#settingsuseraddress .form-check-input{
+#settingsuseraddress .form-check-input {
     display: none !important;
 }
 
@@ -3207,22 +3275,26 @@ input[type="date"] {
 #modelserviceprovidernamerated {
     font-size: 25px;
 }
-.modal-body .fs1{
-    font-size:20px;
+
+.modal-body .fs1 {
+    font-size: 20px;
 }
+
 .modal-header .dvProimgContainer {
     border-radius: 500px;
     border: 1px solid #b0b0b0;
     height: 46px;
     width: 46px;
 }
-.modal-body label{
-    font-weight:700;
-    display:block;
+
+.modal-body label {
+    font-weight: 700;
+    display: block;
 }
-.modal-body label span{
-    font-weight: normal;
-}
+
+    .modal-body label span {
+        font-weight: normal;
+    }
 /* book services css end */
 footer .detaile {
     border-top: 2px solid #424242;
@@ -3276,11 +3348,14 @@ footer .footer-max-width .nav li a:hover {
 }
 
 #rateSPModal .modal-dialog,
-#trmodel .modal-dialog{
-    max-width:100%;
+#trmodel .modal-dialog,
+#trserviceprovidermodel .modal-dialog {
+    max-width: 100%;
 }
+
 #rateSPModal .modal-content,
-#trmodel .modal-content {
+#trmodel .modal-content,
+#trserviceprovidermodel .modal-content {
     max-width: 750px !important;
 }
 
@@ -3291,10 +3366,165 @@ footer .footer-max-width .nav li a:hover {
     font-weight: 700 !important;
     display: inline-block;
     margin-left: 5px;
-    float:right;
+    float: right;
 }
 
-.newaddressmodel select{
-    height:46px;
+.newaddressmodel select {
+    height: 46px;
+}
 
+
+/*seviceprovider css*/
+.genderrow input{
+    height:16px;
+}
+.genderrow label{
+    font-weight:normal !important;
+}
+.Avatar .Avatar-img {
+    height: 85px;
+    border-radius: 85px;
+    border: 3px solid transparent;
+    cursor: pointer;
+}
+
+#Avatar input[type="radio"]:checked + label img{
+    border: 3px solid #1D7A8C !important;    
+}
+.dvmysettings .settingsheadding {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.newservicerequest tr th:nth-child(5){
+    width:125px !important;
+}
+.newservicerequest .sub-headding #chkpet:checked {
+    background-color: #1d798c;
+    border-color: #1d798c;
+}
+.avatar-headding h3 {
+    color: #646464;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    font-weight: 700;
+    margin: 0 0 15px;
+}
+.avatar-headding img{
+    height:70px;
+    background-color:white;
+}
+
+
+/*blockquote customer css*/
+.dvblockcustomer {
+    border: 1px solid transparent !important;
+}
+
+    .dvblockcustomer .blockcustomer {
+        border: 1px solid transparent !important;
+    }
+
+    .dvblockcustomer .dataTables_wrapper {
+        border: 1px solid transparent !important;
+    }
+
+.blockcustomer tbody {
+    display: flex;
+}
+
+    .blockcustomer tbody tr {
+        display: flex;
+        flex-direction: column;
+        margin: 0px;
+        padding: 15px;
+        border: 1px solid #e1e1e1;
+        width: 310px !important;
+        margin: 15px;
+    }
+
+        .blockcustomer tbody tr td {
+            border-top: none !important;
+        }
+            .blockcustomer tbody tr td img {
+                border: 1px solid #acacac;
+                border-radius:500px;
+            }
+.genderrow .form-check-input:checked {
+    background-color: white;
+    border: 1px solid #1d7a8c !important;
+
+}
+.genderrow .form-check-input {
+    position: relative;
+}
+    .genderrow .form-check-input:checked[type=radio]::after
+    {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        background-color: #1d7a8c;
+        border-radius: 12px;
+        border-color: #1d7a8c !important;
+    }
+
+.btn-Accept{
+    background-color:#1D7A8C !important;
+    color:white;
+    padding:2px;
+}
+.btn-tomato{
+    background-color:#ff6b6b;
+    line-height:24px;
+    width:80px;
+    padding:5px;
+}
+
+.newservicerequest .action{
+    min-width:155px !important;
+}
+.ratings .category select{
+   width:auto;
+}
+.ml-30 {
+    margin-left:30px !important;
+}
+.ratings .colume-3 {
+    min-width: 50%;
+    padding-left:10px;
+}
+.ratings .colume-2,
+.ratings .colume-1 {
+    min-width: 25%;
+    text-align: left;
+    padding-left: 10px;
+}
+.ratings .commentbox{
+    float:left;
+}
+#trserviceprovidermodel .modal-content iframe{
+    height:100%;
+    width:100%;
+}
+#trserviceprovidermodel .modal-content .model-body-body{
+    display:flex;
+}
+.modal-body .d_t {
+    font-size: 22px;
+    line-height: 26px;
+    color: #4f4f4f;
+    font-weight: 700;
+}
+.btnlightgreen {
+    width: 100px;
+    background-color: #67b644;
+    color:white;
+    border-radius:500px;
+}
+.serviceproviderhistory #example_wrapper{
+    margin-top:42px;
 }

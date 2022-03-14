@@ -1,5 +1,6 @@
 ﻿using Helperland.Data;
 using Helperland.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,9 +70,9 @@ namespace Helperland.Repository
 
         public User GetUSerbyloginid(int userid)
         {
-            return _helperlandContext.Users.Where(x => x.UserId == userid).FirstOrDefault();
-
-           // return Json(new SingleEntity<ForgotViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter the Registrated Email" });
+            return _helperlandContext.Users.Where(x => x.UserId == userid).Include(c => c.UserAddresses).FirstOrDefault();
+            //ServiceRequest serviceRequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceRequestId).Include(c => c.ServiceRequestExtras).FirstOrDefault();
+            // return Json(new SingleEntity<ForgotViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter the Registrated Email" });
         }
 
         public User UpdateUserDetils(User user)

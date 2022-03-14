@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "BlockCustomer";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+<div class="customer-table  newservicerequest dvblockcustomer">
+    <input type="hidden" id="hiddenuserid" value="@sessionUser.UserID" />
+    <input type="hidden" id="hiddenServiceRequestId" value="" />
+    <input type="hidden" id="hiddenserviceproviderid" value="" />
+    <table id="example" class="display customer-table blockcustomer" style="width:100%">
+        <thead class="d-none">
+            <tr>
+                <th>Service ID <img alt="" class="sorting-img"></th>
+                <th>Service data <img alt="" class="sorting-img"></th>
+                <th class="cus-dait">Customer details <img alt="" class="sorting-img"></th>
+                
+
+            </tr>
+        </thead>
+        <tbody class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+        </tbody>
+    </table>
+</div>
+
+
+@section UserLayoutSection{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+               
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: false,
+                info: true,
+               
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": [],
+               
+            });
+        });
+
+        $(document).ready(function () {
+            loaddata();
+
+        });
+
+        function loaddata() {
+            $.ajax({
+                url: '/serviceprovider/getallcustomer',
+                type: 'post',
+              
+                success: function (respo) {
+                    $('#example').DataTable().clear();
+                  
+                    console.log(respo);
+                    respo.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        var btnbandu;
+                        debugger;
+                        if (element.blockeduser != null) {
+                           btnnbandu = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="UnBlockCustomer(' + element.customeruserid + ')" value="UnBlock">UnBlock</button>'
+                        }
+                        else {
+                            btnnbandu =  '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockCustomer(' + element.customeruserid + ')" value="Block">Block</button>'
+                        }
+                        t.row.add([
+                            '<img src="..//img/service-provider/avatar-hat.png" alt="Alternate Text" />',
+                            ' <label>' + element.customername + element.customername2 + '</label>',
+                            btnnbandu
+                        ]).draw(false);
+                    });
+                }
+            });
+        }
+        function BlockCustomer(targetedid) {
+            $.ajax({
+                url: '/serviceprovider/BlockCustomerByserviceprovider',
+                type: 'post',
+                data: { 'targetedid': targetedid},
+                success: function (respo) {
+                    $('#example').DataTable().clear();
+                    console.log(respo.length);
+                    console.log(respo);
+                  //  $(".btn-blockUnblock").html("Unblock");
+                    location.reload();
+                }
+            });
+        }
+        function UnBlockCustomer(targetedid) {
+            $.ajax({
+                url: '/serviceprovider/UnBlockCustomerByserviceprovider',
+                type: 'post',
+                data: { 'targetedid': targetedid },
+                success: function (respo) {
+                    $('#example').DataTable().clear();
+                    
+                    console.log(respo);
+                    location.reload();
+                    //  $(".btn-blockUnblock").html("Unblock");
+                }
+            });
+        }
+
+    </script>
+}

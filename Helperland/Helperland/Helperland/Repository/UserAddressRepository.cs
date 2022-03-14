@@ -33,6 +33,7 @@ namespace Helperland.Repository
         {
             return _helperlandContext.UserAddresses.Where(x => x.AddressId == id).FirstOrDefault();
         }
+      
         public UserAddress UpdateAddress(UserAddress userAddress)
         {
             _helperlandContext.UserAddresses.Update(userAddress);
@@ -49,5 +50,16 @@ namespace Helperland.Repository
             return (selectedaddress);
 
         }
+
+        public List<UserAddress> GetAllAddressbypostalcode(int userid, string postalcode)
+        {
+            List<UserAddress> addresses = _helperlandContext.UserAddresses.Where(x => x.UserId == userid && x.PostalCode == postalcode).ToList();
+            return addresses;
+        }
+
+        //public UserAddress GetAddressDetialsbyUserid(int userid)
+        //{
+        //    return _helperlandContext.UserAddresses.Where(x => x.UserId == id).FirstOrDefault();
+        //}
     }
 }

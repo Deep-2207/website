@@ -18,22 +18,10 @@
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
                 <span class="settings-details-name"> My Details</span>
-                <span class="mysettings-details-img mysettngsimg d-none">
-
-                </span>
+                <span class="mysettings-details-img mysettngsimg d-none"></span>
             </button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link tabaddress" id="pills-profile-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                    aria-selected="false">
 
-                <span class="settings-details-name">  My Addresses</span>
-                <span class="mysettings-address-img d-none mysettngsimg">
-
-                </span>
-            </button>
-        </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
@@ -48,14 +36,19 @@
     </ul>
     <div class="alert alert-success d-none" role="alert" id="successmesg">
         @*Data Updated Succesfully*@
-        
+
     </div>
     <div class="tab-content" id="pills-tabContent">
         <!-- tab-1 -->
         <div class="tab-pane fade show active tab-1" id="pills-home" role="tabpanel"
              aria-labelledby="pills-home-tab">
+            <div class="avatar-headding">
+                <img alt="avtar" id="Profileicon" style="float: right;" src="">
+                <h3 class="pt-4">Basic Details</h3>
+            </div>
 
             <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+
                 <div class="col-md-4">
                     <label for="txtfirstname" class="form-label">First name</label>
                     <input type="text" class="form-control" id="txtfirstname"
@@ -103,7 +96,6 @@
                             }
                         </select>
                         <select class="form-select month ms-2" aria-label="Default select example" id="fillselMonth">
-                            
                             <option value="0">Month</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
@@ -117,7 +109,6 @@
                             <option value="10">October</option>
                             <option value="11">November</option>
                             <option value="12">December</option>
-
                         </select>
                         <select class="form-select year ms-2" aria-label="Default select example" id="ddlyear" value="0">
                             <option value="0" selected>
@@ -135,78 +126,107 @@
                     <span class="text-danger" id="spndboerrormesg"></span>
                 </div>
 
+                <div class="col-md-4">
+                    <label for="usernationality" class="form-label">Nationality</label>
+                    <select class="form-select language ms-2 w-100" id="usernationality">
+                        <option value="1" selected>Indian</option>
+                        <option value="2">Germany</option>
+                        <option value="3">American</option>
+                    </select>
+                </div>
             </div>
 
             <hr class="m-tb-15">
+            <label> Gender</label>
+            <div class="col genderrow mb-3">
 
-            <div class="col-md-4 mb-15">
-                <label for="userlanguage" class="form-label">My preferred language</label>
-                <select class="form-select language ms-2 w-auto" id="userlanguage">
-                    <option value="1" selected>English</option>
-                    <option value="2">Hindi</option>
-                    <option value="3">Gujarati</option>
-                </select>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" id="Male" value="1">
+                    <label class="form-check-label" for="Male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" id="Female" value="2">
+                    <label class="form-check-label" for="Female">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" id="Other" value="3">
+                    <label class="form-check-label" for="Other">RatherNotToSay</label>
+                </div>
             </div>
-            <div class="text-center text-md-start">
-                <div class="btncontinue d-inline-block m-sm-auto" onclick="saveupdatedata(@sessionUser.UserID)">Save</div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+
+                <div class="Avatar w-100" id="Avatar">
+                    <div class="avatar-headding mb-2">
+                        Select Avtar
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-1" value="option1" hidden checked>
+                        <label class="form-check-label" for="Avatar-1"><img src="~/img/service-provider/avatar-car.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-2" value="option2" hidden>
+                        <label class="form-check-label" for="Avatar-2"><img src="~/img/service-provider/avatar-female.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-3" value="option1" hidden>
+                        <label class="form-check-label" for="Avatar-3"><img src="~/img/service-provider/avatar-hat.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-4" value="option1" hidden>
+                        <label class="form-check-label" for="Avatar-4"><img src="~/img/service-provider/avatar-iron.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-5" value="option2" hidden>
+                        <label class="form-check-label" for="Avatar-5"><img src="~/img/service-provider/avatar-male.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                        <input class="form-check-input" type="radio" name="Avatar" id="Avatar-6" value="option1" hidden>
+                        <label class="form-check-label" for="Avatar-6"><img src="~/img/service-provider/avatar-ship.png" alt="Alternate Text" class="Avatar-img" /></label>
+                    </div>
+                </div>
             </div>
-        </div>
 
+            <label class="mt-3 settingsheadding w-100">My Address</label>
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
 
-        <!-- //tab-2 -->
-        <div class="tab-pane fade profile" id="pills-profile" role="tabpanel"
-             aria-labelledby="pills-profile-tab">
-            <table id="tbladdresses" class="display mysetting-address mb-15" style="width:100%">
-                <thead>
-                    <tr>
-                        <th class="col-md-9 pl-25">Address<img alt="" class="sorting-img"></th>
-                        <th class="col-md-3 text-center">Action <img alt="" class="sorting-img"></th>
+                <div class="col-md-4">
+                    <label for="txtstreetname" class="form-label">Street name</label>
+                    <input type="text" class="form-control" id="txtstreetname"
+                           aria-describedby="emailHelp" placeholder="Street name">
+                    <span class="text-danger" id="spnstreetnameerror"></span>
+                </div>
+                <div class="col-md-4">
+                    <label for="txthousenumber" class="form-label">House number</label>
+                    <input type="text" class="form-control" id="txthousenumber"
+                           aria-describedby="emailHelp" placeholder="House number">
+                    <span class="text-danger" id="spnhousenumbererror"></span>
+                </div>
+                <div class="col-md-4">
 
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @*<tr id="tdaddresslist">
-
-                        <td class="text-left">
-                        </td>
-                        <td class="d-flex action justify-content-center">
-
-                            <a href="" type="button" id="editaddress" data-bs-toggle="modal"
-                               data-bs-target="#settingnewaddress">
-
-                                <img src="~/img/customer-service/edit-icon.png" alt="">
-                            </a>
-
-                            <a href="" data-bs-toggle="modal" data-bs-target="#settingdeleteaddress">
-                                <img src="~/img/customer-service/delete-icon.png" alt="    ">
-                            </a>
-                        </td>
-
-                    </tr>*@
-
-
-                </tbody>
-
-            </table>
-
-
-
-            <div class="bottomline">
-                <div class="left-bottom">
-
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btncutom1" data-bs-toggle="modal"
-                            data-bs-target="#settingnewaddress" id="addnewaddress">
-                        Add New Address
-                    </button>
+                    <label for="txtpostalcode" class="form-label">Postal code</label>
+                    <input type="text" class="form-control" id="txtpostalcode"
+                           aria-describedby="emailHelp" placeholder="Postal code">
+                    <span class="text-danger" id="spnpostalcodeerrormesg"></span>
 
                 </div>
-                <div class="right-bottom"> </div>
             </div>
 
+            <div class="row row-cols-1 row-cols-md-2 g-4 mt-0 mb-3">
+                <div class="col-md-4">
+                    <label for="dropcity" class="form-label">City</label>
+                    <select class="form-select" id="dropcity" aria-describedby="emailHelp"
+                            placeholder="City">
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center text-md-start">
+                <button class="btncontinue d-inline-block m-sm-auto" onclick="saveupdatedata(@sessionUser.UserID)">Save</button>
+            </div>
         </div>
-        <!-- tab-3 -->
+
+        <!-- //tab-2 -->
         <div class="tab-pane fade tab-3" id="pills-contact" role="tabpanel"
              aria-labelledby="pills-contact-tab">
 
@@ -310,32 +330,11 @@
 </div>
 
 
-<div class="modal fade newaddressmodel" id="settingdeleteaddress" tabindex="-1" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Address</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body settings-newaddress">
-                Are you sure you want to delete this address
-               
-            </div>
-            <div class="modal-footer w-100 justify-content-between text-center" id="settingdeleteaddressfinaldelete">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
 @section UserLayoutSection{
     <script>
 
         var _RegExpressMobile = new RegExp("^[0-9]{10}$");
         $(document).ready(function () {
-
             loaddata();
         });
 
@@ -343,11 +342,12 @@
         function loaddata() {
             var userid = $("#loginuserid").val();
             $.ajax({
-                url: '/customer/filldeitails',
+                url: '/serviceprovider/filldeitails',
                 data: { 'userid': userid },
                 type: 'post',
 
                 success: function (resp) {
+
                     console.log(resp);
                     document.getElementById("txtfirstname").value = resp.firstName;
                     document.getElementById("txtlastname").value = resp.lastName;
@@ -355,19 +355,44 @@
                     document.getElementById("txtphonenumber").value = resp.mobile;
                     $("userlanguage").val(resp.languageId);
 
-                    var nData = new Date(resp.dateOfBirth);
+                    if (resp.dateOfBirth != null) {
+                        debugger;
+                        var nData = new Date(resp.dateOfBirth);
+                        $("#ddlday").val(nData.getDate());
+                        console.log(nData.getMonth());
+                        $("#fillselMonth").val((nData.getMonth() + 1).toString());
+                        document.getElementById("fillselMonth").value = (new Date(nData).getMonth() + 1);
+                        $("#ddlyear").val(nData.getFullYear());
+                    }
 
-                    $("#ddlday").val(nData.getDate());
-                    console.log(nData.getMonth() + 1);
-                    $("#fillselMonth").val(nData.getMonth() + 1).toString();
+                    $("input[type=radio][name=Gender][value=" + resp.gender + "]").attr('checked', true);
 
-                    $("#ddlyear").val(nData.getFullYear());
+                    $("#Profileicon").attr('src', resp.userProfilePicture);
 
+                    $("input[type=radio][name=Avatar]").each(function () {
+                        var spimg = $(this).closest(".form-check").find("label").find("img").attr("src");
+
+                        if (spimg == resp.userProfilePicture) {
+                            $(this).attr('checked', true);
+                        }
+                    });
                     $("#userlanguage").val(resp.languageId);
+
+                    /*address edit add*/
+                  
+                    if (resp.userAddresses.length > 0) {
+                        $("#txtstreetname").val(resp.userAddresses[0].addressLine1);
+                        $("#txthousenumber").val(resp.userAddresses[0].addressLine2);
+                        $("#txtpostalcode").val(resp.userAddresses[0].postalCode);
+                        filecitydropdwon(resp.userAddresses[0].postalCode);
+                        $("#dropcity").val(resp.userAddresses[0].city);
+                    }
                 }
             });
 
         }
+
+
        /* tab 1 js*/
         function saveupdatedata(userid) {
 
@@ -377,15 +402,6 @@
 
             //dboyear.toString() + "/" + dbomonth.toString() + "/" + (dboday + 1).toString()
             var dbo = new Date(dboyear, dbomonth-1, dboday);
-            console.log(dbo);
-            //dboday: $("#ddlday").val(),
-            //    dbomonth : $("#ddlmonth").val(),
-            //        dboyear : $("#ddlyear").val()
-            console.log(dbo.toISOString());
-
-
-
-
 
             if (dboday != "" || dbomonth != "" || dboyear != "") {
                 if (!isValidDate(dboyear, dbomonth, dboday)) {
@@ -396,7 +412,6 @@
                 }
             }
 
-
             var customer = {
                 userid: $("#loginuserid").val(),
                 firstName: $("#txtfirstname").val(),
@@ -404,9 +419,11 @@
                 email: $("#txtemail").val(),
                 mobile: $("#txtphonenumber").val(),
                 language: $("userlanguage").val(),
-                dateOfBirth: dbo.toISOString()
+                dateOfBirth: dbo.toISOString(),
+                gender: $('input[name="Gender"]:checked').val(),
+
             };
-            debugger;
+
             if ($("#txtfirstname").val() == "") {
                 $("#errorfirstname").html("Please enter the firstName");
             }
@@ -419,7 +436,7 @@
             else {
                 $("#spnerrorlastname").html("");
             }
-            
+
             if ($("#txtphonenumber").val() == "") {
                 $("#spntxtphonenumber").html("Please enter the Phonenumber");
             }
@@ -429,26 +446,45 @@
             else {
                 $("#spntxtphonenumber").html("");
             }
-           
+
+            //address tab
+            debugger;
+            if ($("#txtstreetname").val() == "") {
+                $("#spnstreetnameerror").html("Please enter the Street name");
+            }
+            else {
+                $("#spnstreetnameerror").html("");
+            }
+            if ($("#txthousenumber").val() == "") {
+                $("#spnhousenumbererror").html("Please enter the house Number");
+            }
+            else {
+                $("#spnhousenumbererror").html("");
+            }
+            if ($("#txtpostalcode").val() == "") {
+                $("#spnpostalcodeerrormesg").html("Please enter the Postal code");
+            }
+            else {
+                $("#spnpostalcodeerrormesg").html("");
+            }
 
 
-
-            //if (!RegExpressEmail.test($("#txtemail").val())) {
-            //    $("#spnemailerrormesg").html("Please enter Valid Email").fadeOut(9999);
-            //}
-            //else {
-            //    $("#spnemailerrormesg").html("");
-            //}
-
-
-
+            //address tab over
 
             if ($("#errorfirstname").val() == "" &&
                 $("#spnerrorlastname").val() == "" &&
                 $("#spntxtphonenumber").val() == "" &&
-              
-                $("#txtfirstname").val() != "" && $("#txtlastname").val() != "" && $("#txtphonenumber").val() != "" 
-                && $("#spndboerrormesg").html() == "") {
+                $("#txtfirstname").val() != "" &&
+                $("#txtlastname").val() != "" &&
+                $("#txtphonenumber").val() != "" &&
+                $("#spndboerrormesg").html() == "" &&
+                $("#txtstreetname").val() != "" &&
+                $("#txthousenumber").val() != "" &&
+                $("#txtpostalcode").val() != "" &&
+                $("#spnstreetnameerror").val() == "" &&
+                $("#spnhousenumbererror").val() == "" &&
+                $("#spnpostalcodeerrormesg").val() == ""
+            ) {
                 console.log(customer + "customer");
                 $.ajax({
                     url: '/customer/updatedetialsbyuserid',
@@ -462,7 +498,36 @@
                         if (resp) {
                             $("#successmesg").removeClass(" d-none");
                             $("#successmesg").text('Your Details is Updated');
-                          
+
+                        }
+
+                    }
+                });
+               
+                var serviceprovideraddress = {
+                    userid: userid,
+                    addressLine1: $("#txtstreetname").val(),
+                    addressLine2: $("#txthousenumber").val(),
+                    postalCode: $("#txtpostalcode").val(),
+                    mobile: $("#txtphonenumber").val(),
+                    city: $("#dropcity").val(),
+                    email: $(":input[type=text][readonly='readonly']").val()
+                    
+                };
+                //address ajax
+                $.ajax({
+                    url: '/serviceprovider/addorupdateaddress',
+                    type: 'post',
+                    data: serviceprovideraddress,
+                    datatype: "json",
+                    cache: false,
+
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp) {
+                            $("#successmesg").removeClass(" d-none");
+                            $("#successmesg").text('Your Details is Updated');
+
                         }
 
                     }
@@ -486,91 +551,18 @@
             return input;
         }
 
-
+        $("input[type=radio][name=Avatar]").click(function () {
+            $("input[type=radio][name=Avatar]").each(function () {
+                if ($(this).prop('checked')) {
+                    var spprofile = $(this).closest(".form-check").find("label").find("img").attr("src");
+                    $("#Profileicon").attr('src', spprofile);
+                }
+            });
+        });
 
 
 
         /*tab2 js*/
-
-
-
-        function OpenEditCustomerAddressModal(addressid) {
-            $("#modeltitle").html("Edit Address");
-            $("#btnaddressmodel").html('<button type="button" class="btn btncontinue w-100" id="addressmodelbtn" onclick="Updateaddress(' + addressid + ')">Update Address</button>');
-            $("#settingnewaddress").modal("show");
-
-            $.ajax({
-                type: "POST",
-                url: "/customer/GetAddressDetialsbyid",
-                data: { "addressid": addressid },
-                success: function (res) {
-                    console.log(res);
-
-                    $("#txtstreetname").val(res.addressLine1);
-                    $("#txthousenumber").val(res.addressLine2);
-                    $("#txtpostalcode").val(res.postalCode);
-                    $("#mobilenumber").val(res.mobile);
-                    filecitydropdwon(res.postalCode);
-                    $("#dropcity").val(res.city);
-                }
-
-            });
-
-
-        }
-
-
-
-        function OpenDeleteCustomerAddressModel(addressid) {
-            $("#settingdeleteaddress").modal("show");
-            $("#settingdeleteaddressfinaldelete").html('<button type="button" class="btn btncontinue text-left" onclick="deleteadderess(' + addressid + ')">Yes</button>')
-        }
-       
-        $("#addnewaddress").click(function () {
-            $("#btnaddressmodel").html('<button type="button" class="btn btncontinue w-100" id="addressmodelbtn" onclick="SaveNewAddress()">Save</button>');
-            $("#addressmodelbtn").html("Save");
-        });
-       
-
-        $(".tabaddress").click(function () {
-
-
-
-            //userid = $("#loginuserid").val();
-            //$("#tdaddresslist").load('/customer/Getaddress?userId=' + userid);
-
-
-
-
-            $.ajax({
-                type: "POST",
-                url: "/customer/getcutomeraddress",
-                dataType: 'json',
-                success: function (resp) {
-
-                    console.log(resp);
-
-                    var htmlContent = "";
-                    
-                    resp.forEach(function (element) {
-                        console.log(element)
-                        htmlContent = htmlContent + "<tr><td><b>Address:</b> " + element.addressLine1 + " " + element.addressLine2 + ", " +
-                            element.postalCode + " " + element.city + "<br />" + "<b>Phone number:</b> " + element.mobile + "</td>" +
-                            "<td class='d-flex'><a class='actionIcon editIcon' onclick='OpenEditCustomerAddressModal(" + element.addressId + ")' ><img src='../img/customer-service/edit-icon.png' /></a> " +
-                            "<a class='actionIcon deleteIcon ms-1' onclick='OpenDeleteCustomerAddressModel(" + element.addressId + ")' ><img src='../img/customer-service/delete-icon.png' /></a></td>";
-                      
-
-                    });
-                    $("#tbladdresses tbody").html(htmlContent);
-
-
-
-                }
-
-            });
-
-
-        });
 
         $("#txtpostalcode").change(function () {
             /*$('#inpcurrentpostalcode').html($("#txtzipcode").val());*/
@@ -579,7 +571,7 @@
             // console.log(checkpostalcode);
             $("#loader").addClass("is-active");
             filecitydropdwon(postalcode);
-           
+
         });
 
         function filecitydropdwon(postalcode) {
@@ -590,11 +582,10 @@
                 success: function (res) {
                     console.log(res);
                     $("#loader").removeClass("is-active");
-                    //$.each(res.d, function (data, value) {
-                    //    $("#dropcity").append($("<option></option>").val(value.CountryId).html(value.CountryName));
-                    //})
+
                     if (res.length == 0) {
                         document.getElementById("spnpostalcodeerrormesg").innerHTML = "PLease enter the Valid Postal Code";
+                        $("#fillselMonth").empty();
                     }
                     else {
                         res.forEach((city) => {
@@ -607,197 +598,86 @@
             });
         }
 
-        function SaveNewAddress() {
-            debugger;
-            if (document.getElementById("txtstreetname").value.length > 0) {
-                document.getElementById("spnstreetnameerror").innerHTML = "";
-                if (document.getElementById("txthousenumber").value.length > 0) {
-                    document.getElementById("spnhousenumbererror").innerHTML = "";
-                    if (document.getElementById("mobilenumber").value.length > 0) {
-                        if (document.getElementById("mobilenumber").value.length < 10) {
-                            document.getElementById("spnmobilenumbererror").innerHTML = "Enter valid Mobile number!!";
-                            document.getElementById("spnstreetnameerror").innerHTML = "";
-                            document.getElementById("spnhousenumbererror").innerHTML = "";
-                        }
-                        else {
-                            document.getElementById("spnmobilenumbererror").innerHTML = "";
-                            if (document.getElementById("txtpostalcode").value.length > 0) {
-                                document.getElementById("spnpostalcodeerrormesg").innerHTML = "";
-                                debugger;
-                                var newaddress = {}
-                                newaddress.userid = $("#loginuserid").val();
-                                newaddress.StreetName = $("#txtstreetname").val()
-                                newaddress.Housenumber = $("#txthousenumber").val();
-                                newaddress.City = $("#dropcity").val();
-                                newaddress.PostalCode = $("#txtpostalcode").val();
-                                newaddress.MobileNumber = $("#mobilenumber").val();
-                                console.log(newaddress + "new address");
-                                $("#loader").addClass("is-active");
-                                $.ajax({
-                                    url: '/Home/AddCustomerUserAddress',
-                                    type: 'post',
-                                    dataType: 'json',
-                                    contentType: 'application/json',
-                                    data: JSON.stringify(newaddress),
-                                    success: function (resp) {
-                                        $("#loader").removeClass("is-active");
-                                        if (resp) {
-                                            $(".tabaddress").click();
-                                            clearnewaddressdetail();
+        //function SaveNewAddress() {
+        //    if (document.getElementById("txtstreetname").value.length > 0) {
+        //        document.getElementById("spnstreetnameerror").innerHTML = "";
+        //        if (document.getElementById("txthousenumber").value.length > 0) {
+        //            document.getElementById("spnhousenumbererror").innerHTML = "";
+        //            if (document.getElementById("mobilenumber").value.length > 0) {
+        //                if (document.getElementById("mobilenumber").value.length < 10) {
+        //                    document.getElementById("spnmobilenumbererror").innerHTML = "Enter valid Mobile number!!";
+        //                    document.getElementById("spnstreetnameerror").innerHTML = "";
+        //                    document.getElementById("spnhousenumbererror").innerHTML = "";
+        //                }
+        //                else {
+        //                    document.getElementById("spnmobilenumbererror").innerHTML = "";
+        //                    if (document.getElementById("txtpostalcode").value.length > 0) {
+        //                        document.getElementById("spnpostalcodeerrormesg").innerHTML = "";
+        //                        debugger;
+        //                        var newaddress = {}
+        //                        newaddress.userid = $("#loginuserid").val();
+        //                        newaddress.StreetName = $("#txtstreetname").val()
+        //                        newaddress.Housenumber = $("#txthousenumber").val();
+        //                        newaddress.City = $("#dropcity").val();
+        //                        newaddress.PostalCode = $("#txtpostalcode").val();
+        //                        newaddress.MobileNumber = $("#mobilenumber").val();
+        //                        console.log(newaddress + "new address");
+        //                        $("#loader").addClass("is-active");
+        //                        $.ajax({
+        //                            url: '/Home/AddCustomerUserAddress',
+        //                            type: 'post',
+        //                            dataType: 'json',
+        //                            contentType: 'application/json',
+        //                            data: JSON.stringify(newaddress),
+        //                            success: function (resp) {
+        //                                $("#loader").removeClass("is-active");
+        //                                if (resp) {
+        //                                    $(".tabaddress").click();
+        //                                    clearnewaddressdetail();
 
-                                            $("#settingnewaddress").modal("hide");
+        //                                    $("#settingnewaddress").modal("hide");
 
-                                            $("#tblCustomerAddressList tbody").html(htmlContent);
-                                            $("#successmesg").removeClass(" d-none");
-                                            $("#successmesg").html("New Address Added Succesfully..!!")
+        //                                    $("#tblCustomerAddressList tbody").html(htmlContent);
+        //                                    $("#successmesg").removeClass(" d-none");
+        //                                    $("#successmesg").html("New Address Added Succesfully..!!")
 
-                                        }
-                                        else {
-                                            alert("erorr");
+        //                                }
+        //                                else {
+        //                                    alert("erorr");
 
-                                        }
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                        document.getElementById("spnpostalcodeerrormesg").innerHTML = "PLease enter the Valid Postal Code";
-                                    }
-                                });
-                            }
-                            else {
-                                document.getElementById("spnpostalcodeerrormesg").innerHTML = "Plese enter the postal code";
-                            }
+        //                                }
+        //                            },
+        //                            error: function (err) {
+        //                                console.log(err);
+        //                                document.getElementById("spnpostalcodeerrormesg").innerHTML = "PLease enter the Valid Postal Code";
+        //                            }
+        //                        });
+        //                    }
+        //                    else {
+        //                        document.getElementById("spnpostalcodeerrormesg").innerHTML = "Plese enter the postal code";
+        //                    }
 
-                        }
-                    }
-                    else {
-                        document.getElementById("spnmobilenumbererror").innerHTML = "Enter Mobile number!!";
-                        document.getElementById("spnstreetnameerror").innerHTML = "";
-                        document.getElementById("spnhousenumbererror").innerHTML = "";
-                    }
-                }
-                else {
-                    document.getElementById("spnhousenumbererror").innerHTML = "Enter House number!!";
-                    document.getElementById("spnstreetnameerror").innerHTML = "";
-                    document.getElementById("spnmobilenumbererror").innerHTML = "";
-                }
-            }
-            else {
-                document.getElementById("spnstreetnameerror").innerHTML = "Enter Street name!!";
-                document.getElementById("spnhousenumbererror").innerHTML = "";
-                document.getElementById("spnmobilenumbererror").innerHTML = "";
-            }
+        //                }
+        //            }
+        //            else {
+        //                document.getElementById("spnmobilenumbererror").innerHTML = "Enter Mobile number!!";
+        //                document.getElementById("spnstreetnameerror").innerHTML = "";
+        //                document.getElementById("spnhousenumbererror").innerHTML = "";
+        //            }
+        //        }
+        //        else {
+        //            document.getElementById("spnhousenumbererror").innerHTML = "Enter House number!!";
+        //            document.getElementById("spnstreetnameerror").innerHTML = "";
+        //            document.getElementById("spnmobilenumbererror").innerHTML = "";
+        //        }
+        //    }
+        //    else {
+        //        document.getElementById("spnstreetnameerror").innerHTML = "Enter Street name!!";
+        //        document.getElementById("spnhousenumbererror").innerHTML = "";
+        //        document.getElementById("spnmobilenumbererror").innerHTML = "";
+        //    }
 
-        }
-
-        function Updateaddress(addressid) {
-            debugger;
-            if (document.getElementById("txtstreetname").value.length > 0) {
-                document.getElementById("spnstreetnameerror").innerHTML = "";
-                if (document.getElementById("txthousenumber").value.length > 0) {
-                    document.getElementById("spnhousenumbererror").innerHTML = "";
-                    if (document.getElementById("mobilenumber").value.length > 0) {
-                        if (document.getElementById("mobilenumber").value.length < 10) {
-                            document.getElementById("spnmobilenumbererror").innerHTML = "Enter valid Mobile number!!";
-                            document.getElementById("spnstreetnameerror").innerHTML = "";
-                            document.getElementById("spnhousenumbererror").innerHTML = "";
-                        }
-                        else {
-                            document.getElementById("spnmobilenumbererror").innerHTML = "";
-                            if (document.getElementById("txtpostalcode").value.length > 0) {
-                                document.getElementById("spnpostalcodeerrormesg").innerHTML = "";
-                                debugger;
-                                var newaddress = {}
-                                newaddress.userid = $("#loginuserid").val();
-                                newaddress.addressid = addressid;
-                                newaddress.StreetName = $("#txtstreetname").val()
-                                newaddress.Housenumber = $("#txthousenumber").val();
-                                newaddress.City = $("#dropcity").val();
-                                newaddress.PostalCode = $("#txtpostalcode").val();
-                                newaddress.MobileNumber = $("#mobilenumber").val();
-                                console.log(newaddress + "new address");
-                                $("#loader").addClass("is-active");
-                                $.ajax({
-                                    url: '/customer/UpdateaddressById',
-                                    type: 'post',
-                                    dataType: 'json',
-                                    contentType: 'application/json',
-                                    data: JSON.stringify(newaddress),
-                                    success: function (resp) {
-                                        $("#loader").removeClass("is-active");
-                                        if (resp) {
-                                            $("#settingnewaddress").modal("hide");
-                                           
-                                            $(".tabaddress").click();
-                                            $("#successmesg").removeClass(" d-none");
-                                            $("#successmesg").html("Your Address is Update succesfully..!!")
-                                        }
-                                        else {
-                                            alert("erorr");
-
-                                        }
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                        document.getElementById("spnpostalcodeerrormesg").innerHTML = "PLease enter the Valid Postal Code";
-                                    }
-                                });
-                            }
-                            else {
-                                document.getElementById("spnpostalcodeerrormesg").innerHTML = "Plese enter the postal code";
-                            }
-
-                        }
-                    }
-                    else {
-                        document.getElementById("spnmobilenumbererror").innerHTML = "Enter Mobile number!!";
-                        document.getElementById("spnstreetnameerror").innerHTML = "";
-                        document.getElementById("spnhousenumbererror").innerHTML = "";
-                    }
-                }
-                else {
-                    document.getElementById("spnhousenumbererror").innerHTML = "Enter House number!!";
-                    document.getElementById("spnstreetnameerror").innerHTML = "";
-                    document.getElementById("spnmobilenumbererror").innerHTML = "";
-                }
-            }
-            else {
-                document.getElementById("spnstreetnameerror").innerHTML = "Enter Street name!!";
-                document.getElementById("spnhousenumbererror").innerHTML = "";
-                document.getElementById("spnmobilenumbererror").innerHTML = "";
-            }
-
-        }
-
-        function clearnewaddressdetail() {
-
-            document.getElementById("txthousenumber").value = "";
-            document.getElementById("mobilenumber").value = "";
-            document.getElementById("txtpostalcode").value = "";
-            document.getElementById("txthousenumber").value = "";
-
-        }
-
-        function deleteadderess(addressid) {
-            $.ajax({
-                type: "POST",
-                url: "/customer/deleteaddressByID",
-                data: { "addressid": addressid },
-                success: function (res) {
-                    console.log(res);
-                    if (res) {
-                        $("#loader").removeClass("is-active");
-                        $("#settingdeleteaddress").modal("hide");
-                        $(".tabaddress").click();
-                        $("#successmesg").removeClass(" d-none");
-                        $("#successmesg").html("Your Address Deleted Successfully..!!")
-                    }
-                    
-                    
-
-                }
-
-            });
-        }
+        //}
 
         /*tab 3 js start*/
 
@@ -809,11 +689,7 @@
             var newconfirmpassword = $("#cofirmnewpswd").val();
 
             if ($("#currentpswd").val() == "") {
-
-
                     $("#errorcurrentpsw").html("Please enter the OldPassword");
-
-
             }
             else {
                 if (!_regulerexpforpsw.test($("#currentpswd").val())) {
@@ -822,7 +698,6 @@
                 else {
                     $("#errorcurrentpsw").html("");
                 }
-
             }
             if ($("#newpsw").val() == "") {
                 $("#errornewpsw").html("Please enter the New Password");
@@ -834,7 +709,6 @@
                 else {
                     $("#errornewpsw").html("");
                 }
-
             }
             if ($("#cofirmnewpswd").val() == "") {
                 $("#errornewconfirmpsw").html("Please enter the New Password");
@@ -860,7 +734,7 @@
         function checkoldpassword(psw, newpsw) {
             var userid = @sessionUser.UserID;
               $.ajax({
-                  url: '/customer/checkingoldpassword',
+                  url: '/serviceprovider/checkingoldpassword',
                   data: { 'password': psw, 'userid': userid, 'newpassword':newpsw},
                   type: 'post',
 
@@ -885,5 +759,6 @@
 
 
     </script>
+
 
 }

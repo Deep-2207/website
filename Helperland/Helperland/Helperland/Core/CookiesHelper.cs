@@ -32,7 +32,8 @@ namespace Helperland.Core
                     {
                         UserID = _user.UserId,
                         UserName = _user.FirstName + " " + _user.LastName,
-                        UserType = ((UserTypeEnum)_user.UserTypeId).ToString()
+                        UserType = ((UserTypeEnum)_user.UserTypeId).ToString(),
+                        Email = _user.Email
                     };
                     filterContext.HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
 
@@ -44,7 +45,7 @@ namespace Helperland.Core
                     }
 
                     else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider) {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "ServiceProviderView", controller = "serviceprovider" });
+                        filterContext.Result = new RedirectToRouteResult(new { action = "UpcomingServices", controller = "ServiceProvider" });
                         return;
                     }
 

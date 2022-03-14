@@ -16,7 +16,7 @@
 </section>
 
 <section class="customer-service-provider">
-    <div class="max-width sidebar-max-width">
+    <div class="max-width-1400 sidebar-max-width">
         <nav class="navbar-expand-xl sidebar-main">
 
             <div class="sidebar">
@@ -24,7 +24,7 @@
                 <div class="collapse navbar-collapse sidebar-div-menu" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 sidebar-ul" id="sidebar-menu">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" asp-action="Dashboard" asp-controller="Customer">Dashbord</a>
+                            <a class="nav-link" aria-current="page" asp-action="Dashboard" asp-controller="customer">Dashbord</a>
                         </li>
                         @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
                         {
@@ -51,7 +51,7 @@
                 <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h3 class="mb-30">Service Details</h3>
 
-                <label id="d&t">
+                <label id="d&t" class="d_t">
                 </label>
                 <label class="d-block fw-bold">Duration: <span id="duration" class="fw-normal pl-1"></span><span class="fw-normal">Hrs</span></label>
                 <hr />
@@ -94,15 +94,87 @@
     </div>
 </div>
 
+
+<div class="modal" id="trserviceprovidermodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-30">Service Details</h3>
+                <div class="model-body-body">
+                    <div class="col-md-6">
+                        <label id="serviceproviderd&t" class="d_t">
+                        </label>
+                        <label class="d-block fw-bold">Duration: <span id="serviceproviderduration" class="fw-normal pl-1"></span><span class="fw-normal">Hrs</span></label>
+                        <hr />
+                        <label class="d-block">Service Id:<span id="serviceprovidersrid" class="fw-normal"></span></label>
+                        <label id="">
+                            Extra:
+                            <span class="extraservice" id="serviceproviderextra"></span>
+                        </label>
+                        <label class="col-md-6">
+                            Net Amount:
+                            <span id="serviceproviderprice" class="modelprice"></span><span class="modelprice">€</span>
+                        </label>
+
+
+                        <hr />
+                        <label class="">CustomerName:<span id="customername"></span> </label>
+                        <label class="">Service Address:<span id="serviceproviderserviceaddress"></span> </label>
+                        <label>Phone:<span class="" id="serviceproviderphonenumber"></span> </label>
+                        <label>Email:<span class="" id="serviceprovideremail"></span> </label>
+
+                        <hr />
+
+                        <label>Comments<span class="" id="serviceprovidercomments"></span> </label>
+                        <label id="serviceproviderpet"></label>
+
+
+
+                        <div id="btnaccept" class="mt-2">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59619.503804871325!2d72.91031529119871!3d20.943719127259634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0f795909b2c77%3A0x1494cfa5f558f3dd!2sNavsari%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1647171202164!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                @*<button class="btn btnReschedule d-inline-block" value="" >Reschedule</button>
+        <button class="btn btncancel d-inline-block" value="" >Cancel</button>*@
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
     @RenderSection("UserLayoutSection", required: false)
     <script>
-        $('#sidebar-menu li a').click(function ()
-        {
-            $('#sidebar-menu li').removeClass("active");
-            
-            $("#sidebar-menu li").addClass("active");
+        //$('#sidebar-menu li a').click(function ()
+        //{
+        //    $('#sidebar-menu li').removeClass("active");
+        //    alert("")
+        //    $("#sidebar-menu li").addClass("active");
+        //});
+        $(document).ready(function () {
+           
+            var url = window.location.href;
+            // hightlight active link
+            $("#sidebar-menu li a").each(function () {
+                // checks if its the same on the address bar
+                console.log(url + " - " + (this.href) + " = " + (url == (this.href)))
+                if (url == (this.href)) {
+                    console.log(url + "-------------");
+                    $(this).parent().addClass("active");
+                }
+            });
         });
+
     </script>
 }
 

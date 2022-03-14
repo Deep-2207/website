@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -73,7 +74,7 @@ namespace Helperland.Controllers
                 if (_user.UserTypeId == (int)UserTypeEnum.Customer)
                     return RedirectToAction("Dashboard", "customer");
                 else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
-                    return RedirectToAction("upcomingservice", "serviceprovider");
+                    return RedirectToAction("UpcomingServices", "ServiceProvider");
                 else
                     return RedirectToAction("UserManagement", "admin");
                 //userTypewiseRedirection(user.UserTypeId, user.F
@@ -83,7 +84,6 @@ namespace Helperland.Controllers
                 ViewBag.page = "home";
                 return View();
             }
-
         }
 
         public IActionResult homeindex()
@@ -182,46 +182,8 @@ namespace Helperland.Controllers
                 return View("~/Views/Home/index.cshtml");
             }
 
-            //if (checksessionuser(user))
-            //{
-
-            //    return View();
-            //}
-            //else
-            //{
-            //    ViewBag.openmodel = true;
-            //    return RedirectToAction("Book_Services","home");
-            //}
 
         }
-        //public bool checksessionuser(string check)
-        //{
-        //    var IsUser = false;
-
-        //    if (check != null)
-        //    {
-        //       return (IsUser = true);
-        //    }
-        //    return (IsUser = false);
-
-        //}
-        //[HttpPost]
-        //public IActionResult Book_Services()
-        //{
-        //    //return View(model);
-        //    //if(ViewBag.nextpage == true)
-        //    //{
-        //    //    return 
-        //    //}
-
-        //    return View("Schedule_Plan", "home");
-        //    //return RedirectToAction("Book_Services", new { t = "pills-profile-tab" });
-        //}
-        //[HttpPost]
-        //public IActionResult Schedule_Plan(LoginAndForgotPassword model)
-        //{
-        //    return View("Details", "home");
-        //}
 
 
         [HttpPost]
@@ -265,47 +227,20 @@ namespace Helperland.Controllers
 
             return View();
         }
-        //public JsonResult checkNewAddress(string streetName, int house_number, int city, long phone_Number, UserAddress model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = HttpContext.Session.GetString("User");
-        //        UserAddress userAddress = new UserAddress()
-        //        {
-
-        //        };
-        //        return Json(true);
-        //    }
-        //    return Json(true);
-        //}
-
-
-        //public IActionResult CreateNewAddress(UserAddress model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = HttpContext.Session.GetString("User");
-        //        UserAddress userAddress = new UserAddress()
-        //        {
-        //            UserId = model.UserId,
-        //            AddressLine1 = model.AddressLine1,
-        //            AddressLine2 = model.AddressLine2,
-        //            PostalCode = model.PostalCode,
-        //            City = model.City,
-        //            Mobile = model.Mobile
-        //        };
-
-        //        _helperlandContext.UserAddresses.Add(model);
-        //        _helperlandContext.SaveChanges();
-        //        return View("~/Views/home/Book_Services.cshtml");
-
-        //    }
-        //    return View();
-        //}
-
+      
         [HttpPost]
         public JsonResult AddCustomerUserAddress([FromBody] UserAddressViewModel userAddressViewModel)
         {
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+
             State state = _stateRepository.GetStateName(userAddressViewModel.City.ToString().Trim());
             UserAddress userAddress = new UserAddress
             {
@@ -315,7 +250,10 @@ namespace Helperland.Controllers
                 City = userAddressViewModel.City.ToString().Trim(),
                 State = state.StateName,
                 Mobile = userAddressViewModel.MobileNumber,
-                UserId = Convert.ToInt32(userAddressViewModel.UserID)
+                UserId = Convert.ToInt32(userAddressViewModel.UserID),
+                Email = sessionUser.Email
+    
+
             };
 
             userAddress = _userAddressRepository.AddUserAddress(userAddress);
@@ -323,23 +261,6 @@ namespace Helperland.Controllers
             return Json(userAddress);
         }
 
-
-        //[HttpPost]
-        //public JsonResult Completbooking([FromBody] UserAddressViewModel userAddressViewModel)
-        //{
-        //    UserAddress userAddress = new UserAddress
-        //    {
-        //        AddressLine1 = userAddressViewModel.StreetName,
-        //        AddressLine2 = userAddressViewModel.HouseNumber,
-        //        PostalCode = userAddressViewModel.PostalCode,
-        //        City = userAddressViewModel.City,
-        //        Mobile = userAddressViewModel.MobileNumber,
-        //        UserId = Convert.ToInt32(userAddressViewModel.UserID)
-        //    };
-
-        //    userAddress = _userAddressRepository.AddUserAddress(userAddress);
-        //    return Json(userAddress);
-        //}
         [HttpPost]
         public JsonResult Completbooking([FromBody] ServiceRequestViewModel model)
         {
@@ -372,21 +293,6 @@ namespace Helperland.Controllers
 
             UserAddress userAddress = _userAddressRepository.SelectAddressByID(Convert.ToInt32(model.UserAddressID));
 
-            //    EmailModel emailModel = new EmailModel
-            //    {
-            //        //To = model.Forgot.Email,
-            //       //foreach (var spuser  in model.T)
-            //        Subject = "Helperland Reset Password",
-            //        Body = "Your reset link is" + "<a  href ='" + "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt
-
-
-            //    };
-
-            //MailHelper mailhelper = new MailHelper(_configuration);
-
-            //mailhelper.Send(emailModel);
-
-
             ServiceRequestAddress serviceRequestAddress = new ServiceRequestAddress
             {
                 ServiceRequestId = serviceRequest.ServiceRequestId,
@@ -402,15 +308,8 @@ namespace Helperland.Controllers
 
             ServiceRequestExtra serviceRequestExtra = new ServiceRequestExtra
             {
-
                 ServiceRequestId = serviceRequest.ServiceRequestId,
-
             };
-
-           
-
-            
-
 
             foreach (string extraService in model.ExtraservicesName)
             {
@@ -419,10 +318,22 @@ namespace Helperland.Controllers
                 _serviceRequestExtraRepository.Add(serviceRequestExtra);
 
             }
-                List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
-            
-                //List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider && x.WorksWithPets == true).ToList();
-            
+            //List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+            //var sp = (from ur in _helperlandContext.Users
+            //         where ur.ZipCode = (serviceRequest.ZipCode).ToString()
+            //List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider && x.WorksWithPets == true).ToList();
+
+            List<User> sp = (from usr in _helperlandContext.Users
+                             join
+                             fb in _helperlandContext.FavoriteAndBlockeds 
+                             on
+                             usr.UserId equals fb.UserId into temp
+                             from fb in temp.DefaultIfEmpty()
+                             where usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true && usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
+                             select usr).ToList();
+
+
+
             EmailModel emailModel;
             foreach (var spsendmail in sp)
             {
@@ -430,8 +341,7 @@ namespace Helperland.Controllers
                 emailModel.To = spsendmail.Email;
                 emailModel.Subject = "Service AVailiblity";
                 emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId;
-                ////Body =  "<a href = '" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt + "' > Reset Password </ a > "
-                //Body = string.Format("Click <a href='{0}'>here</a> to login", this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encrypt)
+             
                 MailHelper mailhelper = new MailHelper(_configuration);
                 mailhelper.Send(emailModel);
             }
@@ -444,12 +354,11 @@ namespace Helperland.Controllers
         {
             List<City> cities = _cityRepostiory.FillCityDropDown(postalcode);
             return Json(cities);
-
         }
 
-        public IActionResult GetAddressByUserID(int userid)
+        public IActionResult GetAddressByUserID(int userid, string postalcode)
         {
-            List<UserAddress> address = _userAddressRepository.GetAllAddress(userid);
+            List<UserAddress> address = _userAddressRepository.GetAllAddressbypostalcode(userid, postalcode);
             return View("CustomerAddressList", address);
         }
 
