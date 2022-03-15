@@ -16,13 +16,13 @@
     <input type="hidden" id="hiddenServiceRequestId" value="" />
     <input type="hidden" id="hiddenserviceproviderid" value="" />
     <div class="category ml-30 mb-3">
-        <select class="form-select" aria-label="Default select example">
-            <option selected>All</option>
-            <option value="1">Excellent</option>
-            <option value="2">Very Good</option>
-            <option value="3">Good</option>
-            <option value="4">Poor</option>
-            <option value="5">Very Poor</option>
+        <select class="form-select" aria-label="Default select example" id="filterratings">
+            <option value="5" selected>All</option>
+            <option value="4">Excellent</option>
+            <option value="3">Very Good</option>
+            <option value="2">Good</option>
+            <option value="1">Poor</option>
+            <option value="0">Very Poor</option>
         </select>
     </div>
     <table id="example" class="display customer-table history-table" style="width:100%">
@@ -69,36 +69,37 @@
         });
 
         function loaddata() {
+            var ratings = $("#filterratings").val();
             $.ajax({
                 url: '/serviceprovider/getservicereated',
                 type: 'post',
-
+                data: { "ratings": ratings},
                 success: function (respo) {
                     $('#example').DataTable().clear();
                     console.log(respo);
 
                     respo.forEach(function (element) {
                         var t = $('#example').DataTable();
-                        date = new Date(element.servistartdateandtime);
+                        date = new Date(element.serviceRequest.serviceStartDate);
 
-                        var d2 = new Date(element.servistartdateandtime);
-                        d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
+                        var d2 = new Date(element.serviceRequest.serviceStartDate);
+                        d2.setMinutes(d2.getMinutes() + (element.serviceRequest.serviceHours * 60));
                         var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
                         var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
 
 
                         t.row.add([
-                            '<div class="box"><div class= "d-flex innerbox" ><div class="colume-1">' + element.servicereqestid + ' <br />' + element.customername1 + element.customername2 + '</div><div class="colume-2">' +
+                            '<div class="box"><div class= "d-flex innerbox" ><div class="colume-1">' + element.ratingId + ' <br />' + element.ratingFromNavigation.firstName + element.ratingFromNavigation.lastName + '</div><div class="colume-2">' +
                             '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br>' +
                             '<img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime +
                             '</div>' +
                             '<div class="colume-3">' +
-                            'ratings: <br> <input required class= "ratingspdashboard"  value = "' + element.rating + '" type = "text" title = "" >' +
+                            'ratings: <br> <input required class= "ratingspdashboard"  value = "' + element.ratings + '" type = "text" title = "" >' +
                             '</div>' +
                             '</div>' +
                             '<hr / class="m-0">' +
                             '<div class="commentbox float-left mt-2">' +
-                            '<span class="bold"> comment :-   </span>'+ "  " + element.comment +
+                            '<span class="bold"> comment :-   </span>' + "  " + element.comments +
                             '</div>' +
                             '</div>'
                         ]).draw(false);
@@ -112,7 +113,7 @@
                             showClear: false,
                             readonly: true,
                             starCaptions: function (val) {
-                                if (val == '5' && val > '4') {
+                                if (val <= '5' && val > '4') {
                                     val = "Excellent";
                                     return val;
                                 }
@@ -147,5 +148,11 @@
             }
             return input;
         }
+
+        $("#filterratings").change(function () {
+            $('#example').DataTable().clear().draw();
+            loaddata();
+        });
+      
     </script>
 }

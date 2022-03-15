@@ -437,7 +437,7 @@ namespace Helperland.Controllers
             return View();
         }
 
-        public JsonResult getservicereated()
+        public JsonResult getservicereated(int ratings)
         {
             var user = HttpContext.Session.GetString("User");
             SessionUser sessionUser = new SessionUser();
@@ -446,37 +446,11 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            //ServiceRequest serviceRequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceRequestId).Include(c => c.ServiceRequestExtras).FirstOrDefault();
-
-            //            select* from[dbo].[Rating] as rt
-            //join
-            //[dbo].[User] as usr
-            //on
-            //rt.RatingFrom = usr.UserId
-            //where rt.RatingTo = '18'
-            var ratings = (from rt in _helperlandContext.Ratings
-                           join
-                            usr in _helperlandContext.Users
-                            on
-                            rt.RatingFrom equals usr.UserId
-                            join
-                            sr in _helperlandContext.ServiceRequests
-                            on
-                            rt.ServiceRequestId equals sr.ServiceRequestId
-                           where rt.RatingTo == sessionUser.UserID
-                           select new 
-                           { 
-                                servicereqestid = rt.ServiceRequestId,
-                                ratingid = rt.RatingId,
-                                customername1 = usr.FirstName,
-                                customername2 = usr.LastName,
-                                servistartdateandtime = sr.ServiceStartDate,
-                                rating = rt.Ratings,
-                                comment = rt.Comments,
-                                servicehoures = sr.ServiceHours
-                           }).ToList();
-            return Json(ratings);
+           
+            var customerratings = _helperlandContext.Ratings.Where(x => x.RatingTo == sessionUser.UserID && x.Ratings > (ratings == 5 ? 0 : ratings) && x.Ratings <= (ratings == 5 ? 5 : (ratings + 1))).Include(x => x.RatingFromNavigation).Include(x => x.ServiceRequest);
+            return Json(customerratings);
         }
+
         public JsonResult dispaydataformtheserviceid(int servicerequestid)
         {
             var user = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();
