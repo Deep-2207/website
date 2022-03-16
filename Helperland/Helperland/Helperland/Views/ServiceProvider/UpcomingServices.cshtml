@@ -179,7 +179,7 @@
                     document.getElementById("serviceproviderphonenumber").innerHTML = respo.user.serviceRequestAddresses[0].mobile;
                     document.getElementById("serviceprovideremail").innerHTML = respo.user.serviceRequestAddresses[0].email;
                     document.getElementById("serviceprovidercomments").innerHTML = respo.user.comments;
-                    $("#btnaccept").html('<button id="srcompleted' + respo.user.serviceRequestId + '" class="btn btn-Accept btn-rounded-17 me-1" onclick="Completed(' + respo.user.serviceRequestId + ')" value="Completed">Completed</button><button class="btn btn-danger btn-rounded-17" onclick="Cancel(' + respo.user.serviceRequestId + ')" value="Cancel">Cancel</button>');
+                    $("#btnaccept").html('<button id="srcompleted' + respo.user.serviceRequestId + '" class="btn btn-Accept btn-rounded-17 me-1 d-flex align-items-center p-2" onclick="Completed(' + respo.user.serviceRequestId + ')" value="Completed"><img src="..//img/service-provider/right.png" />Completed</button><button class="btn btn-danger btn-rounded-17 d-flex align-items-center" onclick="Cancel(' + respo.user.serviceRequestId + ')" value="Cancel"><img src="..//img/service-provider/cancwel.png" />Cancel</button>');
 
                     var d2 = new Date(respo.user.serviceStartDate);
                     var date1 = d2;

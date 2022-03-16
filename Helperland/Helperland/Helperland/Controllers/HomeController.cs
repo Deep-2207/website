@@ -109,6 +109,8 @@ namespace Helperland.Controllers
         {
             return View();
         }
+
+        #region Contact us
         public IActionResult Contact()
         {
             return View();
@@ -165,7 +167,10 @@ namespace Helperland.Controllers
             return View();
         }
 
-        //[SessionHelper(UserTypeEnum.Customer)]
+        #endregion Contact us
+
+        #region Book Service
+
         [HttpGet]
         public IActionResult Book_Services()
         {
@@ -361,6 +366,8 @@ namespace Helperland.Controllers
             List<UserAddress> address = _userAddressRepository.GetAllAddressbypostalcode(userid, postalcode);
             return View("CustomerAddressList", address);
         }
+
+        #endregion Book Service
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

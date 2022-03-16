@@ -34,18 +34,9 @@ namespace Helperland.Controllers
             this._userAddressRepository = userAddressRepository;
             this._helperlandContext = helperlandContext;
         }
-        public IActionResult ServiceHistory()
-        {
-            return View();
-        }
-        public IActionResult BookService()
-        {
-            return View();
-        }
-        public IActionResult MySettings()
-        {
-            return View();
-        }
+
+
+        #region customer Dashboard
         public IActionResult Dashboard()
         {
             var user = HttpContext.Session.GetString("User");
@@ -127,9 +118,7 @@ namespace Helperland.Controllers
                     {
                         serviceRequestConflict = false;
                         break;
-                        //Json(new SingleEntity<LoginViewModel> { Result = model, Status = "OK", ErrorMessage = errorMessage = "Another service request has been assigned to the service provider on " + serviceRequestStartDateTime.ToShortDateString()
-                        //    + " from " + serviceRequestStartDateTime.ToShortTimeString() + " to " + serviceRequestEndD, URL = "Customer/ServiceHistory" });
-                        //return Json(serviceRequestConflict ,  
+                        
                     }
                     else
                     {
@@ -164,10 +153,13 @@ namespace Helperland.Controllers
 
             return Json(serviceRequest);
         }
+        #endregion customer Dashboard
 
-
-        //servicehistory page cs file start
-
+        #region Servicehistory
+        public IActionResult ServiceHistory()
+        {
+            return View();
+        }
         public JsonResult loadtable(int userid)
         {
             List<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.UserId == userid &&
@@ -187,7 +179,7 @@ namespace Helperland.Controllers
             return Json(serviceRequests);
         }
 
-        //float serviceontimearrival, float serviceFriendly, float serviceQualityofservice
+      
         public JsonResult ratesp(int servicerequestid, int userid, float serviceontimearrival, float serviceFriendly, float serviceQualityofservice)
         {
 
@@ -224,32 +216,8 @@ namespace Helperland.Controllers
             return Json(new SingleEntity<RatingViewModel> { Result = ratingViewModel, Status = "ok" });
         }
 
-        public JsonResult filldeitails(int userid)
-        {
-            var user = _customerRepository.GetUSerbyloginid(userid);
-
-            return Json(user);
-        }
-
-        public JsonResult updatedetialsbyuserid(User model)
-        {
-
-            User user = _customerRepository.GetUSerbyloginid(model.UserId);
-
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-           
-            user.Mobile = model.Mobile;
-            user.DateOfBirth = model.DateOfBirth;
-            user.ModifiedDate = DateTime.Now;
-            user.ModifiedBy = model.UserId;
-            user.LanguageId = model.LanguageId;
-
-            _customerRepository.UpdateUserDetils(user);
-
-            return Json(model);
-        }
-
+       
+    
         public JsonResult submitratings(Rating model)
         {
             ServiceRequest sr = _customerRepository.GetserviceReqestDetials(model.ServiceRequestId);
@@ -272,7 +240,40 @@ namespace Helperland.Controllers
             return Json(model);
         }
 
-       
+        #endregion Servicehistory
+
+        #region Customer my settings
+
+        public IActionResult MySettings()
+        {
+            return View();
+        }
+        public JsonResult filldeitails(int userid)
+        {
+            var user = _customerRepository.GetUSerbyloginid(userid);
+
+            return Json(user);
+        }
+
+        public JsonResult updatedetialsbyuserid(User model)
+        {
+
+            User user = _customerRepository.GetUSerbyloginid(model.UserId);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+
+            user.Mobile = model.Mobile;
+            user.DateOfBirth = model.DateOfBirth;
+            user.ModifiedDate = DateTime.Now;
+            user.ModifiedBy = model.UserId;
+            user.LanguageId = model.LanguageId;
+
+            _customerRepository.UpdateUserDetils(user);
+
+            return Json(model);
+        }
+
         [HttpPost]
         public JsonResult getcutomeraddress()
         {
@@ -346,6 +347,6 @@ namespace Helperland.Controllers
             }
             return Json(IsPasswordSame);
         }
-
+        #endregion Customer my settings
     }
 }

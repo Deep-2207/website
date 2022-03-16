@@ -35,6 +35,8 @@ namespace Helperland.Controllers
             this._configuration = configuration;
             this._user = new User();
         }
+
+        #region Create Account
         public IActionResult CreateAccount()
         {
 
@@ -66,7 +68,9 @@ namespace Helperland.Controllers
             }
             return View();
         }
+        #endregion Create Account
 
+        #region Become a provider
         public IActionResult BecomeAPro()
         {
             ViewBag.page = "home";
@@ -100,9 +104,9 @@ namespace Helperland.Controllers
             }
             return View();
         }
+        #endregion Become a provider
 
-
-
+        #region LOgin and forgot password
         [HttpPost]
         public JsonResult login([FromBody] LoginViewModel model)
         {
@@ -205,8 +209,6 @@ namespace Helperland.Controllers
         }
 
 
-
-
         public IActionResult ResetPassword(string token)
         {
             if (ModelState.IsValid)
@@ -294,6 +296,10 @@ namespace Helperland.Controllers
             return RedirectToAction("index", "home");
 
         }
+
+        #endregion LOgin and forgot password
+
+        #region Booke services
         public IActionResult Book_Services()
         {
             return View();
@@ -303,5 +309,6 @@ namespace Helperland.Controllers
         {
             return View(model);
         }
+        #endregion Booke services
     }
 }

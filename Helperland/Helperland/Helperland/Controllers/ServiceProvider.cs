@@ -34,7 +34,7 @@ namespace Helperland.Controllers
             this._stateRepository = stateRepository;
             this._customerRepository = customerRepository;
         }
-
+        #region MYSettings
         public IActionResult Mysettings()
         {
             return View();
@@ -98,6 +98,9 @@ namespace Helperland.Controllers
             }
             return Json(model);
         }
+        #endregion MYSettings
+
+        #region New Servicerequest
         public IActionResult NewServiceRequest()
         {
             return View();
@@ -118,26 +121,7 @@ namespace Helperland.Controllers
             bool workingwithpet = Convert.ToBoolean(sp.WorksWithPets);
             return Json(workingwithpet);
         }
-        //public JsonResult getnewservicerequest(bool HasPat)
-        //{
-        //    var user = HttpContext.Session.GetString("User");
-        //    SessionUser sessionUser = new SessionUser();
-
-        //    if (user != null)
-        //    {
-        //        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
-        //    }
-
-        //    User spuser = _helperlandContext.Users.Where(x => x.UserId == sessionUser.UserID).FirstOrDefault();
-        //    List<ServiceRequest> sr = _helperlandContext.ServiceRequests.Where(x => x.ZipCode == spuser.ZipCode && x.Status == Convert.ToInt16(ServiceStatusEnum.New) && x.HasPets == HasPat && x.ServiceProviderId == null).ToList();
-
-        //    foreach (ServiceRequest request in sr)
-        //    {
-        //        request.User = _helperlandContext.Users.Where(x => x.UserId == request.UserId).FirstOrDefault();
-        //        request.ServiceRequestAddresses = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == request.ServiceRequestId).ToList();
-        //    }
-        //    return Json(sr);
-        //}
+       
 
         public JsonResult getnewservicerequest(bool HasPat)
         {
@@ -194,17 +178,13 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            //var accedptsr = _serviceProviderRepository.Acceptsr(serviceid, sessionUser.UserID);
-
-
-
+           
             ServiceRequest newacceptrequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceid).FirstOrDefault();
 
             bool RequestAccepted = true;
             if (newacceptrequest.RecordVersion.ToString() != recordVersion)
             {
                 //return    error this service request assign to different user
-
                 return Json(RequestAccepted = false);
             }
 
@@ -215,8 +195,7 @@ namespace Helperland.Controllers
             {
                 DateTime newdatetime = Convert.ToDateTime(newacceptrequest.ServiceStartDate);
                 DateTime newdatetimewithservicehours = newdatetime.AddMinutes(newacceptrequest.ServiceHours * 60);
-                //DateTime newtime = Convert.ToDateTime(chanhgetime);
-
+                
                 if (timecheck.ServiceRequestId != serviceid)
                 {
                     if (timecheck.ServiceStartDate <= newdatetimewithservicehours && newdatetime <= timecheck.ServiceStartDate.AddMinutes((timecheck.ServiceHours * 60) + 30))
@@ -254,6 +233,9 @@ namespace Helperland.Controllers
 
             return Json(serviceRequestConflict);
         }
+        #endregion New Servicerequest
+
+        #region Upcoming servierequest
         public IActionResult UpcomingServices()
         {
             return View();
@@ -325,7 +307,9 @@ namespace Helperland.Controllers
 
             return Json(_serviceProviderRepository.Updateservicereqest(comp));
         }
+        #endregion Upcoming servierequest
 
+        #region Servicehistory
         public IActionResult ServiceHistory()
         {
             return View();
@@ -346,7 +330,7 @@ namespace Helperland.Controllers
                                  join
                                     cuaddress in _helperlandContext.ServiceRequestAddresses
                                     on sr.ServiceRequestId equals cuaddress.ServiceRequestId
-                                 where usr.UserId == sessionUser.UserID && sr.Status == Convert.ToInt16(ServiceStatusEnum.completed) && sr.ServiceProviderId == sessionUser.UserID
+                                 where sr.Status == Convert.ToInt16(ServiceStatusEnum.completed) && sr.ServiceProviderId == sessionUser.UserID
                                  select new
                                  {
                                      serviceid = sr.ServiceRequestId,
@@ -358,10 +342,13 @@ namespace Helperland.Controllers
                                      servicereqestpostalcode = cuaddress.PostalCode,
                                      payment = sr.TotalCost,
                                      servicehoures = sr.ServiceHours
-                                 }).ToList();
+                                 }).Distinct();
             return Json(servicedisapy);
 
         }
+        #endregion Servicehistory
+
+        #region BlockCustomer
         public IActionResult BlockCustomer()
         {
             return View();
@@ -377,7 +364,6 @@ namespace Helperland.Controllers
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
 
-            //List<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == sessionUser.UserID).ToList();
             var serviceRequests = (from sr in _helperlandContext.ServiceRequests
                                    join
                                    usr in _helperlandContext.Users
@@ -431,7 +417,9 @@ namespace Helperland.Controllers
             return Json(_serviceProviderRepository.UnBlockCutomer(targetedid));
 
         }
+        #endregion BlockCustomer
 
+        #region ratings
         public IActionResult Ratings()
         {
             return View();
@@ -450,7 +438,7 @@ namespace Helperland.Controllers
             var customerratings = _helperlandContext.Ratings.Where(x => x.RatingTo == sessionUser.UserID && x.Ratings > (ratings == 5 ? 0 : ratings) && x.Ratings <= (ratings == 5 ? 5 : (ratings + 1))).Include(x => x.RatingFromNavigation).Include(x => x.ServiceRequest);
             return Json(customerratings);
         }
-
+        #endregion ratings
         public JsonResult dispaydataformtheserviceid(int servicerequestid)
         {
             var user = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();

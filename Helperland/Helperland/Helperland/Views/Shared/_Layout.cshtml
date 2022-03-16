@@ -74,6 +74,7 @@
                                 Welcome,<br>
                                 <b style="user-select: auto;">First Customer</b>
                             </li>
+                          
                             <li class="sid-nav-item">
                                 <a class="sid-sid-nav-link" aria-current="page" asp-action="dashboard" asp-controller="customer">Dashboard</a>
                             </li>
@@ -222,15 +223,6 @@
 
                                         <a class="dropdown-item" asp-action="mysettings" asp-controller=@(sessionUser.UserType == (UserTypeEnum.Customer).ToString() ? "customer" : "Serviceprovider" )>My Setting</a>
 
-                                        @*@if (sessionUser.UserType == UserTypeEnum.Customer)
-                                        {
-                                            <a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a>
-                                        }
-                                        else
-                                        {
-                                            <a class="dropdown-item" asp-action="mysettings" asp-controller="customer">My Setting</a>
-                                        }*@
-
                                     </li>
                                     <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Log Out</a></li>
                                 </ul>
@@ -244,18 +236,7 @@
             </div>
         </div>
     </nav>
-    <!-- Navbar end-->
-    @*@if (user != null)
-        {
-        <section class="headding-name text-center p-t-64">
-          <h2 class="headding">
-            Welcome, <span>@sessionUser.UserName</span>
-          </h2>
-        </section>
-        }*@
-
-
-
+ 
     @RenderBody()
 
 
@@ -322,12 +303,7 @@
                 <div class="modal-body">
                     <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h3 class="mb-30">Login To Your Account</h3>
-                    @*<div class="alert alert-danger alert-dismissible fade m-0  mb-3 @(TempData["ErrorMessage"]==null
-                        ? "d-none" : "show" )" role="alert">
-                                @TempData["ErrorMessage"]
-                                <button type="submit" class="btn-close" id="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>*@
-
+                  
                     <div id="dvloginerrormesag"></div>
 
                     <div class="email mb-3">

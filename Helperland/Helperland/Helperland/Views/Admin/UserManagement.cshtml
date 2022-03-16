@@ -1,472 +1,76 @@
 ﻿@{
-    Layout = "_AdminLayout";
-    ViewData["Title"] = "UserManagement";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+    int serviceprovider = Convert.ToInt16(UserTypeEnum.ServiceProvider);
+    int customer = Convert.ToInt16(UserTypeEnum.Customer);
 }
-<section class="admin-body p-t-64">
-    <div class="Container-fluid d-flex admin-dashboard">
-        <nav class="navbar navbar-expand-xl navbar-light bg-light admin-sidebar">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Service Management </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Role Management</a>
-                    </li>
-
-                    <li class='nav-link sub-menu drop-1'>
-                        <a href='#Coupon'>Coupon Code Management<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>Coupon Codes</a></li>
-                            <li><a href='#settings'>Usage History</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Escalation Management</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Service Requests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Service Provider</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">User Management</a>
-                    </li>
-
-                    <li class='nav-link sub-menu drop-2'>
-                        <a href='#Coupon'>Finance Module<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>All Transactions</a></li>
-                            <li><a href='#settings'>Generate Payment</a></li>
-                            <li><a href='#settings'> Customer Invoices</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Zip Code Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Rating Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Inquiry Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Newsletter Management</a>
-                    </li>
-
-                    <li class='nav-link sub-menu drop-3'>
-                        <a href='#Coupon'>Content Management<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>Blog</a></li>
-                            <li><a href='#settings'>FAQs</a></li>
-
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-
-        </nav>
-        <div class="side-dashboard p-lr-20">
-            <div class="sub-headding d-flex justify-content-between p-tb-15 m-t-15">
-                <h2>User Management</h2>
-                <button class="new-user btn">
-                    <img src="~/img/admin-user/add.png" alt="">&nbsp;&nbsp; Add New
-                    User
-                </button>
-            </div>
-            <form>
-                <div class="form-row align-items-center d-flex justify-content-center dv-filter">
-                    <div class="col form-group col-md-4">
-
-                        <select id="inputState" class="form-control">
-                            <option disabled selected>User Name</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col form-group col-md-4">
-
-                        <select id="inputState" class="form-control">
-                            <option disabled selected>User Role</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col phonenumber-col">
-
-                        <div class="input-group mb-2 d-flex phonenumber">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">+49</div>
-                            </div>
-                            <input type="text" class="form-control phonenumber-input" id="inlineFormInputGroup"
-                                   placeholder="Username">
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Zip">
-                    </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary mb-2 admin-submit">Submit</button>
-                    </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-light mb-2">clear</button>
-                    </div>
-                </div>
-            </form>
-            <div class="admin-data-table p-t-20">
-                <table id="example" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>User Name</th>
-                            <th>User Type</th>
-                            <th>Role</th>
-                            <th>PosterCode</th>
-                            <th>City</th>
-                            <th>USer Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <!-- <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td> -->
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td> Manager</td>
-                            <td>Berlin</td>
-                            <td>15km</td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>navsari</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Lyum watson</td>
-                            <td>Call Center </td>
-                            <td>Inquiry Manager</td>
-                            <td>Berlin</td>
-                            <td></td>
-                            <td><button class="active">Active</button></td>
-                            <td class="nav-item dropdown action">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/img/admin-user/group-38.png" alt="">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Deactivate</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
-
-        </div>
+<div class="side-dashboard p-lr-20">
+    <div class="sub-headding d-flex justify-content-between p-tb-15 m-t-15">
+        <h2>User Management</h2>
+        <button class="new-user btn">
+            <img src="~/img/admin-user/add.png" alt="">&nbsp;&nbsp; Add New
+            User
+        </button>
     </div>
-</section>
+    <form>
+        <div class="form-row align-items-center d-flex justify-content-center dv-filter">
+            <div class="col form-group col-md-4">
 
+                <select id="inputState" class="form-control">
+                    <option disabled selected>User Name</option>
+                    <option>...</option>
+                </select>
+            </div>
+            <div class="col form-group col-md-4">
+
+                <select id="inputState" class="form-control">
+                    <option disabled selected>User Role</option>
+                    <option>...</option>
+                </select>
+            </div>
+            <div class="col phonenumber-col">
+
+                <div class="input-group mb-2 d-flex phonenumber">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">+49</div>
+                    </div>
+                    <input type="text" class="form-control phonenumber-input" id="inlineFormInputGroup"
+                           placeholder="Username">
+                </div>
+            </div>
+
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Zip">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary mb-2 admin-submit">Submit</button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-light mb-2">clear</button>
+            </div>
+        </div>
+    </form>
+    <div class="admin-data-table p-t-20">
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>User Name<img alt="" class="sorting-img p-l-5"></th>
+                    <th>Role<img alt="" class="sorting-img p-l-5"></th>
+                    <th>Date Of <br /> Registration<img alt="" class="sorting-img p-l-5"></th>
+                    <th>User Type<img alt="" class="sorting-img p-l-5"></th>
+                    <th>Phone<img alt="" class="sorting-img p-l-5"></th>
+                    <th>PosterCode<img alt="" class="sorting-img p-l-5"></th>
+                    <th>USer Status<img alt="" class="sorting-img p-l-5"></th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Admin/UserManagement.js"></script>
+}

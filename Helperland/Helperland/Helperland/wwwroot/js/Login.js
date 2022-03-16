@@ -49,6 +49,7 @@ function btnlogin() {
                 }
             },
             error: function (err) {
+                $("#loader").removeClass("is-active");
                 console.log(err);
             }
         });
@@ -87,6 +88,7 @@ function btnsendforgotrpswdmail() {
                 }
             },
             error: function (err) {
+                $("#loader").removeClass("is-active");
                 console.log(err);
             }
         });

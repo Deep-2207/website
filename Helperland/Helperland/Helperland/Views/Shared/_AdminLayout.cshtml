@@ -7,6 +7,9 @@
 
     @*Bootstrap Css*@
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    @*rateing css*@
+    <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
 
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
@@ -33,63 +36,63 @@
             </h2>
             <div class="collapse navbar-collapse sidebar-collapse-dv" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto d-none sidebar-collapse-ul">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Service Management </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Role Management</a>
-                    </li>
+                    @*<li class="nav-item">
+                            <a class="nav-link" href="#">Service Management </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Role Management</a>
+                        </li>
 
-                    <li class='nav-link sub-menu drop-1'>
-                        <a href='#Coupon'>Coupon Code Management<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>Coupon Codes</a></li>
-                            <li><a href='#settings'>Usage History</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Escalation Management</a>
-                    </li>
+                        <li class='nav-link sub-menu drop-1'>
+                            <a href='#Coupon'>Coupon Code Management<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a href='#settings'>Coupon Codes</a></li>
+                                <li><a href='#settings'>Usage History</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Escalation Management</a>
+                        </li>*@
 
                     <li class="nav-item">
                         <a class="nav-link" href="#">Service Requests</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Service Provider</a>
-                    </li>
+                    @*<li class="nav-item">
+                            <a class="nav-link" href="#">Service Provider</a>
+                        </li>*@
                     <li class="nav-item">
                         <a class="nav-link" href="#">User Management</a>
                     </li>
 
-                    <li class='nav-link sub-menu drop-2'>
-                        <a href='#Coupon'>Finance Module<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>All Transactions</a></li>
-                            <li><a href='#settings'>Generate Payment</a></li>
-                            <li><a href='#settings'> Customer Invoices</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Zip Code Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Rating Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Inquiry Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Newsletter Management</a>
-                    </li>
+                    @*<li class='nav-link sub-menu drop-2'>
+                            <a href='#Coupon'>Finance Module<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a href='#settings'>All Transactions</a></li>
+                                <li><a href='#settings'>Generate Payment</a></li>
+                                <li><a href='#settings'> Customer Invoices</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Zip Code Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Rating Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Inquiry Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Newsletter Management</a>
+                        </li>
 
-                    <li class='nav-link sub-menu drop-3'>
-                        <a href='#Coupon'>Content Management<div class='fa fa-caret-down right'></div></a>
-                        <ul>
-                            <li><a href='#settings'>Blog</a></li>
-                            <li><a href='#settings'>FAQs</a></li>
+                        <li class='nav-link sub-menu drop-3'>
+                            <a href='#Coupon'>Content Management<div class='fa fa-caret-down right'></div></a>
+                            <ul>
+                                <li><a href='#settings'>Blog</a></li>
+                                <li><a href='#settings'>FAQs</a></li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>*@
                 </ul>
             </div>
             <div class="backblack"></div>
@@ -106,9 +109,81 @@
         </div>
     </nav>
     <!-- navbar section end -->
-    <div>
-        @RenderBody()
-    </div>
+    <section class="admin-body p-t-64 admin-service-body">
+        <div class="Container-fluid d-flex admin-dashboard">
+            <nav class="navbar navbar-expand-xl navbar-light bg-light admin-sidebar">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="#">Service Management </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Role Management</a>
+                            </li>
+
+                            <li class="nav-link sub-menu drop-1">
+                                <a href='#Coupon'>Coupon Code Management<div class='fa fa-caret-down right'></div></a>
+                                <ul>
+                                    <li><a href='#settings'>Coupon Codes</a></li>
+                                    <li><a href='#settings'>Usage History</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Escalation Management</a>
+                            </li>*@
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="idservicerequest" asp-action="servicerequest" asp-controller="admin">Service Requests</a>
+                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="#">Service Provider</a>
+                            </li>*@
+                        <li class="nav-item border-bottom-0 active">
+                            <a class="nav-link" href="#">User Management</a>
+                        </li>
+
+                        @*<li class='nav-link sub-menu drop-2'>
+                                <a href='#Coupon'>Finance Module<div class='fa fa-caret-down right'></div></a>
+                                <ul>
+                                    <li><a href='#settings'>All Transactions</a></li>
+                                    <li><a href='#settings'>Generate Payment</a></li>
+                                    <li><a href='#settings'> Customer Invoices</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Zip Code Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Rating Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Inquiry Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Newsletter Management</a>
+                            </li>
+
+                            <li class='nav-link sub-menu drop-3'>
+                                <a href='#Coupon'>Content Management<div class='fa fa-caret-down right'></div></a>
+                                <ul>
+                                    <li><a href='#settings'>Blog</a></li>
+                                    <li><a href='#settings'>FAQs</a></li>
+
+                                </ul>
+                            </li>*@
+                    </ul>
+
+                </div>
+
+            </nav>
+
+            @RenderBody()
+
+        </div>
+    </section>
 
 
     <!-- footer start-->
@@ -171,19 +246,23 @@
     @RenderSection("Scripts", required: false)
 
 
+    @*rating js*@
+    <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
+    <script src="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.js"></script>
+
     @*Fontawesome Cdn*@
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
 
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                "dom": '<"top"i>rt<"bottom"flp><"clear">',
-                "bInfo": false, // hide showing entries
-                "bFilter": false, //hide Search bar
+    @*<script>
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    "bInfo": false, // hide showing entries
+                    "bFilter": false, //hide Search bar
+                });
             });
-        });
 
-    </script>
+        </script>*@
 </body>
 </html>

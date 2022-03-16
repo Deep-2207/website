@@ -44,8 +44,9 @@ function checkAvailability() {
                     document.getElementById('spn_error_zipcode').innerHTML = "We are not providing service in this area. We’ll notify you if any Helper would start working near your area!!";
                 }
             },
-            error: function (respo) {
-                alert('error:' + respo.responseText);
+            error: function (err) {
+                $("#loader").removeClass("is-active");
+                console.log(err);
             }
         });
 
@@ -296,14 +297,11 @@ function SaveNewAddress() {
                                 $(".btnaddress").addClass(" d-block");
 
                                 $(".newAddress").addClass(" d-none");
-                                alert("success");
+                                
                             }
-                            else {
-                                alert("erorr");
-                            }
-
                         },
                         error: function (err) {
+                            $("#loader").removeClass("is-active");
                             console.log(err);
                         }
                     });
@@ -340,6 +338,10 @@ function FillCityDropdown() {
             $("#loader").removeClass("is-active");
             $("#City").empty();
             respo.forEach((city) => $('#City').append($("<option></option>").val(city.cityName).html(city.cityName)));
+        },
+        error: function (err) {
+            $("#loader").removeClass("is-active");
+            console.log(err);
         }
     })
 }
@@ -374,6 +376,10 @@ function btnNewAddress() {
 
                 $("#ddlNationality").append($("<option></option>").val(value.CountryId).html(value.CountryName));
             })
+        },
+        error: function (err) {
+            $("#loader").removeClass("is-active");
+            console.log(err);
         }
     });
 }
@@ -498,6 +504,7 @@ function completbooking() {
                 }
             },
             error: function (err) {
+                $("#loader").removeClass("is-active");
                 console.log(err);
             }
         });

@@ -38,13 +38,7 @@
                         </button>
                     </li>
                     <li class="nav-item col b-l-1 b-b-1" role="presentation">
-                        @*<button class="nav-link disabled" id="pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-details" type="button" role="tab" aria-controls="pills-profile"
-                                    aria-selected="false" onclick="btndetailstab()">
-                                <img src="~/img/Book-Service/details.png" alt="" class="details-img"> <span>
-                                    Your Details
-                                </span>
-                            </button>*@
+                      
                         <button class="nav-link disabled" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-details"
                                 type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onclick="btndetailstab()">
                             <img src="~/img/Book-Service/details.png" alt="" class="details-img"> <span> Your Details</span>
@@ -121,9 +115,7 @@
                                                 @for (double i = 3; i <= 12; i = (i + 0.5))
                                                 {
                                                     string[] s = i.ToString().Split('.');
-                                                    @*<option value="121">121</option>
-                                                        <option value="122">122</option>
-                                                        <option value="123">123</option>*@
+                                                   
                                                     <option value=@i class="ddlselecttimevalue">
                                                         @s[0] : @(s.Length == 2? "5" : "0") Hrs
                                                     </option>
@@ -233,7 +225,7 @@
                     </div>
                     <!-- </div> -->
                     <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        @*<form asp-action="Details" method="post" asp-controller="home">*@
+                   
                         <div class="Address-list">
                             <h2 class="headding">
                                 Enter your contact details, so we can serve you in better way!
@@ -488,33 +480,6 @@
     </div>
 </div>
 
-
-@*valid selected time*@
-
-
-
-<!-- Modal -->
-<!--<div class="modal fade" id="validtimemodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Confirm the service time</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-
 <div class="modal" id="validtimemodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
@@ -523,16 +488,10 @@
                 <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h3 class="mb-30">Confirm the service time</h3>
 
-
                 Booking time is less than recommended, we may not be able to finish the job. Please confirm if you wish to proceed with your booking?
-
-
-
 
                 <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" title="Login" id="uncheckokbtn" onclick="btnclearextraservice()">OK</button>
             </div>
-
-
         </div>
     </div>
 </div>

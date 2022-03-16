@@ -179,7 +179,6 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
-F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\History.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\MySettings.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\NewServiceRequest.cshtml.g.cs
@@ -187,3 +186,4 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceHistory.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\BlockCustomer.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\Ratings.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Servicerequest.cshtml.g.cs
