@@ -1,22 +1,5 @@
 ﻿$(document).ready(function () {
-    //$('#example').on('draw.dt', function () { //every time ajax call, this code execute
-
-    //    //$(".ratingspdashboard").rating({
-    //    //    min: 0,
-    //    //    max: 5,
-
-
-    //    //    step: 0.1,
-    //    //    size: "xs",
-    //    //    stars: "5",
-    //    //    showClear: false,
-    //    //    readonly: true,
-    //    //    starCaptions: function (val) {
-    //    //        return val;
-    //    //    }
-    //    //});   
-    //    //    });
-    //}
+    
     $('#example').DataTable({
 
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
@@ -28,15 +11,17 @@
         "pagingType": "full_numbers",
         // bFilter: false,
         ordering: true,
-        searching: false,
+        searching: true,
         info: true,
-       
         "oLanguage": {
             "sInfo": "Total Records: _TOTAL_"
         },
         "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
         responsive: true,
         "order": [],
+        "bDestroy": true,
+        orderCellsTop: true,
+        fixedHeader: true
         //buttons: {
         //    dom: {
         //        button: {
@@ -54,9 +39,13 @@
         //    }]
         //}
     });
+   
 
    // getuserrequest();
     getuserrequest();
+    debugger;
+   
+    
 });
 
 function AppendZero(input) {
@@ -65,6 +54,58 @@ function AppendZero(input) {
     }
     return input;
 }
+
+
+$("#btnserchsubmit").click(function () {
+    debugger;
+    var t = $('#example').DataTable();
+    // t.search('');
+    var username = $("#serchusername").val();
+    var usertype = $("#idusertype option:selected").text();
+    var phonenumber = $("#idphonenumber").val();
+    var postalcode = $("#idpostalcode").val();
+    var fromdate = $("#txtFromDate").val();
+    var todate = $("#idtodate").val();
+    t.column(0).search(username).draw(true);
+    /*console.log(t.search($("#serchusername").val()));*/
+    if (usertype != "User Type") {
+        t.column(3).search(usertype).draw(true);
+    }
+    t.column(4).search(phonenumber).draw(true);
+    t.column(5).search(postalcode).draw(true);
+    if ($("#txtFromDate").val() != '' && $("#idtodate").val() != '') {
+        jQuery.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = new Date(parseInt($("#txtFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                var max = new Date(parseInt($("#idtodate").val().toString().split('-')[0]), parseInt(parseInt($("#idtodate").val().toString().split('-')[1]) - 1), parseInt($("#idtodate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                var date = new Date(parseInt(data[2].toString().split('-')[2]), parseInt(parseInt(data[2].toString().split('-')[1]) - 1), parseInt(data[2].toString().split('-')[0]), 0, 0, 0, 0);
+                var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
+                if (
+                    (min === null && max === null) ||
+                    (min === null && date <= max) ||
+                    (min <= date && max === null) ||
+                    (min <= date && date <= max)
+                ) {
+                    console.log('success');
+                    return true;
+                }
+                else {
+                    console.log('error');
+                    return false;
+                }
+
+            }
+        );
+        t.draw();
+    }
+});
+$("#btnclear").click(function () {
+    var table = $('#example').DataTable();
+    table
+        .search('')
+        .columns().search('')
+        .draw();
+});
 
 function getuserrequest() {
     $.ajax({
@@ -80,11 +121,14 @@ function getuserrequest() {
                 var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
                 //user type id
                 var usertype;
-                if (element.userTypeId == 2) {
+                if (element.userTypeId == 3) {
+                    usertype = 'Customer';
+                }
+                else if (element.userTypeId == 2) {
                     usertype = 'Serviceprovider';
                 }
                 else {
-                    usertype = 'Customer';
+                    usertype = 'Admin';
                 }
 
                 var userstatus;
@@ -115,7 +159,7 @@ function getuserrequest() {
                     '</div >'
 
                 ]).draw(false);
-
+               
             });
         },
         error: function (err) {

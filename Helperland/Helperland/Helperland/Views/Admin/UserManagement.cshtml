@@ -16,16 +16,24 @@
         <div class="form-row align-items-center d-flex justify-content-center dv-filter">
             <div class="col form-group col-md-4">
 
-                <select id="inputState" class="form-control">
-                    <option disabled selected>User Name</option>
-                    <option>...</option>
-                </select>
+                @*<select id="inputState" class="form-control">
+                <option disabled selected>User Name</option>
+                <option>...</option>
+            </select>*@
+                <div class="input-group mb-2 d-flex phonenumber">
+
+                    <input type="text" class="form-control phonenumber-input" id="serchusername"
+                           placeholder="Username">
+                </div>
+
             </div>
             <div class="col form-group col-md-4">
 
-                <select id="inputState" class="form-control">
-                    <option disabled selected>User Role</option>
-                    <option>...</option>
+                <select id="idusertype" class="form-select">
+                    <option value="0" selected>User Type</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Service Provider</option>
+                    <option value="3">Customer</option>
                 </select>
             </div>
             <div class="col phonenumber-col">
@@ -34,19 +42,34 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">+49</div>
                     </div>
-                    <input type="text" class="form-control phonenumber-input" id="inlineFormInputGroup"
+                    <input type="text" class="form-control phonenumber-input" id="idphonenumber"
                            placeholder="Username">
                 </div>
             </div>
 
             <div class="col">
-                <input type="text" class="form-control" placeholder="Zip">
+                <input type="text" class="form-control" placeholder="Zip" id="idpostalcode">
             </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary mb-2 admin-submit">Submit</button>
+          
+            <div class="col datetime">
+                <!-- <input type="text" placeholder="From Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                <input type="text" id="txtFromDate" placeholder="From Date" onfocus="(this.type='date')" class="calender-icon form-control input-element width-135">
+                <!-- <input type="date" class="form-control input-element width-135" id=""> -->
             </div>
-            <div class="col">
-                <button type="submit" class="btn btn-light mb-2">clear</button>
+            <div class="col datatime">
+                <!-- <input type="text" placeholder="To Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                <input type="text" placeholder="To Date" id="idtodate" class="calender-icon form-control input-element width-135" onfocus="(this.type='date')">
+                <!-- <input type="date" class="form-control input-element width-135" id=""> -->
+
+            </div>
+            <br />
+            <div class="w-100 d-flex justify-content-center mt-3 mb-3">
+                <div class="col">
+                    <button type="button" id="btnserchsubmit" class="btn btn-primary mb-2 admin-submit">Submit</button>
+                </div>
+                <div class="col">
+                    <button type="button" id="btnclear" class="btn btn-light mb-2">clear</button>
+                </div>
             </div>
         </div>
     </form>

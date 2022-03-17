@@ -3,6 +3,7 @@ using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace Helperland.Controllers
                                          status = sr.Status,
                                          customeraddress1 = sradres.AddressLine1 + " " + sradres.AddressLine2,
                                          customeraddress2 = sradres.PostalCode + " " + sradres.City,
-                                     }).ToList();
+                                     }).AsNoTracking().ToList();
             return Json(allservicerequest);
 
         }
