@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    
+
     $('#example').DataTable({
 
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
@@ -37,11 +37,11 @@
         //    }]
         //}
     });
-   
+
     getuserrequest();
-   
-   
-    
+
+
+
 });
 
 function AppendZero(input) {
@@ -53,7 +53,7 @@ function AppendZero(input) {
 
 
 $("#btnserchsubmit").click(function () {
-    
+
     var t = $('#example').DataTable();
     // t.search('');
     var username = $("#serchusername").val();
@@ -69,35 +69,40 @@ $("#btnserchsubmit").click(function () {
     }
     t.column(4).search(phonenumber).draw(true);
     t.column(5).search(postalcode).draw(true);
-    if ($("#txtFromDate").val() != '' && $("#txtToDate").val() != '') {
-        jQuery.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-                var min = new Date(parseInt($("#txtFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
-                var max = new Date(parseInt($("#txtToDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtToDate").val().toString().split('-')[1]) - 1), parseInt($("#txtToDate").val().toString().split('-')[2]), 0, 0, 0, 0);
-                var date = new Date(parseInt(data[2].toString().split('-')[2]), parseInt(parseInt(data[2].toString().split('-')[1]) - 1), parseInt(data[2].toString().split('-')[0]), 0, 0, 0, 0);
-                var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
-                if (
-                    (min === null && max === null) ||
-                    (min === null && date <= max) ||
-                    (min <= date && max === null) ||
-                    (min <= date && date <= max)
-                ) {
-                    console.log('success');
-                    return true;
-                }
-                else {
-                    console.log('error');
-                    return false;
-                }
 
+    jQuery.fn.dataTable.ext.search.push(
+
+        function (settings, data, dataIndex) {
+            var min = "";
+            var max = "";
+            if ($("#txtFromDate").val() != '' && $("#txtToDate").val() != '') {
+                min = new Date(parseInt($("#txtFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                max = new Date(parseInt($("#txtToDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtToDate").val().toString().split('-')[1]) - 1), parseInt($("#txtToDate").val().toString().split('-')[2]), 0, 0, 0, 0);
             }
-        );
-        t.draw();
-    }
+
+            var date = new Date(parseInt(data[2].toString().split('-')[2]), parseInt(parseInt(data[2].toString().split('-')[1]) - 1), parseInt(data[2].toString().split('-')[0]), 0, 0, 0, 0);
+            var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
+            if (
+                (min === "" && max === "") ||
+                (min === "" && date <= max) ||
+                (min <= date && max === "") ||
+                (min <= date && date <= max)
+            ) {
+                console.log('success');
+                return true;
+            }
+            else {
+                console.log('error');
+                return false;
+            }
+
+        }
+    );
+    t.draw();
+
 });
 $("#btnclear").click(function () {
     var table = $('#example').DataTable();
-  
     $('#txtFromDate').val('');
     $('#txtFromDate').attr('type', 'text');
     $('#txtToDate').val('');
@@ -116,7 +121,7 @@ $("#btnclear").click(function () {
         .search('')
         .columns().search('')
         .draw();
-   
+
 });
 
 function getuserrequest() {
@@ -168,9 +173,9 @@ function getuserrequest() {
                 //        userstatus = '<button class="btn-Cancel" value="InActive">InActive</button>';
                 //        activeanddeactive = '<li><a class="dropdown-item" href="#">Active</a></li>';   
                 //    }
-                   
+
                 //}
-                  var userstatus;
+                var userstatus;
                 var activeanddeactive;
                 if (element.isApproved != true) {
                     userstatus = '<button class="btnapprove">Approve</button>';
@@ -181,7 +186,7 @@ function getuserrequest() {
                     else {
                         activeanddeactive += '<li><a class="dropdown-item" href="#" onclick="ActiveDeactive(' + element.userId + ',1)">Active</a></li>';
                     }
-                                        
+
                 }
                 else {
                     if (element.isActive == true) {
@@ -198,12 +203,12 @@ function getuserrequest() {
                 t.row.add([
                     element.firstName + " " + element.lastName,
                     '',
-                    '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt="" class="me-1"><span class="bold">' + inputtagdate,                   
+                    '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt="" class="me-1"><span class="bold">' + inputtagdate,
                     usertype,
                     element.mobile,
                     element.zipCode,
                     userstatus,
-                    '<div class="nav-item dropdown action">'+
+                    '<div class="nav-item dropdown action">' +
                     '<a class= "nav-link dropdown-toggle" href = "#" id = "navbarDropdown" role = "button"' +
                     'data-bs-toggle="dropdown" aria-expanded="false" >' +
                     '<img src="..//img/admin-user/group-38.png" alt="">' +
@@ -214,7 +219,7 @@ function getuserrequest() {
                     '</div >'
 
                 ]).draw(false);
-               
+
             });
         },
         error: function (err) {
@@ -228,16 +233,16 @@ function AppeoveUser(userid) {
     $.ajax({
         type: 'post',
         url: '/Admin/approve',
-        data: { 'userid': userid},
+        data: { 'userid': userid },
         success: function (resp) {
             console.log(resp);
             Swal.fire(
                 'Approve!',
-                'You are Approved '+ userid +' now thay can login',
+                'You are Approved ' + userid + ' now thay can login',
                 'success'
             )
             afterload();
-            
+
         },
         error: function (err) {
             $("#loader").removeClass("is-active");
@@ -254,19 +259,20 @@ function ActiveDeactive(userid, index) {
         success: function (resp) {
             console.log(resp);
             if (index == 1) {
+
+                Swal.fire(
+                    'DisActivated!',
+                    userid + ' User is DisActivated',
+                    'success'
+                )
+            }
+            else {
                 Swal.fire(
                     'Activated!',
                     userid + ' User is Activated',
                     'success'
                 )
             }
-            else {
-                Swal.fire(
-                    'DisActivated!',
-                    userid + ' User is DisActivated',
-                    'success'
-                )
-            }           
             afterload();
         },
         error: function (err) {
@@ -282,7 +288,7 @@ function afterload() {
 
 $("#txtToDate").change(function () {
     $("#txtFromDate").attr({
-        "max": $("#txtToDate").val(),   
+        "max": $("#txtToDate").val(),
     });
 });
 $("#txtFromDate").change(function () {

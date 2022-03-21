@@ -87,6 +87,9 @@ function rescheduleservice(servicerequestid) {
     $("#errormesgrechedual").addClass(" d-none")
     $("#errormesgrechedual").html("");
     $("#loader").addClass("is-active");
+
+
+
     $.ajax({
         type: 'Post',
         url: '/customer/reschukeservicedate',
@@ -121,44 +124,55 @@ function changeservicetime() {
     var servicerequestid = $("#hiddenServiceRequestId").val();
     var changedate = $("#datechange").val();
     var time = $("#drpselecttime :selected").text();
+    debugger;
+    if ($("#datechange").val() == '') {
+        $("#spantimechange").html("Please Enter Date");
+    }
+    else {
+        $("#spantimechange").html("");
+    }
+   
+   
+    if (changedate != '' && $("#spantimechange").html() == "") {
+        $("#loader").addClass("is-active");
+        $.ajax({
+            type: 'Post',
+            url: '/customer/changeservicetimedate',
+            data: {
+                "servicerequestid": servicerequestid,
+                "changedate": changedate,
+                "chanhgetime": time
+            },
+            success: function (respo) {
+                $("#loader").removeClass("is-active");
+                if (respo.serviceRequestConflict == true && respo.serviceovertime == true) {
+                    $('#rechedual').modal('hide');
+                    /* window.location.href = "/customer/dashboard";*/
+                    location.reload();
 
-    $("#loader").addClass("is-active");
-    $.ajax({
-        type: 'Post',
-        url: '/customer/changeservicetimedate',
-        data: {
-            "servicerequestid": servicerequestid,
-            "changedate": changedate,
-            "chanhgetime": time
-        },
-        success: function (respo) {
-            $("#loader").removeClass("is-active");
-            if (respo.serviceRequestConflict == true && respo.serviceovertime == true) {
-                $('#rechedual').modal('hide');
-                /* window.location.href = "/customer/dashboard";*/
-                location.reload();
-                
+                }
+                else {
+                    /*  debugger;*/
+
+                    console.log(respo);
+                    $("#errormesgrechedual").removeClass(" d-none")
+                    if (respo.serviceRequestConflict == false) {
+                        $("#errormesgrechedual").html("Another service request has been assigned to the service provider on " + changedate + "Either choose another date or pick up a different time slot");
+                    }
+                    if (respo.serviceovertime == false) {
+                        $("#errormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
+                    }
+
+                    $('#rechedual').modal('show');
+                }
+            },
+            error: function (err) {
+                $("#loader").removeClass("is-active");
+                console.log(err);
             }
-            else {
-              /*  debugger;*/
-              
-                console.log(respo);
-                $("#errormesgrechedual").removeClass(" d-none")
-                if (respo.serviceRequestConflict == false) {
-                    $("#errormesgrechedual").html("Another service request has been assigned to the service provider on " + changedate + "Either choose another date or pick up a different time slot");
-                }
-                if (respo.serviceovertime == false) {
-                    $("#errormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
-                }
-                
-                $('#rechedual').modal('show');
-            } 
-        },
-        error: function (err) {
-            $("#loader").removeClass("is-active");
-            console.log(err);
-        }
-    });
+        });
+    }
+  
 }
 
 

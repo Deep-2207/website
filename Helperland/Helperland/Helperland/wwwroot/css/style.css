@@ -2476,9 +2476,9 @@ nav .navbar-nav-icone {
     width: 135px;
 }
 
-    .admin-dashboard .side-dashboard .datetime input::after {
+   /* .admin-dashboard .side-dashboard .datetime input::after {
         content: url("../img/admin-user/add.png");
-    }
+    }*/
 
 .calender-icon {
     background: transparent url(../img/admin-user/icon-calendar-blue.png) 9px center no-repeat !important;
@@ -3558,7 +3558,8 @@ footer .footer-max-width .nav li a:hover {
     border-bottom:none !important;
 }
 .side-dashboard .form-row input,
-.side-dashboard .form-row select {
+.side-dashboard .form-row select,
+#admindropcity {
     height: 46px;
 }
 .side-dashboard .form-row #btnclear:hover,
@@ -3571,13 +3572,14 @@ footer .footer-max-width .nav li a:hover {
     outline: 0;
     box-shadow: none;
 }
-    .side-dashboard .form-row input:focus,
-    .side-dashboard .form-row select:focus,
-    .side-dashboard .form-row button:focus {
-        border-color: #1FB6FF;
-        outline: 0;
-        box-shadow: none;
-    }
+.side-dashboard .form-row input:focus,
+.side-dashboard .form-row select:focus,
+.side-dashboard .form-row button:focus,
+##admindropcity:focus{
+    border-color: #1FB6FF;
+    outline: 0;
+    box-shadow: none;
+}
 #editrefundmodel .modal-content{
     max-width:100%;
 }

@@ -259,7 +259,7 @@
 
 
 
-           
+
             var t = $('#example').DataTable();
             var servicerequest = $("#idservicerequestsr").val();
             var postalcode = $("#idpostalcodesr").val();
@@ -274,34 +274,34 @@
                 t.column(4).search(servicestutes).draw(true);
             }
 
-           // if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
-                jQuery.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var min = "";
-                        var max = "";
-                        if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
-                             min = new Date(parseInt($("#txtsrFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
-                             max = new Date(parseInt($("#txtsrtoDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrtoDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrtoDate").val().toString().split('-')[2]), 0, 0, 0, 0);
-                        }
-                            var date = new Date(parseInt(data[1].toString().split('-')[2]), parseInt(parseInt(data[1].toString().split('-')[1]) - 1), parseInt(data[1].toString().split('-')[0]), 0, 0, 0, 0);
-                            var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
-                            if (
-                                (min === '' && max === '') ||
-                                (min === '' && date <= max) ||
-                                (min <= date && max === '') ||
-                                (min <= date && date <= max)
-                            ) {
-                                console.log('success');
-                                return true;
-                            }
-                            else {
-                                console.log('error');
-                                return false;
-                            }
-                        
+            // if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
+            jQuery.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = "";
+                    var max = "";
+                    if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
+                        min = new Date(parseInt($("#txtsrFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                        max = new Date(parseInt($("#txtsrtoDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrtoDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrtoDate").val().toString().split('-')[2]), 0, 0, 0, 0);
                     }
-                );
-                t.draw();
+                    var date = new Date(parseInt(data[1].toString().split('-')[2]), parseInt(parseInt(data[1].toString().split('-')[1]) - 1), parseInt(data[1].toString().split('-')[0]), 0, 0, 0, 0);
+                    var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
+                    if (
+                        (min === '' && max === '') ||
+                        (min === '' && date <= max) ||
+                        (min <= date && max === '') ||
+                        (min <= date && date <= max)
+                    ) {
+                        console.log('success');
+                        return true;
+                    }
+                    else {
+                        console.log('error');
+                        return false;
+                    }
+
+                }
+            );
+            t.draw();
             //}
 
         });
@@ -369,40 +369,75 @@
         }
 
         function editandreschedul() {
-            var editdata = {}
-            editdata.ServicerequestID = $("#hiddenservicerequest").val();
-            editdata.StartDate = $("#admindatechange").val();
-            editdata.StartTime = $("#admindrpselecttime :selected").text();
-            editdata.Streetname = $("#admintxtstreetname").val();
-            editdata.HouseNumber = $("#admintxthousenumber").val();
-            editdata.PostalCode = $("#admintxtpostalcode").val();
-            editdata.City = $("#admindropcity").val();
-            editdata.Comment = $("#admincommet").val();
+            debugger;
+            if ($("#admindatechange").val() == "") {
+                $("#spantimechange").html("Please Enter Date");
+            }
+            else {
+                $("#spantimechange").html("");
+            }
+            if ($("#admintxtstreetname").val() == "") {
+                $("#spnstreetnameerror").html("Please Enter StreetName");
+            }
+            else {
+                $("#spnstreetnameerror").html("");
+            }
+            if ($("#admintxthousenumber").val() == "") {
+                $("#spnhousenumbererror").html("Please Enter HouseNumber");
+            }
+            else {
+                $("#spnhousenumbererror").html("");
+            }
+            if ($("#admintxtpostalcode").val() == "") {
+                $("#spnpostalcodeerrormesg").html("Please Enter PostalCode");
+            }
+            else {
+                $("#spnpostalcodeerrormesg").html("");
+            }
 
-            $.ajax({
-                type: 'post',
-                url: '/Admin/editandreschedul',
+            if ($("#admindatechange").val() != "" && $("#spantimechange").html() == "" &&
+                $("#admintxtstreetname").val() != "" && $("#spnstreetnameerror").html() == "" &&
+                $("#admintxthousenumber").val() != "" && $("#spnhousenumbererror").html() == "" &&
+                $("#admintxtpostalcode").val() != "" && $("#spnpostalcodeerrormesg").html() == "")
+            {
+                var editdata = {}
+                editdata.ServicerequestID = $("#hiddenservicerequest").val();
+                editdata.StartDate = $("#admindatechange").val();
+                editdata.StartTime = $("#admindrpselecttime :selected").text();
+                editdata.Streetname = $("#admintxtstreetname").val();
+                editdata.HouseNumber = $("#admintxthousenumber").val();
+                editdata.PostalCode = $("#admintxtpostalcode").val();
+                editdata.City = $("#admindropcity").val();
+                editdata.Comment = $("#admincommet").val();
 
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify(editdata),
-                success: function (respo) {
+                $.ajax({
+                    type: 'post',
+                    url: '/Admin/editandreschedul',
 
-                    if (respo.serviceRequestConflict == false) {
-                        $("#adminerrormesgrechedual").removeClass(" d-none")
-                        $("#adminerrormesgrechedual").html("Another service request has been assigned to the service provider on " + editdata.StartTime + "Either choose another date or pick up a different time slot");
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(editdata),
+                    success: function (respo) {
+
+                        if (respo.serviceRequestConflict == false) {
+                            $("#adminerrormesgrechedual").removeClass(" d-none")
+                            $("#adminerrormesgrechedual").html("Another service request has been assigned to the service provider on " + editdata.StartTime + "Either choose another date or pick up a different time slot");
+                        }
+                        if (respo.serviceovertime == false) {
+                            $("#adminerrormesgrechedual").removeClass(" d-none")
+                            $("#adminerrormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
+                        }
+                        $("#editrefundmodel").modal("hide");
+                        afterload();
+                    },
+                    error: function (err) {
+                        $("#loader").removeClass("is-active");
+                        console.log(err);
                     }
-                    if (respo.serviceovertime == false) {
-                        $("#adminerrormesgrechedual").removeClass(" d-none")
-                        $("#adminerrormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
-                    }
-                    $("#editrefundmodel").modal("hide");
-                },
-                error: function (err) {
-                    $("#loader").removeClass("is-active");
-                    console.log(err);
-                }
-            });
+                });
+            }
+
+
         }
         function CancelRequestbyAdmin(serviceid) {
             console.log(serviceid)
@@ -421,7 +456,7 @@
                         url: '/Admin/cancelservcierequest',
                         data: { "serviceid": serviceid },
                         success: function (respo) {
-                           // $('#example').DataTable().ajax.reload();
+                            // $('#example').DataTable().ajax.reload();
                             Swal.fire(
                                 'Cancel!',
                                 'Servicerequest is Cancelled',
@@ -437,6 +472,20 @@
                 }
             })
         }
+        function afterload() {
+            $('#example').DataTable().clear().draw();
+            getallservicerequest();
+        }
+        $("#txtsrtoDate").change(function () {
+            $("#txtsrFromDate").attr({
+                "max": $("#txtsrtoDate").val(),
+            });
+        });
+        $("#txtsrFromDate").change(function () {
+            $("#txtsrtoDate").attr({
+                "min": $("#txtsrFromDate").val(),
+            });
+        });
     </script>
 
 }
