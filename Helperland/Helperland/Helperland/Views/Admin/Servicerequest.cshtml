@@ -15,49 +15,54 @@
     <form class="requestmanagement">
         <div class="form-row align-items-center d-flex justify-content-center dv-filter">
             <div class="col">
-                <input type="text" class="form-control width-110" placeholder="Service ID">
+                <input type="text" class="form-control w-auto" placeholder="Service ID" id="idservicerequestsr">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control w-auto" placeholder="Postal Code" id="idpostalcodesr">
             </div>
             <div class="col form-group">
 
-                <select id="inputState" class="form-select width-127">
-                    <option disabled selected>Customer</option>
+                <select id="idcustomerdrp" class="form-select width-127">
+                    <option disabled selected value="0">Customer</option>
                     <option>...</option>
                 </select>
             </div>
-            <div class="col form-group drop-service-provider">
+            <div class="col form-group drop-service-provider w-auto">
 
-                <select id="inputState" class="form-select width-152">
-                    <option disabled selected>Service Provider</option>
-                    <option>...</option>
+                <select id="idserviceproviderdrp" class="form-select width-152">
+                    <option disabled selected value="0">Service Provider</option>
+
                 </select>
             </div>
             <div class="col form-group">
 
-                <select id="inputState" class="form-select width-120">
-                    <option disabled selected>Status</option>
-                    <option>...</option>
+                <select id="idenumservicestutes" class="form-select width-120">
+                    <option disabled selected value="0">Status</option>
+                    @foreach (var sp in Enum.GetNames(typeof(ServiceStatusEnum)))
+                    {
+                        <option value="@sp">@sp</option>
+                    }
                 </select>
             </div>
             <div class="col datetime">
                 <!-- <input type="text" placeholder="From Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
-                <input type="text" id="txtFromDate" placeholder="From Date" onfocus="(this.type='date')" class="calender-icon form-control input-element width-135">
+                <input type="text" id="txtsrFromDate" placeholder="From Date" onfocus="(this.type='date')" class="calender-icon form-control input-element width-135">
                 <!-- <input type="date" class="form-control input-element width-135" id=""> -->
             </div>
             <div class="col datatime">
                 <!-- <input type="text" placeholder="To Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
-                <input type="text" placeholder="To Date" class="calender-icon form-control input-element width-135" onfocus="(this.type='date')">
+                <input type="text" id="txtsrtoDate" placeholder="To Date" class="calender-icon form-control input-element width-135" onfocus="(this.type='date')">
                 <!-- <input type="date" class="form-control input-element width-135" id=""> -->
 
             </div>
+            <div class="d-flex mt-3 mb-3">
 
-
-
-
-            <div class="col">
-                <button type="submit" class="btn btn-primary mb-2 admin-submit width-84">Submit</button>
-            </div>
-            <div class="col">
-                <button type="submit" class="btn btn-light mb-2 width-84">clear</button>
+                <div class="col">
+                    <button type="button" class="btn btn-primary mb-2 admin-submit width-84" id="idsubmit">Submit</button>
+                </div>
+                <div class="col">
+                    <button type="button" id="btnclear" class="btn btn-light mb-2 width-84">clear</button>
+                </div>
             </div>
         </div>
     </form>
@@ -83,156 +88,355 @@
 
 @section Scripts{
 
-   <script>
-       $(document).ready(function () {
-           $('#example').on('draw.dt', function () { //every time ajax call, this code execute
+    <script>
+        $(document).ready(function () {
+            $('#example').on('draw.dt', function () { //every time ajax call, this code execute
 
-               $(".ratingspdashboard").rating({
-                   min: 0,
-                   max: 5,
-                   step: 0.1,
-                   size: "xs",
-                   stars: "5",
-                   showClear: false,
-                   readonly: true,
-                   starCaptions: function (val) {
-                       return val;
-                   }
-               });
-           });
+                $(".ratingspdashboard").rating({
+                    min: 0,
+                    max: 5,
+                    step: 0.1,
+                    size: "xs",
+                    stars: "5",
+                    showClear: false,
+                    readonly: true,
+                    starCaptions: function (val) {
+                        return val;
+                    }
+                });
+            });
+            $('#example').DataTable({
 
-           $('#example').DataTable({
-
-               "dom": '<"top"i>rt<"bottom"flp><"clear">',
-
-
-               "bFilter": false, //hide Search bar
-               "pagingType": "full_numbers",
-               paging: true,
-               "pagingType": "full_numbers",
-               // bFilter: false,
-               ordering: true,
-               searching: false,
-               info: true,
-
-               "oLanguage": {
-                   "sInfo": "Total Records: _TOTAL_"
-               },
-               "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
-               responsive: true,
-               "order": [],
-              
-           });
-           getallservicerequest();
-       });
-       function getallservicerequest() {
-        
-           $.ajax({
-               type: 'post',
-               url: '/Admin/getallrequest',
-               success: function (resp) {
-                   console.log(resp);
-                   $('#example').DataTable().clear();
-
-                   resp.forEach(function (element) {
-                       var t = $('#example').DataTable();
-                       date = new Date(element.servicestartdate);
-                       var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
-                       var d2 = new Date(element.servicestartdate);
-                       d2.setMinutes(d2.getMinutes() + (element.servicehours * 60));
-                       var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
-                       var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
-                       var serviceproviderdetails;
-
-                       if (element.serviceprovideruser != null) {
-                           serviceproviderdetails = '<div class="d-flex"><img class="align-self-center mr-3" src="..//img/customer-service/forma-1-copy-19.png"> <div class="media-body"> ' + element.serviceprovideruser.firstName + " " + element.serviceprovideruser.lastName ;
-
-                           if (element.ratings != null) {
-                               serviceproviderdetails = serviceproviderdetails + '<input required class= "ratingspdashboard"  value = "' + element.ratings + '" type = "text" title = "" > ' ;
-                           }
-                           else {
-                               serviceproviderdetails = serviceproviderdetails + "<br> Not Rated";
-                           }
-
-                           serviceproviderdetails = serviceproviderdetails + " </div></div>";
-                       }
-                       else {
-                           serviceproviderdetails = '';
-                       }
-                      
-                       var servicestutas;
-                       var editandrefunnd;
-                       switch (element.status) {
-                           case 1:
-                               servicestutas = '<button class="btn-new" value="New">New</button>';
-                               editandrefunnd = '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="#">Edit & Refund</a></li></ul>';
-                               break;
-                           case 2:
-                               servicestutas = '<button class="btn-pandding" value="Pandding">Pandding</button>';
-                               editandrefunnd = '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="#">Edit & Refund</a></li></ul>';
-                               break;
-                           case 3:
-                               servicestutas = '<button class="btn-Cancel" value="Cancelled">Cancelled</button>';
-                               editandrefunnd = ''
-                               break;
-                           case 4:
-                               servicestutas = '<button class="btn-completed" value="Completed">Completed</button>';
-                               editandrefunnd = ''
-                               break;
-                       }
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
 
 
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: true,
+                info: true,
 
-                       t.row.add([
-                           element.servicerequestid,
-                           '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
-                           element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.customeraddress1 + ' <br> ' + element.customeraddress2,
-                           serviceproviderdetails,
-                           servicestutas,
-                           '<div class="nav-item dropdown action servicerequestaction">' +
-                           '<a class= "nav-link dropdown-toggle" href = "#" id = "navbarDropdown" role = "button"' +
-                           'data-bs-toggle="dropdown" aria-expanded="false" >' +
-                           '<img src="..//img/admin-user/group-38.png" alt="">' +
-                           '</a>' +
-                           editandrefunnd +
-                           '</div >'
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": [],
 
-                       ]).draw(false);
-                       $('.rb-rating').rating({
-                           'showCaption': true,
-                           'stars': '3',
-                           'min': '0',
-                           'max': '3',
-                           'step': '1',
-                           'size': 'xs',
-                           'starCaptions': { 0: 'status:nix', 1: 'status:wackelt', 2: 'status:geht', 3: 'status:laeuft' }
-                       });
-                       $(".ratingspdashboard").rating({
-                           min: 0,
-                           max: 5,
-                           step: 0.1,
-                           size: "xs",
-                           stars: "5",
-                           showClear: false,
+            });
+            $("#loader").addClass("is-active");
+            getallservicerequest();
+        });
+        function getallservicerequest() {
+
+            $.ajax({
+                type: 'post',
+                url: '/Admin/getallrequest',
+                success: function (resp) {
+                    $("#loader").removeClass("is-active");
+                    console.log(resp);
+                    $('#example').DataTable().clear();
+
+                    resp.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        date = new Date(element.servicestartdate);
+                        var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
+                        var d2 = new Date(element.servicestartdate);
+                        d2.setMinutes(d2.getMinutes() + (element.servicehours * 60));
+                        var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
+                        var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
+                        var serviceproviderdetails;
+
+                        if (element.serviceprovideruser != null) {
+                            serviceproviderdetails = '<div class="d-flex"><img class="align-self-center mr-3" src="..//img/customer-service/forma-1-copy-19.png"> <div class="media-body ms-2"> ' + element.serviceprovideruser.firstName + " " + element.serviceprovideruser.lastName;
+
+                            if (element.ratings != null) {
+                                serviceproviderdetails = serviceproviderdetails + '<input required class= "ratingspdashboard"  value = "' + element.ratings + '" type = "text" title = "" > ';
+                            }
+                            else {
+                                serviceproviderdetails = serviceproviderdetails + "<br> Not Rated";
+                            }
+
+                            serviceproviderdetails = serviceproviderdetails + " </div></div>";
+                        }
+                        else {
+                            serviceproviderdetails = '';
+                        }
+
+                        var servicestutas;
+                        var editandrefunnd;
+                        switch (element.status) {
+                            case 1:
+                                servicestutas = '<button class="btn-new" value="New">New</button>';
+                                editandrefunnd = '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" data-bs-target="#editrefundmodel" data-bs-toggle="modal" onclick="Editservicerequest(' + element.servicerequestid + ')">Edit & Refund</a></li><li><a class="dropdown-item" onclick="CancelRequestbyAdmin(' + element.servicerequestid + ')">Cancel SR By Cust</a></li></ul>';
+                                break;
+                            case 2:
+                                servicestutas = '<button class="btn-pandding" value="pending">pending</button>';
+                                editandrefunnd = '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" data-bs-target="#editrefundmodel" data-bs-toggle="modal" onclick="Editservicerequest(' + element.servicerequestid + ')">Edit & Refund</a></li><li><a class="dropdown-item" onclick="CancelRequestbyAdmin(' + element.servicerequestid + ')">Cancel SR By Cust</a></li></ul>';
+                                break;
+                            case 3:
+                                servicestutas = '<button class="btn-Cancel" value="Cancelled">Cancelled</button>';
+                                editandrefunnd = ''
+                                break;
+                            case 4:
+                                servicestutas = '<button class="btn-completed" value="Completed">Completed</button>';
+                                editandrefunnd = ''
+                                break;
+                        }
+
+
+
+                        t.row.add([
+                            element.servicerequestid,
+                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" class="me-2" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" class="me-2" alt="">' + temptime,
+                            element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.customeraddress1 + ' <br> ' + element.customeraddress2,
+                            serviceproviderdetails,
+                            servicestutas,
+                            '<div class="nav-item dropdown action servicerequestaction">' +
+                            '<a class= "nav-link dropdown-toggle" href = "#" id = "navbarDropdown" role = "button"' +
+                            'data-bs-toggle="dropdown" aria-expanded="false" >' +
+                            '<img src="..//img/admin-user/group-38.png" alt="">' +
+                            '</a>' +
+                            editandrefunnd +
+                            '</div >'
+
+                        ]).draw(false);
+                        $('.rb-rating').rating({
+                            'showCaption': true,
+                            'stars': '3',
+                            'min': '0',
+                            'max': '3',
+                            'step': '1',
+                            'size': 'xs',
+                            'starCaptions': { 0: 'status:nix', 1: 'status:wackelt', 2: 'status:geht', 3: 'status:laeuft' }
+                        });
+                        $(".ratingspdashboard").rating({
+                            min: 0,
+                            max: 5,
+                            step: 0.1,
+                            size: "xs",
+                            stars: "5",
+                            showClear: false,
                             readonly: true,
-                           starCaptions: function (val) {
-                               return val;
-                           },
-                       });
-                   });
-               },
-               error: function (err) {
-                   $("#loader").removeClass("is-active");
-                   console.log(err);
-               }
-           });
-       }
-       function AppendZero(input) {
-           if (input.length == 1) {
-               return '0' + input;
-           }
-           return input;
-       }
-   </script>
+                            starCaptions: function (val) {
+                                return val;
+                            },
+                        });
+                    });
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            });
+        }
+        function AppendZero(input) {
+            if (input.length == 1) {
+                return '0' + input;
+            }
+            return input;
+        }
+        $("#btnclear").click(function () {
+            var table = $('#example').DataTable();
+            debugger;
+            $("#idservicerequestsr").val('');
+            $("#idpostalcodesr").val('');
+            $("#idenumservicestutes").val(0);
+            $("#idserviceproviderdrp").val(0);
+            $("#idcustomerdrp").val(0);
+            $("#txtsrFromDate").val("");
+            $("#txtsrtoDate").val("");
+            table
+                .search('')
+                .columns().search('')
+                .draw();
+        });
+        $("#idsubmit").click(function () {
+
+
+
+
+           
+            var t = $('#example').DataTable();
+            var servicerequest = $("#idservicerequestsr").val();
+            var postalcode = $("#idpostalcodesr").val();
+            var servicestutes = $("#idenumservicestutes").val();
+            console.log(servicestutes);
+            if (servicerequest != '') {
+                t.column(0).search("^" + servicerequest + "$", true, false, true).draw(true);
+            }
+
+            t.column(2).search(postalcode).draw(true);
+            if (servicestutes != null) {
+                t.column(4).search(servicestutes).draw(true);
+            }
+
+           // if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
+                jQuery.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var min = "";
+                        var max = "";
+                        if ($("#txtsrFromDate").val() != '' && $("#idtodate").val() != '') {
+                             min = new Date(parseInt($("#txtsrFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                             max = new Date(parseInt($("#txtsrtoDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtsrtoDate").val().toString().split('-')[1]) - 1), parseInt($("#txtsrtoDate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                        }
+                            var date = new Date(parseInt(data[1].toString().split('-')[2]), parseInt(parseInt(data[1].toString().split('-')[1]) - 1), parseInt(data[1].toString().split('-')[0]), 0, 0, 0, 0);
+                            var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
+                            if (
+                                (min === '' && max === '') ||
+                                (min === '' && date <= max) ||
+                                (min <= date && max === '') ||
+                                (min <= date && date <= max)
+                            ) {
+                                console.log('success');
+                                return true;
+                            }
+                            else {
+                                console.log('error');
+                                return false;
+                            }
+                        
+                    }
+                );
+                t.draw();
+            //}
+
+        });
+
+        function Editservicerequest(serviceid) {
+
+            $.ajax({
+                type: 'post',
+                url: '/Admin/editrequest',
+                data: { 'servicerequestid': serviceid },
+                success: function (resp) {
+                    console.log(resp);
+                    $("#hiddenservicerequest").val(resp.serviceaddress.serviceRequestId);
+                    $("#adminerrormesgrechedual").addClass(" d-none")
+                    //file servicetime and date
+                    const date = new Date(resp.starttimeanddate);
+                    var inputTagDate = date.getFullYear().toString() + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + AppendZero(date.getDate().toString());
+                    console.log(resp.starttimeanddate + "---" + date);
+                    $("#admindatechange").val(inputTagDate);
+                    var today = new Date();
+                    $("#admindatechange").attr("min", (today.getFullYear().toString() + '-' + AppendZero((today.getMonth() + 1).toString()) + '-' + AppendZero(today.getDate().toString())));
+                    //console.log(respo.serviceStartDate.)
+                    var hours = date.getHours(); //returns 0-23
+                    var minutes = date.getMinutes(); //returns 0-5
+                    $("#admindrpselecttime").val(hours + (minutes / 60));
+
+                    //file customer address
+                    $("#admintxtstreetname").val(resp.serviceaddress.addressLine1);
+                    $("#admintxthousenumber").val(resp.serviceaddress.addressLine2);
+                    $("#admintxtpostalcode").val(resp.serviceaddress.postalCode);
+                    var city = resp.serviceaddress.city;
+                    debugger;
+                    FillCityDropdownbyid(resp.serviceaddress.postalCode, city);
+                    $("#admindropcity").val(resp.serviceaddress.city);
+                    //$("#admindropcity option:contains(" + resp.serviceaddress.city +")");
+                    console.log(resp.serviceaddress.city);
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            });
+        }
+        function FillCityDropdownbyid(postalcode, city) {
+            var postalcode = $('#admintxtpostalcode').val();
+            $("#loader").addClass("is-active");
+            $.ajax({
+                type: "POST",
+                url: '/home/FillCityDropdown',
+                data: { "postalcode": postalcode },
+                success: function (respo) {
+
+                    console.log(respo);
+                    $("#loader").removeClass("is-active");
+                    $("#admindropcity").empty();
+                    respo.forEach((city) => $('#admindropcity').append($("<option></option>").val(city.cityName).html(city.cityName)));
+                    debugger;
+                    $("#admindropcity").val(city);
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            })
+        }
+
+        function editandreschedul() {
+            var editdata = {}
+            editdata.ServicerequestID = $("#hiddenservicerequest").val();
+            editdata.StartDate = $("#admindatechange").val();
+            editdata.StartTime = $("#admindrpselecttime :selected").text();
+            editdata.Streetname = $("#admintxtstreetname").val();
+            editdata.HouseNumber = $("#admintxthousenumber").val();
+            editdata.PostalCode = $("#admintxtpostalcode").val();
+            editdata.City = $("#admindropcity").val();
+            editdata.Comment = $("#admincommet").val();
+
+            $.ajax({
+                type: 'post',
+                url: '/Admin/editandreschedul',
+
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(editdata),
+                success: function (respo) {
+
+                    if (respo.serviceRequestConflict == false) {
+                        $("#adminerrormesgrechedual").removeClass(" d-none")
+                        $("#adminerrormesgrechedual").html("Another service request has been assigned to the service provider on " + editdata.StartTime + "Either choose another date or pick up a different time slot");
+                    }
+                    if (respo.serviceovertime == false) {
+                        $("#adminerrormesgrechedual").removeClass(" d-none")
+                        $("#adminerrormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
+                    }
+                    $("#editrefundmodel").modal("hide");
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            });
+        }
+        function CancelRequestbyAdmin(serviceid) {
+            console.log(serviceid)
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are Cancel the service on the Be half of the customer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/Admin/cancelservcierequest',
+                        data: { "serviceid": serviceid },
+                        success: function (respo) {
+                           // $('#example').DataTable().ajax.reload();
+                            Swal.fire(
+                                'Cancel!',
+                                'Servicerequest is Cancelled',
+                                'success'
+                            )
+                        },
+                        error: function (err) {
+                            $("#loader").removeClass("is-active");
+                            console.log(err);
+                        }
+                    });
+
+                }
+            })
+        }
+    </script>
 
 }

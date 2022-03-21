@@ -3,8 +3,6 @@
     $('#example').DataTable({
 
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
-      
-
         "bFilter": false, //hide Search bar
         "pagingType": "full_numbers",
         paging: true,
@@ -40,10 +38,8 @@
         //}
     });
    
-
-   // getuserrequest();
     getuserrequest();
-    debugger;
+   
    
     
 });
@@ -57,7 +53,7 @@ function AppendZero(input) {
 
 
 $("#btnserchsubmit").click(function () {
-    debugger;
+    
     var t = $('#example').DataTable();
     // t.search('');
     var username = $("#serchusername").val();
@@ -65,7 +61,7 @@ $("#btnserchsubmit").click(function () {
     var phonenumber = $("#idphonenumber").val();
     var postalcode = $("#idpostalcode").val();
     var fromdate = $("#txtFromDate").val();
-    var todate = $("#idtodate").val();
+    var todate = $("#txtToDate").val();
     t.column(0).search(username).draw(true);
     /*console.log(t.search($("#serchusername").val()));*/
     if (usertype != "User Type") {
@@ -73,11 +69,11 @@ $("#btnserchsubmit").click(function () {
     }
     t.column(4).search(phonenumber).draw(true);
     t.column(5).search(postalcode).draw(true);
-    if ($("#txtFromDate").val() != '' && $("#idtodate").val() != '') {
+    if ($("#txtFromDate").val() != '' && $("#txtToDate").val() != '') {
         jQuery.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 var min = new Date(parseInt($("#txtFromDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtFromDate").val().toString().split('-')[1]) - 1), parseInt($("#txtFromDate").val().toString().split('-')[2]), 0, 0, 0, 0);
-                var max = new Date(parseInt($("#idtodate").val().toString().split('-')[0]), parseInt(parseInt($("#idtodate").val().toString().split('-')[1]) - 1), parseInt($("#idtodate").val().toString().split('-')[2]), 0, 0, 0, 0);
+                var max = new Date(parseInt($("#txtToDate").val().toString().split('-')[0]), parseInt(parseInt($("#txtToDate").val().toString().split('-')[1]) - 1), parseInt($("#txtToDate").val().toString().split('-')[2]), 0, 0, 0, 0);
                 var date = new Date(parseInt(data[2].toString().split('-')[2]), parseInt(parseInt(data[2].toString().split('-')[1]) - 1), parseInt(data[2].toString().split('-')[0]), 0, 0, 0, 0);
                 var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
                 if (
@@ -101,17 +97,35 @@ $("#btnserchsubmit").click(function () {
 });
 $("#btnclear").click(function () {
     var table = $('#example').DataTable();
+  
+    $('#txtFromDate').val('');
+    $('#txtFromDate').attr('type', 'text');
+    $('#txtToDate').val('');
+    $('#txtToDate').attr('type', 'text');
+    $("#txtToDate").attr({
+        "min": ''
+    });
+    $("#txtFromDate").attr({
+        "max": ''
+    });
+    $("#serchusername").val('')
+    $("#idusertype").val(0);
+    $("#idphonenumber").val('');
+    $("#idpostalcode").val('');
     table
         .search('')
         .columns().search('')
         .draw();
+   
 });
 
 function getuserrequest() {
+    $("#loader").addClass("is-active");
     $.ajax({
         type: 'post',
         url: '/Admin/newuser',
         success: function (resp) {
+            $("#loader").removeClass("is-active");
             console.log(resp);
             $('#example').DataTable().clear();
 
@@ -131,12 +145,54 @@ function getuserrequest() {
                     usertype = 'Admin';
                 }
 
-                var userstatus;
-                if (element.isActive == true) {
-                    userstatus = '<button class="active">Active</button>';
+                //var userstatus;
+                //if (element.isActive == true) {
+                //    userstatus = '<button class="active">Active</button>';
+                //}
+                //else {
+                //    userstatus = '<button class="btn-Cancel" value="InActive">InActive</button>';
+                //}
+                //var userstatus;
+                //var activeanddeactive;
+                //if (element.isApproved != true) {
+                //    userstatus = '<button class="btnapprove">Approve</button>';
+                //    activeanddeactive = '<li><a class="dropdown-item" href="#">Approve</a></li>' +
+                //                         '<li><a class="dropdown-item" href="#">Deactivate</a></li>'
+                //}
+                //else {
+                //    if (element.isActive == true) {
+                //        userstatus = '<button class="active">Active</button>';
+                //        activeanddeactive = '<li><a class="dropdown-item" href="#">Deactivate</a></li>'
+                //    }
+                //    else {
+                //        userstatus = '<button class="btn-Cancel" value="InActive">InActive</button>';
+                //        activeanddeactive = '<li><a class="dropdown-item" href="#">Active</a></li>';   
+                //    }
+                   
+                //}
+                  var userstatus;
+                var activeanddeactive;
+                if (element.isApproved != true) {
+                    userstatus = '<button class="btnapprove">Approve</button>';
+                    activeanddeactive = '<li><a class="dropdown-item" href="#" onclick="AppeoveUser(' + element.userId + ')">Approve</a></li>';
+                    if (element.isActive == true) {
+                        activeanddeactive += '<li><a class="dropdown-item" href="#" onclick="ActiveDeactive(' + element.userId + ',0)">Deactivate</a></li>';
+                    }
+                    else {
+                        activeanddeactive += '<li><a class="dropdown-item" href="#" onclick="ActiveDeactive(' + element.userId + ',1)">Active</a></li>';
+                    }
+                                        
                 }
                 else {
-                    userstatus = '<button class="btn-Cancel" value="InActive">InActive</button>';
+                    if (element.isActive == true) {
+                        userstatus = '<button class="active">Active</button>';
+                        activeanddeactive = '<li><a class="dropdown-item" href="#" onclick="ActiveDeactive(' + element.userId + ',1)">Deactivate</a></li>'
+                    }
+                    else {
+                        userstatus = '<button class="btn-Cancel" value="InActive">InActive</button>';
+                        activeanddeactive = '<li><a class="dropdown-item" href="#" onclick="ActiveDeactive(' + element.userId + ',0)">Active</a></li>';
+                    }
+
                 }
 
                 t.row.add([
@@ -153,8 +209,7 @@ function getuserrequest() {
                     '<img src="..//img/admin-user/group-38.png" alt="">' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">' +
-                    '<li><a class="dropdown-item" href="#">Edit</a></li>' +
-                    '<li><a class="dropdown-item" href="#">Deactivate</a></li>' +
+                    activeanddeactive,
                     '</ul>' +
                     '</div >'
 
@@ -168,3 +223,70 @@ function getuserrequest() {
         }
     });
 }
+
+function AppeoveUser(userid) {
+    $.ajax({
+        type: 'post',
+        url: '/Admin/approve',
+        data: { 'userid': userid},
+        success: function (resp) {
+            console.log(resp);
+            Swal.fire(
+                'Approve!',
+                'You are Approved '+ userid +' now thay can login',
+                'success'
+            )
+            afterload();
+            
+        },
+        error: function (err) {
+            $("#loader").removeClass("is-active");
+            console.log(err);
+        }
+    });
+}
+function ActiveDeactive(userid, index) {
+    console.log(index);
+    $.ajax({
+        type: 'post',
+        url: '/Admin/activedeactive',
+        data: { 'userid': userid, 'index': index },
+        success: function (resp) {
+            console.log(resp);
+            if (index == 1) {
+                Swal.fire(
+                    'Activated!',
+                    userid + ' User is Activated',
+                    'success'
+                )
+            }
+            else {
+                Swal.fire(
+                    'DisActivated!',
+                    userid + ' User is DisActivated',
+                    'success'
+                )
+            }           
+            afterload();
+        },
+        error: function (err) {
+            $("#loader").removeClass("is-active");
+            console.log(err);
+        }
+    });
+}
+function afterload() {
+    $('#example').DataTable().clear().draw();
+    getuserrequest();
+}
+
+$("#txtToDate").change(function () {
+    $("#txtFromDate").attr({
+        "max": $("#txtToDate").val(),   
+    });
+});
+$("#txtFromDate").change(function () {
+    $("#txtToDate").attr({
+        "min": $("#txtFromDate").val(),
+    });
+});

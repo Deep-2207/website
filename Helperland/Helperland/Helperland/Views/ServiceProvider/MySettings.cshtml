@@ -384,8 +384,9 @@
                         $("#txtstreetname").val(resp.userAddresses[0].addressLine1);
                         $("#txthousenumber").val(resp.userAddresses[0].addressLine2);
                         $("#txtpostalcode").val(resp.userAddresses[0].postalCode);
-                        filecitydropdwon(resp.userAddresses[0].postalCode);
-                        $("#dropcity").val(resp.userAddresses[0].city);
+                        var city = resp.userAddresses[0].city;
+                        filecitydropdwon(resp.userAddresses[0].postalCode, city);
+                        
                     }
                 }
             });
@@ -574,7 +575,7 @@
 
         });
 
-        function filecitydropdwon(postalcode) {
+        function filecitydropdwon(postalcode, city) {
             $.ajax({
                 type: "POST",
                 url: "/home/FillCityDropdown",
@@ -591,6 +592,10 @@
                         res.forEach((city) => {
                             $('#dropcity').append($("<option></option>").val(city.cityName).html(city.cityName));
                         });
+                        if (city != "") {
+                            $("#dropcity").val(city);
+                        }
+                        
                     }
 
                 }

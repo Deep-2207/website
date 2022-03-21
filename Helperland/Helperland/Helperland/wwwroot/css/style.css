@@ -2156,11 +2156,14 @@ nav .navbar-nav-icone {
 .navbar .admin-username {
     color: #fff;
 }
-
-.sidebar-collapse-dv .sidebar-collapse-ul {
-    height: 100vh;
-    overflow: auto;
-}
+    .navbar .admin-username span{
+        font-size:18px;
+        font-weight:700;
+    }
+    .sidebar-collapse-dv .sidebar-collapse-ul {
+        height: 100vh;
+        overflow: auto;
+    }
 
 .admin-body .admin-sidebar .collapse ul {
     display: flex;
@@ -2388,12 +2391,19 @@ nav .navbar-nav-icone {
             font-size: 13px;
             padding: 3px 17px;
         }
+        .admin-body .admin-data-table tr .btnapprove {
+            background-color: #1fb6ff;
+            color: white;
+            border: none;
+            font-size: 13px;
+            padding: 3px 17px;
+        }
 
-            .admin-body .admin-data-table th {
-                text-align: center;
-                height: 56px;
-                border: 1px solid #E1E1E1;
-            }
+        .admin-body .admin-data-table th {
+            text-align: center;
+            height: 56px;
+            border: 1px solid #E1E1E1;
+        }
 
     .admin-body .admin-data-table thead {
         background: #E1E1E1;
@@ -3546,4 +3556,36 @@ footer .footer-max-width .nav li a:hover {
 }
 .servicerequestaction ul li{
     border-bottom:none !important;
+}
+.side-dashboard .form-row input,
+.side-dashboard .form-row select {
+    height: 46px;
+}
+.side-dashboard .form-row #btnclear:hover,
+.side-dashboard .form-row #btnclear:focus {
+    background: #f8f9fa;
+    color: black !important;    
+}
+.side-dashboard .form-row #btnclear:focus {
+    border-color: #f8f9fa;
+    outline: 0;
+    box-shadow: none;
+}
+    .side-dashboard .form-row input:focus,
+    .side-dashboard .form-row select:focus,
+    .side-dashboard .form-row button:focus {
+        border-color: #1FB6FF;
+        outline: 0;
+        box-shadow: none;
+    }
+#editrefundmodel .modal-content{
+    max-width:100%;
+}
+/*#editrefundmodel .modal-body label {
+    font-weight: normal !important;
+}*/
+#editrefundmodel .modal-content .modelsubheadding{
+    font-weight:700 !important;
+    font-size:18px;
+    margin-top:5px;
 }

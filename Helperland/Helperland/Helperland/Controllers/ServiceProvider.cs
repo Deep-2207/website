@@ -219,7 +219,7 @@ namespace Helperland.Controllers
                     ServiceRequest sr = _serviceProviderRepository.Detailsofsr(serviceid);
                     sr.ServiceProviderId = sessionUser.UserID;
                     sr.SpacceptedDate = DateTime.Now;
-                    sr.Status = (int)ServiceStatusEnum.Pendding;
+                    sr.Status = (int)ServiceStatusEnum.Pending;
 
                     _helperlandContext.ServiceRequests.Update(sr);
                     _helperlandContext.SaveChanges();
@@ -256,7 +256,7 @@ namespace Helperland.Controllers
 
                                 cuaddress in _helperlandContext.ServiceRequestAddresses
                                     on sr.ServiceRequestId equals cuaddress.ServiceRequestId
-                                 where sr.Status == Convert.ToInt16(ServiceStatusEnum.Pendding) && sr.ServiceProviderId == sessionUser.UserID
+                                 where sr.Status == Convert.ToInt16(ServiceStatusEnum.Pending) && sr.ServiceProviderId == sessionUser.UserID
                                  select new
                                  {
                                      serviceid = sr.ServiceRequestId,

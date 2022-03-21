@@ -466,8 +466,9 @@
                     $("#txthousenumber").val(res.addressLine2);
                     $("#txtpostalcode").val(res.postalCode);
                     $("#mobilenumber").val(res.mobile);
-                    filecitydropdwon(res.postalCode);
-                    $("#dropcity").val(res.city);
+                    var city = res.city;
+                    filecitydropdwon(res.postalCode, city);
+                    
                 }
             });
         }
@@ -515,7 +516,7 @@
            
         });
 
-        function filecitydropdwon(postalcode) {
+        function filecitydropdwon(postalcode, city) {
             $.ajax({
                 type: "POST",
                 url: "/home/FillCityDropdown",
@@ -533,6 +534,7 @@
                         res.forEach((city) => {
                             $('#dropcity').append($("<option></option>").val(city.cityName).html(city.cityName));
                         });
+                        $("#dropcity").val(city);
                     }
 
                 }

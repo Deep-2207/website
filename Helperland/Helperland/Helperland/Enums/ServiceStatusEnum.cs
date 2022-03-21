@@ -8,7 +8,7 @@ namespace Helperland.Enums
     public enum ServiceStatusEnum
     {
         New = 1,
-        Pendding = 2,
+        Pending = 2,
         Cancel = 3,
         completed = 4
     }

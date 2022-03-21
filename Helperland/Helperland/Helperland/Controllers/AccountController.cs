@@ -119,7 +119,7 @@ namespace Helperland.Controllers
                     CookieOptions cookieOptions = new CookieOptions();
                     cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
                     HttpContext.Response.Cookies.Append("EmailId", user.Email);
-                    //HttpContext.Response.Cookies.Append("Password", user.Password);
+                    HttpContext.Response.Cookies.Append("Password", user.Password);
                 }
 
                 SessionUser sessionUser = new SessionUser()

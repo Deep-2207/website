@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+            }
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -14,6 +23,7 @@
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/css-loader.css" rel="stylesheet" />
     <!-- Data table CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
@@ -23,6 +33,7 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
+    <div class="loader loader-default" data-half id="loader"></div>
     <!-- navbar section start -->
     <nav class="fixed-top navbar navbar-expand-xl navbar-light admin-navbar-bg-color navbar-height-60">
         <div class="container-fluid">
@@ -97,11 +108,11 @@
             </div>
             <div class="backblack"></div>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-admin">
-                <li class="admin-username" style="user-select: auto;">
+                <li class="admin-username">
                     <img src="~/img/admin-user/admin-user.png" alt="">
-                    James Smith
+                    <span>@sessionUser.UserName</span> 
                 </li>
-                <li class="logout-btn" style="user-select: auto;">
+                <li class="logout-btn">
                     <a asp-action="logout" asp-controller="account"><img src="~/img/admin-user/logout.png" alt=""></a>
                 </li>
             </ul>
@@ -140,8 +151,8 @@
                         @*<li class="nav-item">
                                 <a class="nav-link" href="#">Service Provider</a>
                             </li>*@
-                        <li class="nav-item border-bottom-0 active">
-                            <a class="nav-link" href="#">User Management</a>
+                        <li class="nav-item border-bottom-0">
+                            <a class="nav-link" asp-action="UserManagement" asp-controller="admin">User Management</a>
                         </li>
 
                         @*<li class='nav-link sub-menu drop-2'>
@@ -186,6 +197,92 @@
     </section>
 
 
+    <div class="modal" id="editrefundmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <input type="hidden" id="hiddenservicerequest" />
+                    <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="mb-30">Reschedule Service</h3>
+
+                    <div class="alert alert-danger d-none" id="adminerrormesgrechedual" role="alert">
+
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                        <div class="col mt-0">
+                            <label for="admindatechange" class="form-label">Change Date</label>
+                            <input type="date" class="form-control" id="admindatechange">
+                        </div>
+                        <div class="col mt-0">
+                            <label for="exampleInputEmail1" class="form-label">Select Time</label>
+                            <select class="form-select" id="admindrpselecttime">
+
+                                @for (double i = 8; i <= 18; i = (i + 0.5))
+                                {
+
+                                    string[] s = i.ToString().Split('.');
+                                    <option value="@i">@s[0]: @(s.Length == 2? "30" : "00")</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="modelsubheadding mb-3 mt-3">Service Address</label>
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                        <div class="col mt-0">
+                            <label for="txtstreetname" class="form-label">Street name</label>
+                            <input type="text" class="form-control" id="admintxtstreetname"
+                                   aria-describedby="emailHelp" placeholder="Street name">
+                            <span class="text-danger" id="spnstreetnameerror"></span>
+                        </div>
+
+                        <div class="col mt-0">
+                            <label for="txthousenumber" class="form-label">House number</label>
+                            <input type="text" class="form-control" id="admintxthousenumber"
+                                   aria-describedby="emailHelp" placeholder="House number">
+                            <span class="text-danger" id="spnhousenumbererror"></span>
+                        </div>
+
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                        <div class="col">
+                            <label for="txtpostalcode" class="form-label">Postal code</label>
+                            <input type="text" class="form-control" id="admintxtpostalcode"
+                                   aria-describedby="emailHelp" placeholder="Postal code">
+                            <span class="text-danger" id="spnpostalcodeerrormesg"></span>
+                        </div>
+                        <div class="col">
+                            <label for="admindropcity" class="form-label">City</label>
+                            <select class="form-select" id="admindropcity" aria-describedby="emailHelp"
+                                    placeholder="City">
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="row row-cols-1 row-cols-auto g-4 mt-0">
+
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1"> Why do you want to reschedule service request?</label>
+                            <textarea class="form-control" id="admincommet" rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" onclick="editandreschedul()">Save</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- footer start-->
     <footer>
         <div class="footer-max-width">
@@ -225,7 +322,8 @@
                     <a href="">
                         Privacy
                         Policy
-                </span> </a>
+                    </a>
+                </span>
             </p>
         </div>
     </footer>
@@ -256,15 +354,20 @@
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
 
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
-    @*<script>
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
-                    "bInfo": false, // hide showing entries
-                    "bFilter": false, //hide Search bar
-                });
-            });
+    <script>
+        $(document).ready(function () {
 
-        </script>*@
+            var url = window.location.href;
+            // hightlight active link
+            $(".admin-sidebar ul li a").each(function () {
+                // checks if its the same on the address bar
+                // console.log(url + " - " + (this.href) + " = " + (url == (this.href)))
+                if (url == (this.href)) {
+                    /*console.log(url + "-------------");*/
+                    $(this).parent().addClass("active");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
