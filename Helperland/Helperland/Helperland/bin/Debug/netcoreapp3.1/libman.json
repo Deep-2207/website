@@ -17,6 +17,10 @@
     {
       "library": "bootstrap-star-rating@4.1.2",
       "destination": "wwwroot/lib/bootstrap-star-rating/"
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "wwwroot/lib/select2/"
     }
   ]
 }

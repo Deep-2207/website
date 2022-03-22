@@ -256,5 +256,53 @@ namespace Helperland.Controllers
             _helperlandContext.SaveChanges();
             return Json(loginuser);
         }
+        public JsonResult searchusername(string searchTerm)
+        {
+            var users = _helperlandContext.Users.ToList();
+            if(searchTerm != null)
+            {
+                users = _helperlandContext.Users.Where(x => x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)).Distinct().ToList();
+            }
+            var modifieddata = users.Select(x => new
+            {
+                id = x.FirstName + " " + x.LastName,
+                text = x.FirstName + " " + x.LastName
+            }).Distinct();
+            return Json(modifieddata);
+        }
+        public JsonResult searchcustomer(string searchTerm)
+        {
+            var users = _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.Customer).ToList();
+            if (searchTerm != null)
+            {
+                users = _helperlandContext.Users.Where(x => (x.FirstName.Contains(searchTerm)  || x.LastName.Contains(searchTerm)) && x.UserTypeId == (int)UserTypeEnum.Customer).Distinct().ToList();
+            }
+            var modifieddata = users.Select(x => new
+            {
+                id = x.FirstName + " " + x.LastName,
+                text = x.FirstName + " " + x.LastName
+            }).Distinct();
+            return Json(modifieddata);
+        }
+        public JsonResult searchserviceprovider(string searchTerm)
+        {
+            if(searchTerm != null)
+            {
+                var users = _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+
+                users = _helperlandContext.Users.Where(x => (x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)) && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).Distinct().ToList();
+
+                var modifieddata = users.Select(x => new
+                {
+                    id = x.FirstName + " " + x.LastName,
+                    text = x.FirstName + " " + x.LastName
+                }).Distinct();
+                return Json(modifieddata);
+            }
+            else
+            {
+                return Json("");
+            }
+        }
     }
 }

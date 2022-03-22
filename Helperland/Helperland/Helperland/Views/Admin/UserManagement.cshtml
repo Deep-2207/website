@@ -17,13 +17,15 @@
             <div class="col form-group col-md-4">
 
                 @*<select id="inputState" class="form-control">
-                <option disabled selected>User Name</option>
-                <option>...</option>
-            </select>*@
+                        <option disabled selected>User Name</option>
+                        <option>...</option>
+                    </select>*@
                 <div class="input-group mb-2 d-flex phonenumber">
 
-                    <input type="text" class="form-control phonenumber-input" id="serchusername"
-                           placeholder="Username">
+                    @*<input type="text" class="form-control phonenumber-input" id="serchusername"
+                        placeholder="Username">*@
+                    <select name="simpleSelect2" class="form-control" id="serchusername">
+                    </select>
                 </div>
 
             </div>
@@ -50,7 +52,7 @@
             <div class="col">
                 <input type="text" class="form-control" placeholder="Zip" id="idpostalcode">
             </div>
-          
+
             <div class="col datetime">
                 <!-- <input type="text" placeholder="From Date" class="form-control input-element width-135" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
                 <input type="text" id="txtFromDate" placeholder="From Date" onfocus="(this.type='date')" class="calender-icon form-control input-element width-135">
@@ -88,12 +90,13 @@
                 </tr>
             </thead>
             <tbody>
-               
             </tbody>
         </table>
     </div>
 </div>
 
 @section Scripts{
+    @*Select2 Js*@
+    <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/js/Admin/UserManagement.js"></script>
 }

@@ -62,7 +62,10 @@ $("#btnserchsubmit").click(function () {
     var postalcode = $("#idpostalcode").val();
     var fromdate = $("#txtFromDate").val();
     var todate = $("#txtToDate").val();
-    t.column(0).search(username).draw(true);
+    if (username != null) {
+        t.column(0).search(username).draw(true);
+    }
+    
     /*console.log(t.search($("#serchusername").val()));*/
     if (usertype != "User Type") {
         t.column(3).search(usertype).draw(true);
@@ -295,4 +298,25 @@ $("#txtFromDate").change(function () {
     $("#txtToDate").attr({
         "min": $("#txtFromDate").val(),
     });
+});
+$("#serchusername").select2({
+    placeholder: "Select User",
+    theme: "bootstrap4",
+    allowClear: true,
+    ajax: {
+        url: "/Admin/searchusername",
+        dataType: "json",
+        data: function (params) {
+            var query =
+            {
+                searchTerm: params.term,
+            };
+            return query;
+        },
+        processResults: function (data, params) {
+            return {
+                results: data
+            };
+        }
+    }
 });

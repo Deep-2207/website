@@ -135,6 +135,7 @@ section {
 
 .admin-navbar-bg-color {
     background-color: #1FB6FF;
+    z-index:9999;
 }
 
 .mb-40 {
@@ -3590,4 +3591,27 @@ footer .footer-max-width .nav li a:hover {
     font-weight:700 !important;
     font-size:18px;
     margin-top:5px;
+}
+#serchusername,
+#idserviceproviderdrp,
+#idcustomerdrp {
+    height: 46px !important;
+}
+
+#select2-serchusername-container,
+#select2-idcustomerdrp-container,
+#select2-idserviceproviderdrp-container {
+    height: 46px;
+    align-items: center;
+    display: flex;
+}
+/*.select2-container--bootstrap4 .select2-selection--single{
+    height:auto !important;
+}
+.select2-selection {
+    height: 46px !important;
+}
+*/
+.select2-container--bootstrap4 .select2-selection--single{
+    height:46px !important;
 }

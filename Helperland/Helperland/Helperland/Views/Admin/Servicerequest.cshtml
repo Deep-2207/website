@@ -22,16 +22,21 @@
             </div>
             <div class="col form-group">
 
-                <select id="idcustomerdrp" class="form-select width-127">
-                    <option disabled selected value="0">Customer</option>
-                    <option>...</option>
+                <!--<select id="idcustomerdrp" class="form-select width-127">-->
+                @*<option disabled selected value="0">Customer</option>
+        <option>...</option>*@
+
+                <!--</select>-->
+                <select name="simpleSelect2" class="form-control width-127" id="idcustomerdrp">
                 </select>
             </div>
             <div class="col form-group drop-service-provider w-auto">
 
-                <select id="idserviceproviderdrp" class="form-select width-152">
-                    <option disabled selected value="0">Service Provider</option>
+                @*<select id="idserviceproviderdrp" class="form-select width-152">
+            <option disabled selected value="0">Service Provider</option>
 
+        </select>*@
+                <select name="simpleSelect2" class="form-control width-152" id="idserviceproviderdrp">
                 </select>
             </div>
             <div class="col form-group">
@@ -87,7 +92,7 @@
 </div>
 
 @section Scripts{
-
+    <script src="~/lib/select2/js/select2.js"></script>
     <script>
         $(document).ready(function () {
             $('#example').on('draw.dt', function () { //every time ajax call, this code execute
@@ -264,12 +269,23 @@
             var servicerequest = $("#idservicerequestsr").val();
             var postalcode = $("#idpostalcodesr").val();
             var servicestutes = $("#idenumservicestutes").val();
+            var customer = $("#idcustomerdrp").val();
+            var serviceprovider = $("#idserviceproviderdrp").val();
             console.log(servicestutes);
             if (servicerequest != '') {
                 t.column(0).search("^" + servicerequest + "$", true, false, true).draw(true);
             }
-
-            t.column(2).search(postalcode).draw(true);
+            if (customer != null) {
+                t.column(2).search(postalcode + " " + customer).draw(true);
+            }
+            else {
+                t.column(2).search(postalcode).draw(true);
+            }
+            if (serviceprovider != null) {
+                t.column(3).search(serviceprovider).draw(true);
+            }
+            
+            
             if (servicestutes != null) {
                 t.column(4).search(servicestutes).draw(true);
             }
@@ -398,8 +414,7 @@
             if ($("#admindatechange").val() != "" && $("#spantimechange").html() == "" &&
                 $("#admintxtstreetname").val() != "" && $("#spnstreetnameerror").html() == "" &&
                 $("#admintxthousenumber").val() != "" && $("#spnhousenumbererror").html() == "" &&
-                $("#admintxtpostalcode").val() != "" && $("#spnpostalcodeerrormesg").html() == "")
-            {
+                $("#admintxtpostalcode").val() != "" && $("#spnpostalcodeerrormesg").html() == "") {
                 var editdata = {}
                 editdata.ServicerequestID = $("#hiddenservicerequest").val();
                 editdata.StartDate = $("#admindatechange").val();
@@ -486,6 +501,52 @@
                 "min": $("#txtsrFromDate").val(),
             });
         });
+
+        $("#idcustomerdrp").select2({
+            placeholder: "Select User",
+            theme: "bootstrap4",
+            allowClear: true,
+            ajax: {
+                url: "/Admin/searchcustomer",
+                dataType: "json",
+                data: function (params) {
+                    var query =
+                    {
+                        searchTerm: params.term,
+                    };
+                    return query;
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+
+        });
+        $("#idserviceproviderdrp").select2({
+            placeholder: "Select User",
+            theme: "bootstrap4",
+            allowClear: true,
+            ajax: {
+                url: "/Admin/searchserviceprovider",
+                dataType: "json",
+                data: function (params) {
+                    var query =
+                    {
+                        searchTerm: params.term,
+                    };
+                    return query;
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+
+        });
+
     </script>
 
 }
