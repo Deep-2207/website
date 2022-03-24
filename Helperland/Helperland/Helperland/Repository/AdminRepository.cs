@@ -1,4 +1,5 @@
 ﻿using Helperland.Data;
+using Helperland.Enums;
 using Helperland.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +23,61 @@ namespace Helperland.Repository
         {
             var newuser = _helperlandContext.Users.Select(x => x).ToList();
             return newuser;
+        }
+
+        public List<User> GetAllCustomerBySearch(string srterm)
+        {
+            return _helperlandContext.Users.Where(x => (x.FirstName.Contains(srterm) || x.LastName.Contains(srterm)) && x.UserTypeId == (int)UserTypeEnum.Customer).Distinct().ToList();
+        }
+
+        public List<User> GetAllServiceprovider()
+        {
+            return _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+        }
+
+        public List<User> GetAllServiceproviderBySearch(string srterm)
+        {
+           return _helperlandContext.Users.Where(x => (x.FirstName.Contains(srterm) || x.LastName.Contains(srterm)) && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).Distinct().ToList();
+        }
+
+        public List<User> GetAllServiceproviderbyZipcode(string zipcode)
+        {
+            return _helperlandContext.Users.Where(u => u.ZipCode == zipcode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+        }
+
+        public List<User> GetAllUserBySearch(string srterm)
+        {
+            return _helperlandContext.Users.Where(x => x.FirstName.Contains(srterm) || x.LastName.Contains(srterm)).Distinct().ToList();
+        }
+
+        public List<User> GetAllUserList()
+        {
+           return _helperlandContext.Users.ToList();
+        }
+
+        public ServiceRequestAddress GetServicerequestAddress(int srid)
+        {
+            return _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == srid).FirstOrDefault();
+        }
+
+        public List<User> GetUserByTypeId(int typeid)
+        {
+            return _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.Customer).ToList();
+        }
+
+        public ServiceRequest Updateservicerequest(ServiceRequest serviceRequest)
+        {
+            _helperlandContext.ServiceRequests.Update(serviceRequest);
+            _helperlandContext.SaveChanges();
+            return serviceRequest;
+        }
+
+        public ServiceRequestAddress UpdateServicerequestAddress(ServiceRequestAddress serviceRequestAddress)
+        {
+            _helperlandContext.ServiceRequestAddresses.Update(serviceRequestAddress);
+            _helperlandContext.SaveChanges();
+            return serviceRequestAddress;
+
         }
 
         //public List<ServiceRequest> allservicerequest()

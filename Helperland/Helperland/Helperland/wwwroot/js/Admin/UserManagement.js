@@ -19,23 +19,23 @@
         "order": [],
         "bDestroy": true,
         orderCellsTop: true,
-        fixedHeader: true
-        //buttons: {
-        //    dom: {
-        //        button: {
-        //            tag: 'button',
-        //            className: ''
-        //        }
-        //    },
-        //    buttons: [{
-        //        extend: 'excel',
-        //        text: 'Export',
-        //        className: "Export",
-        //        exportOptions: {
-        //            columns: [0, 1, 2, 3]
-        //        },
-        //    }]
-        //}
+        fixedHeader: true,
+        buttons: {
+            dom: {
+                button: {
+                    tag: 'button',
+                    className: ''
+                }
+            },
+            buttons: [{
+                extend: 'excel',
+                text: 'Export',
+                className: "AdminExport",
+                exportOptions: {
+                    columns: [0, 1, 2, 3]
+                },
+            }]
+        }
     });
 
     getuserrequest();
@@ -120,6 +120,7 @@ $("#btnclear").click(function () {
     $("#idusertype").val(0);
     $("#idphonenumber").val('');
     $("#idpostalcode").val('');
+    $('#serchusername').val(null).trigger('change');
     table
         .search('')
         .columns().search('')
@@ -302,7 +303,7 @@ $("#txtFromDate").change(function () {
 $("#serchusername").select2({
     placeholder: "Select User",
     theme: "bootstrap4",
-    allowClear: true,
+    /*allowClear: true,*/
     ajax: {
         url: "/Admin/searchusername",
         dataType: "json",

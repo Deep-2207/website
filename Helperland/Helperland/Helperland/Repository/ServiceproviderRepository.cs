@@ -3,6 +3,7 @@ using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -83,8 +84,47 @@ namespace Helperland.Repository
 
         public ServiceRequest Detailsofsr(int servicerequestid)
         {
-            var  sr  = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == null && x.ServiceRequestId == servicerequestid).FirstOrDefault();
+            var sr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == null && x.ServiceRequestId == servicerequestid).FirstOrDefault();
             return sr;
+        }
+
+        public List<ServiceRequest> GetAllNewServicerequest(bool haspet, int spid)
+        {
+            List<ServiceRequest> servicedisapy = (List<ServiceRequest>)(from sr in _helperlandContext.ServiceRequests
+                                                       join
+                                                       usr in _helperlandContext.Users
+                                                       on sr.ZipCode equals usr.ZipCode
+                                                       join
+                                                       cuaddress in _helperlandContext.ServiceRequestAddresses
+                                                       on sr.ServiceRequestId equals cuaddress.ServiceRequestId
+                                                       join fb in _helperlandContext.FavoriteAndBlockeds on (int?)sr.UserId equals (int?)fb.TargetUserId into fb1
+                                                       from fb in fb1.DefaultIfEmpty()
+                                                       where usr.UserId == spid && sr.Status == Convert.ToInt16(ServiceStatusEnum.New) && sr.ServiceProviderId == null && sr.HasPets == haspet && (int?)fb.TargetUserId != (int?)sr.UserId
+                                                       select new
+                                                       {
+                                                           serviceid = sr.ServiceRequestId,
+                                                           servicestartdate = sr.ServiceStartDate,
+                                                           customeruser = _helperlandContext.Users.Where(x => x.UserId == sr.UserId).FirstOrDefault(),
+                                                           serviceaddressstrretname = cuaddress.AddressLine1,
+                                                           serviceaddresshousenumber = cuaddress.AddressLine2,
+                                                           servicereqestcity = cuaddress.City,
+                                                           servicereqestpostalcode = cuaddress.PostalCode,
+                                                           payment = sr.TotalCost,
+                                                           workingwithpet = haspet,
+                                                           servicehoures = sr.ServiceHours,
+                                                           recordVersion = sr.RecordVersion
+                                                       }).Distinct();
+            return servicedisapy;
+        }
+
+        public List<Rating> GetAllservicereated(int srid, int raings)
+        {
+            return _helperlandContext.Ratings.Where(x => x.RatingTo == srid && x.Ratings > (raings == 5 ? 0 : raings) && x.Ratings <= (raings == 5 ? 5 : (raings + 1))).Include(x => x.RatingFromNavigation).Include(x => x.ServiceRequest).ToList();
+        }
+
+        public int GetCountOfservicerequest(int srid, int status)
+        {
+            return _helperlandContext.ServiceRequests.Where(sr => sr.ServiceRequestId == srid && status == (int)ServiceStatusEnum.New).Count();
         }
 
         public User GetHashPetAtHome(int userid)
@@ -93,9 +133,21 @@ namespace Helperland.Repository
             return (_helperlandContext.Users.Where(x => x.UserId == userid).FirstOrDefault());
         }
 
+        public string GetMailforTheuserid(int userid)
+        {
+            var email= _helperlandContext.Users.Where(x => x.UserId == userid).Select(x => x.Email).FirstOrDefault();
+            return email;
+           
+        }
+
+        public List<User> GetUserByZipcode(string zipcode)
+        {
+           return _helperlandContext.Users.Where(x => x.ZipCode == zipcode).ToList();
+        }
+
         public List<ServiceRequest> listoldrequest(int serviceproviderid)
         {
-          List<ServiceRequest> listsr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceproviderid).ToList();
+            List<ServiceRequest> listsr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceproviderid).ToList();
             return listsr;
         }
 
@@ -108,6 +160,13 @@ namespace Helperland.Repository
         }
 
         public ServiceRequest Updateservicereqest(ServiceRequest serviceRequest)
+        {
+            _helperlandContext.ServiceRequests.Update(serviceRequest);
+            _helperlandContext.SaveChanges();
+            return serviceRequest;
+        }
+
+        public ServiceRequest Updateservicerequest(ServiceRequest serviceRequest)
         {
             _helperlandContext.ServiceRequests.Update(serviceRequest);
             _helperlandContext.SaveChanges();

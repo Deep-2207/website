@@ -1,4 +1,5 @@
 ﻿using Helperland.Data;
+using Helperland.Enums;
 using Helperland.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +23,11 @@ namespace Helperland.Repository
             _helperlandContext.Ratings.Add(rating);
             _helperlandContext.SaveChanges();
             return rating;
+        }
+
+        public List<ServiceRequest> GetAllserviceBySPID(int? spid)
+        {
+            return _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == spid).ToList();
         }
 
         public List<ServiceRequest> GetAllServicebyUserid(int userid)
@@ -63,9 +69,43 @@ namespace Helperland.Repository
             //return cities;
         }
 
+        public List<ServiceRequestExtra> GetExtraservicesByServiceid(int srid)
+        {
+            return _helperlandContext.ServiceRequestExtras.Where(x => x.ServiceRequestId == srid).ToList();
+        }
+
+        public Rating GetRatingForServicerequest(int srid)
+        {
+            return _helperlandContext.Ratings.Where(x => x.ServiceRequestId == srid).FirstOrDefault();
+        }
+
+        public List<Rating> GetRatingsBySpid(int? spid, int? status)
+        {
+            List<Rating> ratings = _helperlandContext.Ratings.Where(x => x.RatingTo == spid && status != (int)ServiceStatusEnum.Cancel).ToList();
+            return ratings;
+        }
+
+        public List<ServiceRequest> GetServiceHistoryBySpID(int spid)
+        {
+            List<ServiceRequest> servicehistory = _helperlandContext.ServiceRequests.Where(x => x.UserId == spid &&
+                                                                                       x.Status == (int)ServiceStatusEnum.completed ||
+                                                                                       x.Status == (int)ServiceStatusEnum.Cancel).ToList();
+            return  servicehistory;
+        }
+
+        public User Getserviceprovider(int? spid)
+        {
+            return _helperlandContext.Users.Where(x => x.UserId == spid).Include(c => c.UserAddresses).FirstOrDefault();
+        }
+
         public ServiceRequest GetserviceReqestDetials(int srid)
         {
             return _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == srid).FirstOrDefault();
+        }
+
+        public List<ServiceRequestAddress> GetServicerequestAddress(int srid)
+        {
+            return _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == srid).ToList();
         }
 
         public User GetUSerbyloginid(int userid)
@@ -80,6 +120,48 @@ namespace Helperland.Repository
             _helperlandContext.Users.Update(user);
             _helperlandContext.SaveChanges();
             return user;
+        }
+
+        //useraddress
+
+        public List<UserAddress> GetAllAddress(int userid)
+        {
+            List<UserAddress> addresses = _helperlandContext.UserAddresses.Where(x => x.UserId == userid).ToList();
+            return addresses;
+        }
+
+        public UserAddress AddUserAddress(UserAddress userAddress)
+        {
+            _helperlandContext.UserAddresses.Add(userAddress);
+            _helperlandContext.SaveChanges();
+            return userAddress;
+        }
+        public UserAddress SelectAddressByID(int id)
+        {
+            return _helperlandContext.UserAddresses.Where(x => x.AddressId == id).FirstOrDefault();
+        }
+
+        public UserAddress UpdateAddress(UserAddress userAddress)
+        {
+            _helperlandContext.UserAddresses.Update(userAddress);
+            _helperlandContext.SaveChanges();
+            return (userAddress);
+        }
+        public UserAddress DeleteAddress(int addressid)
+        {
+            //_helperlandContext.UserAddresses.Remove(addressid);
+            UserAddress selectedaddress = _helperlandContext.UserAddresses.Where(x => x.AddressId == addressid).FirstOrDefault();
+            _helperlandContext.UserAddresses.Remove(selectedaddress);
+            _helperlandContext.SaveChanges();
+
+            return (selectedaddress);
+
+        }
+
+        public List<UserAddress> GetAllAddressbypostalcode(int userid, string postalcode)
+        {
+            List<UserAddress> addresses = _helperlandContext.UserAddresses.Where(x => x.UserId == userid && x.PostalCode == postalcode).ToList();
+            return addresses;
         }
     }
 }

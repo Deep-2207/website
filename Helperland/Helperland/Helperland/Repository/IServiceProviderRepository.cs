@@ -24,5 +24,14 @@ namespace Helperland.Repository
 
         FavoriteAndBlocked BlockCutomer(FavoriteAndBlocked fandb);
         FavoriteAndBlocked UnBlockCutomer(int targetid);
+
+        List<ServiceRequest> GetAllNewServicerequest(bool haspet, int spid);
+
+        public int GetCountOfservicerequest(int srid, int status);
+
+        ServiceRequest Updateservicerequest(ServiceRequest serviceRequest);
+        List<User> GetUserByZipcode(string zipcode);
+        List<Rating> GetAllservicereated(int srid,int raings);
+        string GetMailforTheuserid(int userid);
     }
 }

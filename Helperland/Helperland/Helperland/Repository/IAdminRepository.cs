@@ -11,5 +11,15 @@ namespace Helperland.Repository
     {
         //public List<ServiceRequest> allservicerequest();
         public List<User> allnewuser();
+        ServiceRequestAddress GetServicerequestAddress(int srid);
+        ServiceRequestAddress UpdateServicerequestAddress(ServiceRequestAddress serviceRequestAddress);
+        ServiceRequest Updateservicerequest(ServiceRequest serviceRequest);
+        List<User> GetAllUserList();
+        List<User> GetAllUserBySearch(string srterm);
+        List<User> GetAllCustomerBySearch(string srterm);
+        List<User> GetAllServiceproviderBySearch(string srterm);
+        List<User> GetUserByTypeId(int typeid);
+        List<User> GetAllServiceprovider();
+        List<User> GetAllServiceproviderbyZipcode(string zipcode);
     }
 }

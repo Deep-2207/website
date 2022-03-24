@@ -255,6 +255,9 @@ section {
 .p-t-20 {
     padding-top: 20px;
 }
+.m-t-40 {
+    margin-top: 40px;
+}
 
 .p-b-10 {
     padding-bottom: 10px;
@@ -3576,11 +3579,15 @@ footer .footer-max-width .nav li a:hover {
 .side-dashboard .form-row input:focus,
 .side-dashboard .form-row select:focus,
 .side-dashboard .form-row button:focus,
-##admindropcity:focus{
-    border-color: #1FB6FF;
+#admindropcity:focus,
+#editrefundmodel input:focus,
+#editrefundmodel select:focus,
+#editrefundmodel textarea:focus{
+    border-color: #1FB6FF !important;
     outline: 0;
     box-shadow: none;
 }
+
 #editrefundmodel .modal-content{
     max-width:100%;
 }
@@ -3604,6 +3611,9 @@ footer .footer-max-width .nav li a:hover {
     height: 46px;
     align-items: center;
     display: flex;
+    justify-content: space-between;
+ 
+
 }
 /*.select2-container--bootstrap4 .select2-selection--single{
     height:auto !important;
@@ -3614,4 +3624,19 @@ footer .footer-max-width .nav li a:hover {
 */
 .select2-container--bootstrap4 .select2-selection--single{
     height:46px !important;
+}
+.select2-container--bootstrap4.select2-container--focus .select2-selection {
+    box-shadow:none !important;
+}
+.AdminExport {
+    background: #1fb6ff;
+    border: none !important;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 7px;
+}
+.select2-selection__clear{
+    margin-top:0px !important;
 }

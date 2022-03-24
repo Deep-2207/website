@@ -7,6 +7,7 @@ using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,31 @@ namespace Helperland.Controllers
         private readonly IServiceProviderRepository _serviceProviderRepository;
         private readonly IStateRepository _stateRepository;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IConfiguration _configuration;
 
         public ServiceProvider(HelperlandContext helperlandContext,
             IServiceProviderRepository serviceProviderRepository,
             IStateRepository stateRepository,
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+            IConfiguration configuration )
         {
             this._helperlandContext = helperlandContext;
             this._serviceProviderRepository = serviceProviderRepository;
             this._stateRepository = stateRepository;
             this._customerRepository = customerRepository;
+            this._configuration = configuration;
+        }
+        public int getLoggedinUserId()
+        {
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+            return sessionUser.UserID;
         }
         #region MYSettings
         public IActionResult Mysettings()
@@ -132,40 +148,31 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            //from sr in _helperlandContext.ServiceRequests
-            //join
-            //usr in _helperlandContext.Users
-            //on sr.UserId equals usr.UserId
-            //join
-            //cuaddress in _helperlandContext.ServiceRequestAddresses
-            //on sr.ServiceRequestId equals cuaddress.ServiceRequestId
-            //where sr.ZipCode == usr.ZipCode && sr.Status == Convert.ToInt16(ServiceStatusEnum.New)
-            //                     //usr.UserId == sessionUser.UserID && && sr.ZipCode == usr.ZipCode && sr.HasPets == HasPat
-
+           
             var servicedisapy = (from sr in _helperlandContext.ServiceRequests
-                                 join
-                                 usr in _helperlandContext.Users
-                                 on sr.ZipCode equals usr.ZipCode
-                                 join
-                                 cuaddress in _helperlandContext.ServiceRequestAddresses
-                                 on sr.ServiceRequestId equals cuaddress.ServiceRequestId
-                                 join fb in _helperlandContext.FavoriteAndBlockeds on (int?)sr.UserId equals (int?)fb.TargetUserId into fb1
-                                 from fb in fb1.DefaultIfEmpty()
-                                 where usr.UserId == sessionUser.UserID && sr.Status == Convert.ToInt16(ServiceStatusEnum.New) && sr.ServiceProviderId == null && sr.HasPets == HasPat && (int?)fb.TargetUserId != (int?)sr.UserId
-                                 select new
-                                 {
-                                     serviceid = sr.ServiceRequestId,
-                                     servicestartdate = sr.ServiceStartDate,
-                                     customeruser = _helperlandContext.Users.Where(x => x.UserId == sr.UserId).FirstOrDefault(),
-                                     serviceaddressstrretname = cuaddress.AddressLine1,
-                                     serviceaddresshousenumber = cuaddress.AddressLine2,
-                                     servicereqestcity = cuaddress.City,
-                                     servicereqestpostalcode = cuaddress.PostalCode,
-                                     payment = sr.TotalCost,
-                                     workingwithpet = HasPat,
-                                     servicehoures = sr.ServiceHours,
-                                     recordVersion = sr.RecordVersion
-                                 }).Distinct();
+                                                                        join
+                                                                        usr in _helperlandContext.Users
+                                                                        on sr.ZipCode equals usr.ZipCode
+                                                                        join
+                                                                        cuaddress in _helperlandContext.ServiceRequestAddresses
+                                                                        on sr.ServiceRequestId equals cuaddress.ServiceRequestId
+                                                                        join fb in _helperlandContext.FavoriteAndBlockeds on (int?)sessionUser.UserID equals (int?)fb.UserId into fb1
+                                                                        from fb in fb1.DefaultIfEmpty()
+                                                                        where usr.UserId == sessionUser.UserID && sr.Status == Convert.ToInt16(ServiceStatusEnum.New) && sr.ServiceProviderId == null && sr.HasPets == HasPat && (int?)fb.TargetUserId != (int?)sr.UserId
+                                                                        select new
+                                                                        {
+                                                                            serviceid = sr.ServiceRequestId,
+                                                                            servicestartdate = sr.ServiceStartDate,
+                                                                            customeruser = _helperlandContext.Users.Where(x => x.UserId == sr.UserId).FirstOrDefault(),
+                                                                            serviceaddressstrretname = cuaddress.AddressLine1,
+                                                                            serviceaddresshousenumber = cuaddress.AddressLine2,
+                                                                            servicereqestcity = cuaddress.City,
+                                                                            servicereqestpostalcode = cuaddress.PostalCode,
+                                                                            payment = sr.TotalCost,
+                                                                            workingwithpet = HasPat,
+                                                                            servicehoures = sr.ServiceHours,
+                                                                            recordVersion = sr.RecordVersion
+                                                                        }).Distinct();
             return Json(servicedisapy);
 
         }
@@ -179,7 +186,7 @@ namespace Helperland.Controllers
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
            
-            ServiceRequest newacceptrequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceid).FirstOrDefault();
+            ServiceRequest newacceptrequest =_customerRepository.GetserviceReqestDetials(serviceid);
 
             bool RequestAccepted = true;
             if (newacceptrequest.RecordVersion.ToString() != recordVersion)
@@ -214,16 +221,45 @@ namespace Helperland.Controllers
 
             if (serviceRequestConflict == true)
             {
-                if (_helperlandContext.ServiceRequests.Where(sr => sr.ServiceRequestId == serviceid && sr.Status == (int)ServiceStatusEnum.New).Count() == 1)
+                if (_serviceProviderRepository.GetCountOfservicerequest(serviceid, (int)ServiceStatusEnum.New) == 1)
                 {
                     ServiceRequest sr = _serviceProviderRepository.Detailsofsr(serviceid);
                     sr.ServiceProviderId = sessionUser.UserID;
                     sr.SpacceptedDate = DateTime.Now;
                     sr.Status = (int)ServiceStatusEnum.Pending;
 
-                    _helperlandContext.ServiceRequests.Update(sr);
-                    _helperlandContext.SaveChanges();
+                    _serviceProviderRepository.Updateservicerequest(sr);
+
+                    var userList = (from sp in _helperlandContext.Users
+                                           join fb in _helperlandContext.FavoriteAndBlockeds
+                                           on sp.UserId equals fb.UserId into temp
+                                           from fb in temp.DefaultIfEmpty()
+                                    where sp.ZipCode == newacceptrequest.ZipCode && sp.UserId != newacceptrequest.ServiceProviderId && sp.UserTypeId == (int)UserTypeEnum.ServiceProvider && sp.IsApproved == true && newacceptrequest.UserId != fb.TargetUserId
+                                    select sp.Email
+                                           ).ToList();
+                    EmailModel emailModel = new EmailModel();
+                    string stremails = "";
+                    var vCount = 0;
+                    foreach (var e in userList)
+                    {
+                        if (vCount == 0)
+                        {
+                            stremails += e;
+                            vCount++;
+                        }
+                        else
+                        {
+                            stremails += "," + e;
+                        }
+                    }
+                    emailModel.To = stremails;
+                    emailModel.Subject = "Service Request no more Available!";
+                    emailModel.Body = "Service Request <strong>" + newacceptrequest.ServiceRequestId + "</strong> has already been accepted by someone and is no more available to You!";
+                    MailHelper mailhelper = new MailHelper(_configuration);
+                    mailhelper.Send(emailModel);
                 }
+
+            
                 else
                 {
                     return Json(new { noLongerAvailable });
@@ -293,18 +329,20 @@ namespace Helperland.Controllers
 
         public JsonResult Cancel(int serviceid)
         {
-            var user = HttpContext.Session.GetString("User");
-            SessionUser sessionUser = new SessionUser();
-
-            if (user != null)
-            {
-                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
-            }
+           
             var comp = _serviceProviderRepository.completed(serviceid);
             comp.Status = (int)ServiceStatusEnum.Cancel;
-            comp.ModifiedBy = sessionUser.UserID;
+            comp.ModifiedBy = getLoggedinUserId();
             comp.ModifiedDate = DateTime.Now;
 
+            var email = _serviceProviderRepository.GetMailforTheuserid(comp.UserId);
+            EmailModel emailModel = new EmailModel();
+            
+            emailModel.To = email;
+            emailModel.Subject = "Service Request no more Available!";
+            emailModel.Body = "Service Request <strong>" + comp.ServiceRequestId + "</strong> Is Canceled By The  By serviceprovider";
+            MailHelper mailhelper = new MailHelper(_configuration);
+            mailhelper.Send(emailModel);
             return Json(_serviceProviderRepository.Updateservicereqest(comp));
         }
         #endregion Upcoming servierequest
@@ -435,16 +473,16 @@ namespace Helperland.Controllers
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
            
-            var customerratings = _helperlandContext.Ratings.Where(x => x.RatingTo == sessionUser.UserID && x.Ratings > (ratings == 5 ? 0 : ratings) && x.Ratings <= (ratings == 5 ? 5 : (ratings + 1))).Include(x => x.RatingFromNavigation).Include(x => x.ServiceRequest);
+            var customerratings = _serviceProviderRepository.GetAllservicereated(sessionUser.UserID, ratings);
             return Json(customerratings);
         }
         #endregion ratings
         public JsonResult dispaydataformtheserviceid(int servicerequestid)
         {
-            var user = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();
-            user.ServiceRequestExtras = _helperlandContext.ServiceRequestExtras.Where(x => x.ServiceRequestId == servicerequestid).ToList();
-            user.ServiceRequestAddresses = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == servicerequestid).ToList();
-            user.User = _helperlandContext.Users.Where(x => x.UserId == user.UserId).FirstOrDefault();
+            var user = _customerRepository.GetserviceReqestDetials(servicerequestid);
+            user.ServiceRequestExtras = _customerRepository.GetExtraservicesByServiceid(servicerequestid);
+            user.ServiceRequestAddresses = _customerRepository.GetServicerequestAddress(servicerequestid);
+            user.User = _customerRepository.GetUSerbyloginid(user.UserId);
             // user.User = _helperlandContext.Users.Where(x=>x.)
 
             String serviceRequestExtraName = "";

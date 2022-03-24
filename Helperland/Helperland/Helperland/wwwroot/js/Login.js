@@ -5,6 +5,7 @@ var RegExpressEmail = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]
 
 //login aajax
 function btnlogin() {
+    debugger;
     if ($("#txtloginemail").val() == "") {
         document.getElementById("spnemailerror").innerHTML = "Please enter the Email"
     }

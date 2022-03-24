@@ -7,7 +7,7 @@
 <div class="side-dashboard p-lr-20">
     <div class="sub-headding d-flex justify-content-between p-tb-15 m-t-15">
         <h2>Service Requests</h2>
-        <button class="new-user btn">
+        <button class="new-user btn" asp-action="CreateAccount" asp-controller="Account">
             <img src="~/img/admin-user/add.png" alt="">&nbsp;&nbsp; Add New
             User
         </button>
@@ -247,6 +247,8 @@
         $("#btnclear").click(function () {
             var table = $('#example').DataTable();
             debugger;
+            $('#idcustomerdrp').val(null).trigger('change');
+            $('#idserviceproviderdrp').val(null).trigger('change');
             $("#idservicerequestsr").val('');
             $("#idpostalcodesr").val('');
             $("#idenumservicestutes").val(0);
@@ -260,10 +262,6 @@
                 .draw();
         });
         $("#idsubmit").click(function () {
-
-
-
-
 
             var t = $('#example').DataTable();
             var servicerequest = $("#idservicerequestsr").val();
@@ -323,13 +321,14 @@
         });
 
         function Editservicerequest(serviceid) {
-
+            $("#loader").addClass("is-active");
             $.ajax({
                 type: 'post',
                 url: '/Admin/editrequest',
                 data: { 'servicerequestid': serviceid },
                 success: function (resp) {
                     console.log(resp);
+                    $("#loader").removeClass("is-active");
                     $("#hiddenservicerequest").val(resp.serviceaddress.serviceRequestId);
                     $("#adminerrormesgrechedual").addClass(" d-none")
                     //file servicetime and date
@@ -424,7 +423,7 @@
                 editdata.PostalCode = $("#admintxtpostalcode").val();
                 editdata.City = $("#admindropcity").val();
                 editdata.Comment = $("#admincommet").val();
-
+                $("#loader").addClass("is-active");
                 $.ajax({
                     type: 'post',
                     url: '/Admin/editandreschedul',
@@ -433,7 +432,9 @@
                     contentType: 'application/json',
                     data: JSON.stringify(editdata),
                     success: function (respo) {
-
+                        console.log(respo);
+                        debugger;
+                        $("#loader").removeClass("is-active");
                         if (respo.serviceRequestConflict == false) {
                             $("#adminerrormesgrechedual").removeClass(" d-none")
                             $("#adminerrormesgrechedual").html("Another service request has been assigned to the service provider on " + editdata.StartTime + "Either choose another date or pick up a different time slot");
@@ -441,6 +442,13 @@
                         if (respo.serviceovertime == false) {
                             $("#adminerrormesgrechedual").removeClass(" d-none")
                             $("#adminerrormesgrechedual").html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
+                        }
+                        if (respo.serviceRequestConflict == true && respo.serviceovertime == true) {
+                            Swal.fire(
+                                'ServicReschedual',
+                                'service Reschdual successfully',
+                                'success'
+                            )
                         }
                         $("#editrefundmodel").modal("hide");
                         afterload();
@@ -466,12 +474,14 @@
                 confirmButtonText: 'Yes, Cancel it!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $("#loader").addClass("is-active");
                     $.ajax({
                         type: 'post',
                         url: '/Admin/cancelservcierequest',
                         data: { "serviceid": serviceid },
                         success: function (respo) {
                             // $('#example').DataTable().ajax.reload();
+                            $("#loader").removeClass("is-active");
                             Swal.fire(
                                 'Cancel!',
                                 'Servicerequest is Cancelled',
@@ -503,9 +513,9 @@
         });
 
         $("#idcustomerdrp").select2({
-            placeholder: "Select User",
+            placeholder: "Customer",
             theme: "bootstrap4",
-            allowClear: true,
+            /*allowClear: true,*/
             ajax: {
                 url: "/Admin/searchcustomer",
                 dataType: "json",
@@ -525,9 +535,9 @@
 
         });
         $("#idserviceproviderdrp").select2({
-            placeholder: "Select User",
+            placeholder: "Serviceprovider",
             theme: "bootstrap4",
-            allowClear: true,
+            /*allowClear: true,*/
             ajax: {
                 url: "/Admin/searchserviceprovider",
                 dataType: "json",

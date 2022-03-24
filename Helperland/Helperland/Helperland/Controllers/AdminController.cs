@@ -23,14 +23,17 @@ namespace Helperland.Controllers
         private readonly HelperlandContext _helperlandContext;
         private readonly IAdminRepository _adminRepository;
         private readonly IConfiguration _configuration;
+        private readonly ICustomerRepository _customerRepository;
 
         public AdminController(HelperlandContext helperlandContext ,
                                 IAdminRepository adminRepository,
-                                IConfiguration configuration)
+                                IConfiguration configuration,
+                                ICustomerRepository customerRepository)
         {
             this._helperlandContext = helperlandContext;
             this._adminRepository = adminRepository;
             this._configuration = configuration;
+            this._customerRepository = customerRepository;
         }
         public IActionResult Index()
         {
@@ -94,9 +97,9 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            ServiceRequest serviceRequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == model.servicerequestid).FirstOrDefault();
+            ServiceRequest serviceRequest = _customerRepository.GetserviceReqestDetials(model.servicerequestid);
 
-            List<ServiceRequest> serviceproviderrequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceRequest.ServiceProviderId).ToList();
+            List<ServiceRequest> serviceproviderrequest = _customerRepository.GetAllserviceBySPID(serviceRequest.ServiceProviderId);
             DateTime newdatetime = Convert.ToDateTime(model.startDate + " " + model.StartTime);
             DateTime newdatetimewithservicehours = newdatetime.AddMinutes(serviceRequest.ServiceHours * 60);
             //DateTime newtime = Convert.ToDateTime(chanhgetime);
@@ -135,18 +138,14 @@ namespace Helperland.Controllers
                 serviceRequest.ModifiedDate = DateTime.Now;
                 serviceRequest.Comments = model.comment;
 
-                var address = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == model.servicerequestid).FirstOrDefault();
+                var address = _adminRepository.GetServicerequestAddress(model.servicerequestid);
                 address.AddressLine1 = model.Streetname;
                 address.AddressLine2 = model.HouseNumber;
                 address.PostalCode = model.postalcode;
                 address.City = model.city;
 
-
-                _helperlandContext.ServiceRequests.Update(serviceRequest);
-                _helperlandContext.ServiceRequestAddresses.Update(address);
-                _helperlandContext.SaveChanges();
-
-
+                _adminRepository.Updateservicerequest(serviceRequest);
+                _adminRepository.UpdateServicerequestAddress(address);
 
                 var eamilsend = (from sr in _helperlandContext.ServiceRequests
                                  join
@@ -160,25 +159,31 @@ namespace Helperland.Controllers
                                  select new
                                  {
                                      getuseremail = usermail.Email,
-                                     getspemail = temptempsp.Email
+                                     getspemail = temptempsp.Email,
+
                                  }).AsNoTracking().ToList();
+
 
                 EmailModel emailModel = new EmailModel();
                 string tempmail = "";
                 foreach (var spsendmail in eamilsend)
                 {
-                    
+
                     tempmail += spsendmail.getuseremail;
-                    if(spsendmail.getspemail != null)
+                    if (spsendmail.getspemail != null)
                     {
-                        tempmail += ","; 
+                        tempmail += ",";
                         tempmail += spsendmail.getspemail;
                     }
+                    
+
+                    tempmail += spsendmail.getuseremail;
 
 
                 }
-
+               
                 emailModel.To = tempmail;
+               // emailModel.To = stremails;
                 emailModel.Subject = "Serivcer Reschedul ";
                 emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId + " By Admin And <br/> New Time And Date is" + model.startDate + "-" + model.StartTime;
 
@@ -199,13 +204,55 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            var servicerequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceid).FirstOrDefault();
+            var servicerequest = _customerRepository.GetserviceReqestDetials(serviceid);
             servicerequest.Status = (int)ServiceStatusEnum.Cancel;
             servicerequest.ModifiedBy = sessionUser.UserID;
             servicerequest.ModifiedDate = DateTime.Now;
 
-             _helperlandContext.ServiceRequests.Update(servicerequest);
-             _helperlandContext.SaveChanges();
+            _adminRepository.Updateservicerequest(servicerequest);
+
+            var eamilsend = (from sr in _helperlandContext.ServiceRequests
+                             join
+                             usermail in _helperlandContext.Users
+                             on sr.UserId equals usermail.UserId
+                             join
+                             spemail in _helperlandContext.Users
+                             on sr.ServiceProviderId equals spemail.UserId into tempsp
+                             from temptempsp in tempsp.DefaultIfEmpty()
+                             where sr.ServiceRequestId == serviceid
+                             select new
+                             {
+                                 getuseremail = usermail.Email,
+                                 getspemail = temptempsp.Email,
+
+                             }).AsNoTracking().ToList();
+
+
+            EmailModel emailModel = new EmailModel();
+            string tempmail = "";
+            foreach (var spsendmail in eamilsend)
+            {
+
+                tempmail += spsendmail.getuseremail;
+                if (spsendmail.getspemail != null)
+                {
+                    tempmail += ",";
+                    tempmail += spsendmail.getspemail;
+                }
+
+
+                tempmail += spsendmail.getuseremail;
+
+
+            }
+
+            emailModel.To = tempmail;
+            // emailModel.To = stremails;
+            emailModel.Subject = "Serivcer Cancelled";
+            emailModel.Body = "Service ID " + serviceid + "is Cancelled By Admin";
+
+            MailHelper mailhelper = new MailHelper(_configuration);
+            mailhelper.Send(emailModel);
 
             return Json(servicerequest);
         }
@@ -219,13 +266,12 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            User loginuser = _helperlandContext.Users.Where(x => x.UserId == userid).FirstOrDefault();
+            User loginuser = _customerRepository.GetUSerbyloginid(userid);
             loginuser.IsApproved = true;
             loginuser.ModifiedBy = sessionUser.UserID;
             loginuser.ModifiedDate = DateTime.Now;
 
-            _helperlandContext.Users.Update(loginuser);
-            _helperlandContext.SaveChanges();
+            _customerRepository.UpdateUserDetils(loginuser);
 
             return Json(loginuser);
         }
@@ -238,11 +284,9 @@ namespace Helperland.Controllers
             {
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
-            User loginuser = _helperlandContext.Users.Where(x => x.UserId == userid).FirstOrDefault();
+            User loginuser = _customerRepository.GetUSerbyloginid(userid); ;
 
-            
-            
-            if(index == 0)
+            if (index == 0)
             {
                 loginuser.IsActive = true;
             }
@@ -252,16 +296,15 @@ namespace Helperland.Controllers
             }
             loginuser.ModifiedBy = sessionUser.UserID;
             loginuser.ModifiedDate = DateTime.Now;
-            _helperlandContext.Users.Update(loginuser);
-            _helperlandContext.SaveChanges();
+            _customerRepository.UpdateUserDetils(loginuser);
             return Json(loginuser);
         }
         public JsonResult searchusername(string searchTerm)
         {
-            var users = _helperlandContext.Users.ToList();
-            if(searchTerm != null)
+            var users = _adminRepository.GetAllUserList();
+            if (searchTerm != null)
             {
-                users = _helperlandContext.Users.Where(x => x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)).Distinct().ToList();
+                users = _adminRepository.GetAllUserBySearch(searchTerm);
             }
             var modifieddata = users.Select(x => new
             {
@@ -272,10 +315,10 @@ namespace Helperland.Controllers
         }
         public JsonResult searchcustomer(string searchTerm)
         {
-            var users = _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.Customer).ToList();
+            var users = _adminRepository.GetUserByTypeId(1);
             if (searchTerm != null)
             {
-                users = _helperlandContext.Users.Where(x => (x.FirstName.Contains(searchTerm)  || x.LastName.Contains(searchTerm)) && x.UserTypeId == (int)UserTypeEnum.Customer).Distinct().ToList();
+                users = _adminRepository.GetAllCustomerBySearch(searchTerm);
             }
             var modifieddata = users.Select(x => new
             {
@@ -288,9 +331,9 @@ namespace Helperland.Controllers
         {
             if(searchTerm != null)
             {
-                var users = _helperlandContext.Users.Where(x => x.UserTypeId == (int)UserTypeEnum.ServiceProvider).ToList();
+                var users = _adminRepository.GetAllServiceprovider();
 
-                users = _helperlandContext.Users.Where(x => (x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)) && x.UserTypeId == (int)UserTypeEnum.ServiceProvider).Distinct().ToList();
+                users = _adminRepository.GetAllServiceproviderBySearch(searchTerm);
 
                 var modifieddata = users.Select(x => new
                 {

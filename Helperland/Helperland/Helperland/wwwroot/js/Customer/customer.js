@@ -148,6 +148,11 @@ function changeservicetime() {
                 if (respo.serviceRequestConflict == true && respo.serviceovertime == true) {
                     $('#rechedual').modal('hide');
                     /* window.location.href = "/customer/dashboard";*/
+                    Swal.fire(
+                        'ServicReschedual',
+                        'service Reschdual successfully',
+                        'success'
+                    )
                     location.reload();
 
                 }

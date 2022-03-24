@@ -2,6 +2,7 @@
 using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
+using Helperland.Repository;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
@@ -24,15 +25,18 @@ namespace Helperland.Controllers
         private readonly HelperlandContext _helperlandContext;
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly IConfiguration _configuration;
+        private readonly IAccountRepository _accountRepository;
         private readonly string _key = "HELPERLAND";
         private User _user;
         public AccountController(HelperlandContext helperlandContext,
                                     IDataProtectionProvider dataProtectionProvider,
-                                    IConfiguration configuration)
+                                    IConfiguration configuration,
+                                    IAccountRepository accountRepository)
         {
             this._helperlandContext = helperlandContext;
             this._dataProtectionProvider = dataProtectionProvider;
             this._configuration = configuration;
+            this._accountRepository = accountRepository;
             this._user = new User();
         }
 
@@ -61,8 +65,7 @@ namespace Helperland.Controllers
                     IsApproved = true
                 };
 
-                _helperlandContext.Add(user);
-                _helperlandContext.SaveChanges();
+                _accountRepository.UpdateUser(user);
                 TempData["Message"] = "Account Created Successfully";
                 return RedirectToAction();
             }
@@ -97,8 +100,7 @@ namespace Helperland.Controllers
                     UserProfilePicture = "/img/service-provider/avatar-hat.png"
                 };
 
-                _helperlandContext.Add(user);
-                _helperlandContext.SaveChanges();
+                _accountRepository.UpdateUser(user);
                 TempData["Message"] = "Register successfully...!! When Admin can approve your Request then you can login";
                 return RedirectToAction();
             }
@@ -111,7 +113,7 @@ namespace Helperland.Controllers
         public JsonResult login([FromBody] LoginViewModel model)
         {
             //User user = await _helperlandContext.Users.FindAsync(x => x.Email == model.Email && x.Password == model.Password);
-            User user = _helperlandContext.Users.Where(x => x.Email == model.Email && x.Password == model.Password).FirstOrDefault();
+            User user = _accountRepository.GetLoginuser(model.Email, model.Password);
             if (user != null && user.IsApproved == true)
             {
                 if (model.IsRemember == true)
@@ -160,7 +162,7 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult forgotpassword([FromBody] ForgotViewModel model)
         {
-            User user = _helperlandContext.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+            User user = _accountRepository.GetUserByEmail(model.Email);
             if (user != null)
             {
                 var plaintextbytes = System.Text.Encoding.UTF8.GetBytes(user.Password);
@@ -239,7 +241,7 @@ namespace Helperland.Controllers
             }
 
             string[] resetpasswordToken = decrypt.Split("_!_");
-            _user = _helperlandContext.Users.Where(x => x.Email == resetpasswordToken[0]).FirstOrDefault();
+            _user = _accountRepository.GetUserByEmail(resetpasswordToken[0]);
 
             DateTime tokendate = Convert.ToDateTime(resetpasswordToken[1]).AddMinutes(30);
             DateTime dateTime = DateTime.Now;
@@ -278,9 +280,7 @@ namespace Helperland.Controllers
 
                 // _user = _helperlandContext.Users.Where(x => x.Email == model.Email).FirstOrDefault();
 
-                _helperlandContext.Users.Update(_user);
-                // _helperlandContext.Update(_user);
-                _helperlandContext.SaveChanges();
+                _accountRepository.UpdateUser(_user);
             }
             return View();
         }
