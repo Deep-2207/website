@@ -35,6 +35,18 @@ namespace Helperland.Controllers
             this._configuration = configuration;
             this._customerRepository = customerRepository;
         }
+        public int getLoggedinUserId()
+        {
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+            return sessionUser.UserID;
+        }
         public IActionResult Index()
         {
             return View();
@@ -346,6 +358,23 @@ namespace Helperland.Controllers
             {
                 return Json("");
             }
+        }
+        public JsonResult refundservice(int serviceid)
+        {
+            return Json(_helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceid).FirstOrDefault());
+        }
+        public JsonResult refundservicepost([FromBody] ServiceRequestViewModel model)
+        {
+            var servicrequest = _customerRepository.GetserviceReqestDetials(model.ServiceRequestID);
+            servicrequest.RefundedAmount = model.Refundamount;
+            servicrequest.ModifiedBy = getLoggedinUserId();
+            servicrequest.ModifiedDate = DateTime.Now;
+            servicrequest.Comments = model.Comments;
+
+            _adminRepository.Updateservicerequest(servicrequest);
+
+            return Json(servicrequest);
+
         }
     }
 }

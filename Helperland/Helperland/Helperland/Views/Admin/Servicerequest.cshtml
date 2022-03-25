@@ -24,7 +24,7 @@
 
                 <!--<select id="idcustomerdrp" class="form-select width-127">-->
                 @*<option disabled selected value="0">Customer</option>
-        <option>...</option>*@
+                    <option>...</option>*@
 
                 <!--</select>-->
                 <select name="simpleSelect2" class="form-control width-127" id="idcustomerdrp">
@@ -33,9 +33,9 @@
             <div class="col form-group drop-service-provider w-auto">
 
                 @*<select id="idserviceproviderdrp" class="form-select width-152">
-            <option disabled selected value="0">Service Provider</option>
+                        <option disabled selected value="0">Service Provider</option>
 
-        </select>*@
+                    </select>*@
                 <select name="simpleSelect2" class="form-control width-152" id="idserviceproviderdrp">
                 </select>
             </div>
@@ -89,6 +89,82 @@
         </table>
     </div>
 
+</div>
+
+
+
+<div class="modal" id="refundmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input type="hidden" id="hiddenservicerequest" />
+                <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-30">Refund Amount</h3>
+
+                <div class="alert alert-danger d-none" id="adminerrormesgrechedual" role="alert">
+
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    <div class="col mt-0">
+                        <div class="row">
+                            <div class="col">
+                                <span>Paid Amount</span><br />
+                                <label id="pamount">00</label> &euro;
+                            </div>
+                            <div class="col">
+                                <span> Refunded Amount</span><br />
+                                <label id="ramount">00</label> &euro;
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <span>Amount</span><br />
+                            <div class="input-group amountcal">
+                                <input type="number" id="txtAmountToRefund" class="form-control" />
+                                <select class="form-select bg-grey" id="ddlRefundType">
+                                    <option value="Percentage" selected>Percentage</option>
+                                    <option value="Fixed">Fixed</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col mt-0">
+                        <div class="row">
+                            <div class="col">
+                                <span>In Balance Amount</span><br />
+                                <label id="ibamount">00</label> &euro;
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <span> Calculate</span><br />
+                            <div class="input-group">
+                                <div class="input-group-prepend col">
+                                    <span class="input-group-text" id="">Calculate</span>
+                                </div>
+                                <input type="text" class="form-control col" id="idcalculate" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-danger w-100" id="spnerrorrefund"></span>
+                </div>
+                <div class="row row-cols-1 row-cols-auto g-4 mt-0">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1"> Why do you want to Refund service request?</label>
+                        <textarea class="form-control" id="admincommetforrefund" rows="3" placeholder="Why do you want to Refund service request?"></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg btnlogin mt-2 disable" type="button" onclick="Refund()" id="btnrefund">Refund</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts{
@@ -188,7 +264,7 @@
                                 break;
                             case 4:
                                 servicestutas = '<button class="btn-completed" value="Completed">Completed</button>';
-                                editandrefunnd = ''
+                                editandrefunnd = '<ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" data-bs-target="#refundmodel" data-bs-toggle="modal" onclick="Refundservice(' + element.servicerequestid + ')">Refund</a></li></ul>'
                                 break;
                         }
 
@@ -282,8 +358,8 @@
             if (serviceprovider != null) {
                 t.column(3).search(serviceprovider).draw(true);
             }
-            
-            
+
+
             if (servicestutes != null) {
                 t.column(4).search(servicestutes).draw(true);
             }
@@ -556,6 +632,107 @@
             }
 
         });
+
+        function Refundservice(srid) {
+            $("#hiddenservicerequest").val(srid);
+            $("#ramount").html("00");
+            $("#loader").addClass("is-active");
+            $.ajax({
+                type: 'post',
+                url: '/Admin/refundservice',
+                data: { "serviceid": srid },
+                success: function (respo) {
+                    debugger;
+                    // $('#example').DataTable().ajax.reload();
+                    $("#loader").removeClass("is-active");
+                    console.log(respo);
+                    $("#pamount").html(respo.totalCost);
+                    if (respo.refundedAmount != null) {
+                        $("#ramount").html(respo.refundedAmount);
+                    }
+                    $("#ibamount").html(respo.totalCost - parseFloat($("#ramount").html()))
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            });
+        }
+        $(".amountcal").on("keyup change", function () {
+            // do stuff!
+            $("#spnerrorrefund").html("");
+            $("#idcalculate").val("");
+
+            reflectrefund();
+        });
+        //$(".amountcal").change(function () {
+        //    debugger;
+           
+
+        //});
+        //$(".amountcal").keyup(function () {
+        //    debugger;
+        //    $("#spnerrorrefund").html("");
+        //    $("#idcalculate").val("");
+
+        //    reflectrefund();
+
+        //});
+        function reflectrefund() {
+            if ($("#txtAmountToRefund").val().length == 0) {
+                $("#idcalculate").val("");
+            }
+            else {
+                var refundamount = parseFloat($("#txtAmountToRefund").val());
+                var refundtype = $("#ddlRefundType").val();
+                var calculateamount;
+                if (refundtype == "Percentage") {
+                    calculateamount = (parseFloat($("#pamount").html()) * refundamount) / 100;
+                }
+                else {
+                    // calculateamount = parseInt($("#pamount").html()) - refundamount;
+                    calculateamount = parseFloat($("#txtAmountToRefund").val());
+
+                }
+                /*spnerrorrefund*/
+                console.log(typeof (calculateamount));
+                console.log(typeof (parseFloat($("#ibamount").html())));
+                if (calculateamount > (parseFloat($("#ibamount").html()))) {
+                    $("#spnerrorrefund").html("Refund Amount is greaterthan the paidamount");
+                    $("#btnrefund").addClass("disable");
+                }
+                else {
+                    $("#spnerrorrefund").html("");
+                    $("#idcalculate").val(calculateamount);
+                    $("#btnrefund").removeClass("disable");
+                }
+            }
+        }
+        function Refund() {
+            var refundobj = {}
+
+            refundobj.ServiceRequestID = $("#hiddenservicerequest").val();
+            refundobj.refundamount = $("#idcalculate").val();
+            refundobj.comments = $("#admincommetforrefund").val();
+
+            $.ajax({
+                type: 'post',
+                url: '/Admin/refundservicepost',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(refundobj),
+                success: function (respo) {
+                    // $('#example').DataTable().ajax.reload();
+                    $("#loader").removeClass("is-active");
+                    console.log(respo); 
+                },
+                error: function (err) {
+                    $("#loader").removeClass("is-active");
+                    console.log(err);
+                }
+            });
+        }
+     
 
     </script>
 

@@ -3582,7 +3582,8 @@ footer .footer-max-width .nav li a:hover {
 #admindropcity:focus,
 #editrefundmodel input:focus,
 #editrefundmodel select:focus,
-#editrefundmodel textarea:focus{
+#editrefundmodel textarea:focus,
+#txtAmountToRefund:focus{
     border-color: #1FB6FF !important;
     outline: 0;
     box-shadow: none;
@@ -3639,4 +3640,19 @@ footer .footer-max-width .nav li a:hover {
 }
 .select2-selection__clear{
     margin-top:0px !important;
+}
+#refundmodel .modal-dialog{
+    max-width:700px !important;
+}
+#refundmodel .modal-content{
+    max-width:100%;
+}
+#refundmodel input,
+#refundmodel select{
+    height:46px !important;
+}
+#ramount,
+#ibamount,
+#pamount{
+    display:inline-block;
 }

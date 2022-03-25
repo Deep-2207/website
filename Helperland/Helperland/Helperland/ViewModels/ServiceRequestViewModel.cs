@@ -69,8 +69,9 @@ namespace Helperland.ViewModels
 
         [JsonPropertyName("paymentdone")]
         public bool PaymentDone { get; set; }
-     
 
+        [JsonPropertyName("refundamount")]
+        public decimal Refundamount { get; set; }
 
         //public virtual User ServiceProvider { get; set; }
         //public virtual User User { get; set; }

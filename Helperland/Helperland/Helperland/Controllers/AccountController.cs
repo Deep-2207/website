@@ -116,6 +116,7 @@ namespace Helperland.Controllers
             User user = _accountRepository.GetLoginuser(model.Email, model.Password);
             if (user != null && user.IsApproved == true)
             {
+              
                 if (model.IsRemember == true)
                 {
                     CookieOptions cookieOptions = new CookieOptions();
