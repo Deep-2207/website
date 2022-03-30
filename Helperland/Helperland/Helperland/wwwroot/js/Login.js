@@ -33,6 +33,7 @@ function btnlogin() {
         logindetails.Password = $("#txtloginpassword").val();
         logindetails.IsRemember = $('#chkIsremember').prop('checked');;
         $("#loader").addClass("is-active");
+       
         $.ajax({
             type: 'post',
             url: '/Account/login',

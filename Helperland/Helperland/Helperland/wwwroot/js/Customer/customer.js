@@ -152,9 +152,11 @@ function changeservicetime() {
                         'ServicReschedual',
                         'service Reschdual successfully',
                         'success'
-                    )
-                    location.reload();
-
+                    ).then(function () {
+                        window.location = "/customer/Dashboard";
+                    });
+                    /*location.reload();*/
+                   
                 }
                 else {
                     /*  debugger;*/
@@ -199,10 +201,13 @@ function cancelservicepost() {
         },
         success: function (respo) {
             $("#loader").removeClass("is-active");
-            if (respo) {
-                $('#cancelservice').modal('hide');
-                window.location.href = "/customer/dashboard";
-            }
+            Swal.fire(
+                'Cancel ServiceRequst',
+                'service Reqeust Cancel successfully',
+                'success'
+            ).then(function () {
+                window.location = "/customer/Dashboard";
+            });
         },
         error: function (err) {
             $("#loader").removeClass("is-active");

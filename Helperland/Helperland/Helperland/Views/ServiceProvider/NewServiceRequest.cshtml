@@ -120,6 +120,7 @@
         }
         function Newservicerequest() {
             debugger;
+            $("#loader").addClass("is-active");
             var HasPat = $("#chkpet").prop("checked");
             $.ajax({
                 url: '/serviceprovider/getnewservicerequest',
@@ -128,7 +129,7 @@
                 success: function (respo) {
                     $('#example').DataTable().clear();
                     console.log(respo.length);
-
+                    $("#loader").removeClass("is-active");
 
                     respo.forEach(function (element) {
                         var t = $('#example').DataTable();
@@ -138,11 +139,11 @@
                         d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
                         var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
                         var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
-
+                        var spandate = date.getFullYear().toString() + AppendZero((date.getMonth() + 1).toString()) + AppendZero(date.getDate().toString());
 
                         t.row.add([
                             '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceid + ',1)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceid + '</a></span>',
-                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
+                            '<span class="d-none">' + spandate +'</span><img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
                             element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.serviceaddressstrretname + ' ' + element.serviceaddresshousenumber + ' <br> ' + element.servicereqestpostalcode + ' ' + element.servicereqestcity,
                             '<span class="price"> ' + element.payment + '€' + '</span>',
                             '',
@@ -158,6 +159,7 @@
 
         function AcceptReqest(servicerequestid, recordVersion) {
             debugger;
+            $("#loader").addClass("is-active");
             $.ajax({
                 url: '/serviceprovider/AcceptServicerequest',
                 data: { 'serviceid': servicerequestid, 'recordVersion': recordVersion },
@@ -165,14 +167,18 @@
                 success: function (resp) {
                     console.log(resp);
                     debugger;
+                    $("#loader").removeClass("is-active");
                     $("#trserviceprovidermodel").modal("hide");
                     if (resp) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Request Accepted',
                             text: 'Request Accept Successfully ID :-' + servicerequestid,
-                        })
-                        Newservicerequest();
+                        }).then(function () {
+                            afterload();
+                            Newservicerequest();
+                        });
+                        //Newservicerequest();
                     }
                     if (resp.serviceRequestConflict == false) {
                         Swal.fire({
@@ -180,17 +186,19 @@
                             title: 'Time Conflict',
                             text: 'Another service request ' + resp.serviceRequestId + ' has already been assigned which has time overlap with this service request. You can’t pick this one!!',
                         })
-                        Newservicerequest();
+                       /* Newservicerequest();*/
                     }
                     if (resp.noLongerAvailable == true) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Service Request is no more Available!!',
                             text: 'This Service Request is no more Available. It has been assigned to another Service Provider!!'
-                        })
+                        }).then(function () {
+                            afterload();
+                            Newservicerequest();
+                        });
                         /*showSPNewServiceRequestsData(document.getElementById("hasPetsForNewRequestsOfSP").checked);*/
-                        afterload();
-                        Newservicerequest();
+                        
                     }
 
 
@@ -203,14 +211,14 @@
             $("#trserviceprovidermodel").modal("show");
             $("#hiddenServiceRequestId").val(id);
             console.log($("#hiddenServiceRequestId").val(id));
-
+            $("#loader").addClass("is-active");
             $.ajax({
                 type: 'Post',
                 url: '/serviceprovider/dispaydataformtheserviceid',
                 data: { "servicerequestid": id },
                 success: function (respo) {
                     console.log(respo);
-
+                    $("#loader").removeClass("is-active");
                     document.getElementById("serviceproviderd&t").innerHTML = respo.user.serviceStartDate;
                     document.getElementById("serviceproviderduration").innerHTML = respo.user.serviceHours;
                     document.getElementById("serviceprovidersrid").innerHTML = respo.user.serviceRequestId;

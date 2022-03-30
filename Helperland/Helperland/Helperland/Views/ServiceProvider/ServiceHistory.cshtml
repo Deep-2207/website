@@ -92,11 +92,11 @@
                         d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
                         var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
                         var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
-
+                        var spandate = date.getFullYear().toString() + AppendZero((date.getMonth() + 1).toString()) + AppendZero(date.getDate().toString());
 
                         t.row.add([
                             '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceid + ',1)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceid + '</a></span>',
-                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
+                            '<span class="d-none">' + spandate +'</span><img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
                             element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.serviceaddressstrretname + ' ' + element.serviceaddresshousenumber + ' <br> ' + element.servicereqestpostalcode + ' ' + element.servicereqestcity,
                             '<span class="price"> ' + element.payment + '€' + '</span>',
                         ]).draw(false);

@@ -62,7 +62,8 @@ namespace Helperland.Controllers
                     Password = model.Password,
                     CreatedDate = DateTime.Now,
                     UserTypeId = (int)UserTypeEnum.Customer,
-                    IsApproved = true
+                    IsApproved = false,
+                    IsActive = true
                 };
 
                 _accountRepository.UpdateUser(user);
@@ -114,7 +115,7 @@ namespace Helperland.Controllers
         {
             //User user = await _helperlandContext.Users.FindAsync(x => x.Email == model.Email && x.Password == model.Password);
             User user = _accountRepository.GetLoginuser(model.Email, model.Password);
-            if (user != null && user.IsApproved == true)
+            if (user != null && user.IsApproved == true && user.IsActive == true)
             {
               
                 if (model.IsRemember == true)
@@ -148,9 +149,13 @@ namespace Helperland.Controllers
                 }
 
             }
-            else if (user != null && user.IsApproved == false)
+            else if (user != null && user.IsApproved == false && user.IsActive == true)
             {
                 return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Still Admin can not accept your Request" });
+            }
+            else if (user != null && user.IsApproved == true && user.IsActive == false)
+            {
+                return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You are InActive By Admin Please Contact Admin User..!" });
             }
             else
             {

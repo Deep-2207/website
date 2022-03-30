@@ -30,16 +30,18 @@
                 {
                     @if (service.Status != (int)ServiceStatusEnum.Cancel && service.Status != (int)ServiceStatusEnum.completed)
                     {
-                        <tr onclick="modelpopp(@service.ServiceRequestId)" class="cptabletr">
-                            <td class="tdclick"><a onclick="showservicerequestdetailmodel(@service.ServiceRequestId, 0)" class="startid d-flex justify-content-center align-items-center" href="#"> @service.ServiceRequestId </a></td>
+                        <tr class="cptabletr">
+                           
+                            <td class="tdclick" onclick="modelpopp(@service.ServiceRequestId)"><a onclick="showservicerequestdetailmodel(@service.ServiceRequestId, 0)" class="startid d-flex justify-content-center align-items-center" href="#"> @service.ServiceRequestId </a></td>
                             <td class="tdclick">
-                                <img src="~/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>@service.ServiceStartDate.Date.ToString("dd-MM-yyyy")</span> <br>
+                                <span class="d-none" id="spandate">@service.ServiceStartDate.Date.ToString("yyyyMMdd")</span><img src="~/img/service-provider-upcoming-service/calendar2.png" alt=""> <span>@service.ServiceStartDate.Date.ToString("dd-MM-yyyy")</span> <br>
                                 <img src="~/img/service-provider-upcoming-service/layer-712.png" alt="">  @service.ServiceStartDate.TimeOfDay.ToString().Remove(5, 3) -  @(service.ServiceStartDate.AddMinutes(service.ServiceHours * 60).TimeOfDay.ToString().Remove(5, 3))
 
                             </td>
                             <td>
                                 @if (service.ServiceProviderId != null)
                                 {
+
                                     <div class="media d-flex">
                                         <img class="align-self-center mr-3" src="~/img/customer-service/forma-1-copy-19.png" alt="Generic placeholder image">
                                         <div class="media-body">
@@ -197,7 +199,7 @@
                 "order": []
             });
             $('#example').on('draw.dt', function () { //every time ajax call, this code execute
-               
+
                 $(".ratingspdashboard").rating({
                     min: 0,
                     max: 5,
@@ -214,7 +216,10 @@
                     },
                 });
             });
-           
+
+            //var
+            //$("#spandate").html();
+
         });
     </script>
 }

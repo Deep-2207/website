@@ -182,13 +182,13 @@
             $(window).on('load', function () {
 
             var userid = $("#hiddenuserid").val();
-
+                $("#loader").addClass("is-active");
             $.ajax({
                 type: 'Post',
                 url: '/customer/loadtable',
                 data: { "userid": userid },
                 success: function (respo) {
-
+                    $("#loader").removeClass("is-active");
                     respo.forEach(function (element) {
                         var t = $('#example').DataTable();
                         date = new Date(element.serviceStartDate);
@@ -198,7 +198,7 @@
                         var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
                         var inputtagdate =  AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
 
-
+                        var spandate = date.getFullYear().toString() + AppendZero((date.getMonth() + 1).toString()) + AppendZero(date.getDate().toString()) ;
                         var totalrating = 0;
                         var sprating = 0;
                         var count = 0;
@@ -207,7 +207,6 @@
                         /*   console.log("rating of" + e);*/
                             totalrating = totalrating + e.ratings;
                             count++;
-
                         });
 
                         if (count > 0) {
@@ -233,8 +232,7 @@
                         }
                         t.row.add([
                             '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceRequestId +',1)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceRequestId + '</a></span>',
-
-                            '<img src=' + "..//img/customer-service/calendar.png" + ' alt=""><span class="bold">' + inputtagdate + '</span> <br>' + temptime,
+                            '<span class="d-none">' + spandate+'</span><img src=' + "..//img/customer-service/calendar.png" + ' alt=""><span class="bold">' + inputtagdate + '</span> <br>' + temptime,
                             ratinginput,
                             '<span class="price"> ' + element.totalCost + '€' + '</span>',
                             '<label class= "btn ' + txtcalss + '" value = "" > ' + txtname + '</label> ' + '</td >',

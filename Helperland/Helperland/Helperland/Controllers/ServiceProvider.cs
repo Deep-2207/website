@@ -156,7 +156,7 @@ namespace Helperland.Controllers
                                                                         join
                                                                         cuaddress in _helperlandContext.ServiceRequestAddresses
                                                                         on sr.ServiceRequestId equals cuaddress.ServiceRequestId
-                                                                        join fb in _helperlandContext.FavoriteAndBlockeds on (int?)sessionUser.UserID equals (int?)fb.UserId into fb1
+                                                                        join fb in _helperlandContext.FavoriteAndBlockeds on sr.UserId equals fb.TargetUserId into fb1
                                                                         from fb in fb1.DefaultIfEmpty()
                                                                         where usr.UserId == sessionUser.UserID && sr.Status == Convert.ToInt16(ServiceStatusEnum.New) && sr.ServiceProviderId == null && sr.HasPets == HasPat && (int?)fb.TargetUserId != (int?)sr.UserId
                                                                         select new
@@ -268,6 +268,25 @@ namespace Helperland.Controllers
             }
 
             return Json(serviceRequestConflict);
+        }
+        public JsonResult updatedetialsbyuserid(User model)
+        {
+
+            User user = _customerRepository.GetUSerbyloginid(model.UserId);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Gender = model.Gender;
+            user.Mobile = model.Mobile;
+            user.DateOfBirth = model.DateOfBirth;
+            user.ModifiedDate = DateTime.Now;
+            user.ModifiedBy = model.UserId;
+            user.LanguageId = model.LanguageId;
+            user.NationalityId = model.NationalityId;
+            _helperlandContext.Users.Update(user);
+            _helperlandContext.SaveChanges();
+
+            return Json(model);
         }
         #endregion New Servicerequest
 
@@ -505,6 +524,23 @@ namespace Helperland.Controllers
             //return Json(user);
             var result = new { user, serviceRequestExtraName };
             return Json(result);
+        }
+        public IActionResult ServiceSchedule()
+        {
+            return View();
+        }
+        public JsonResult GetServiceRequestListForCalender()
+        {
+            var getservicerequestlist = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == getLoggedinUserId() && x.Status == (int)ServiceStatusEnum.completed || x.Status == (int)ServiceStatusEnum.Pending).ToList();
+            var maindata = getservicerequestlist.Select(x => new
+            {
+                serviceproviderid = x.ServiceProviderId,
+                servicestarttime = x.ServiceStartDate,
+                serviceendtime = x.ServiceStartDate.AddMinutes(x.ServiceHours*60),
+                servirequestid = x.ServiceRequestId,
+                servicestatus = x.Status
+            });
+            return Json(maindata);
         }
     }
 }

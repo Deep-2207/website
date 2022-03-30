@@ -85,12 +85,14 @@
             UpcomingService();
         });
         function UpcomingService() {
-
+            $("#loader").addClass("is-active");
             $.ajax({
                 url: '/serviceprovider/upcomingservice',
                 type: 'post',
                 success: function (respo) {
                     console.log(respo);
+                    $('#example').DataTable().clear();
+                    $("#loader").removeClass("is-active");
                     respo.forEach(function (element) {
                         var t = $('#example').DataTable();
                         date = new Date(element.servicestartdate);
@@ -99,14 +101,14 @@
                         d2.setMinutes(d2.getMinutes() + (element.servicehoures * 60));
                         var temptime = AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString()) + " - " + AppendZero(d2.getHours().toString()) + ":" + AppendZero(d2.getMinutes().toString())
                         var inputtagdate = AppendZero(date.getDate().toString()) + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + date.getFullYear().toString();
-
+                        var spandate = date.getFullYear().toString() + AppendZero((date.getMonth() + 1).toString()) + AppendZero(date.getDate().toString());
                         t.row.add([
                             '<span class="tdclick"> <a onclick="showservicerequestdetailmodel(' + element.serviceid + ',2)" class="startid d-flex justify-content-center align-items-center" href="#"> ' + element.serviceid + '</a></span>',
-                            '<img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
+                            '<span class="d-none">' + spandate +'</span><img src="..//img/service-provider-upcoming-service/calendar2.png" alt=""><span class="bold">' + inputtagdate + '</span> <br><img src="..//img/service-provider-upcoming-service/layer-712.png" alt="">' + temptime,
                             element.customeruser.firstName + element.customeruser.lastName + '<br><img src = "..//img/service-provider-upcoming-service/layer-15.png" alt = ""> ' + element.serviceaddressstrretname + ' ' + element.serviceaddresshousenumber + ' <br> ' + element.servicereqestpostalcode + ' ' + element.servicereqestcity,
                             '<span class="price"> ' + element.payment + '€' + '</span>',
                             '',
-                            '<button id="completed' + element.serviceid + '" class="btn btn-Accept btn-rounded-17 me-1" onclick="Completed(' + element.serviceid + ')" value="Completed">Completed</button><button class="btn btn-danger btn-rounded-17" onclick="Cancel(' + element.serviceid + ')" value="Cancel">Cancel</button>'
+                            '<button id="completed' + element.serviceid + '" class="btn btn-Accept btn-completedsr btn-rounded-17 me-1" onclick="Completed(' + element.serviceid + ')" value="Completed">Completed</button><button class="btn btn-danger btn-rounded-17" onclick="Cancel(' + element.serviceid + ')" value="Cancel">Cancel</button>'
                         ]).draw(false);
                         console.log();
                         var date1 = d2;
@@ -132,25 +134,38 @@
             return input;
         }
         function Completed(serviceid) {
+            $("#loader").addClass("is-active");
             $.ajax({
                 url: '/serviceprovider/Completed',
                 type: 'post',
                 data: { 'serviceid': serviceid },
                 success: function (respo) {
+                    $("#loader").removeClass("is-active");
                     console.log(respo);
-                    location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Request Completed',
+                        text: 'Request Completed by serviceprovider ',
+                    })
+                    UpcomingService();
                 }
             });
         }
         function Cancel(serviceid) {
-
+            $("#loader").addClass("is-active");
             $.ajax({
                 url: '/serviceprovider/Cancel',
                 type: 'post',
                 data: { 'serviceid': serviceid },
                 success: function (respo) {
+                    $("#loader").removeClass("is-active");
                     console.log(respo);
-                    location.reload();
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Request Cancelled',
+                        text: 'Request Cancelled by serviceprovider ',
+                    })
+                    UpcomingService();
                 }
             });
         }
@@ -158,14 +173,14 @@
             $("#trserviceprovidermodel").modal("show");
             $("#hiddenServiceRequestId").val(id);
             console.log($("#hiddenServiceRequestId").val(id));
-
+            $("#loader").addClass("is-active");
             $.ajax({
                 type: 'Post',
                 url: '/ServiceProvider/dispaydataformtheserviceid',
                 data: { "servicerequestid": id },
                 success: function (respo) {
                     console.log(respo);
-                  
+                    $("#loader").removeClass("is-active");
                     document.getElementById("serviceproviderd&t").innerHTML = respo.user.serviceStartDate;
                     document.getElementById("serviceproviderduration").innerHTML = respo.user.serviceHours;
                     document.getElementById("serviceprovidersrid").innerHTML = respo.user.serviceRequestId;

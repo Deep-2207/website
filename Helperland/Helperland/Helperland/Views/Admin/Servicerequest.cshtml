@@ -102,9 +102,6 @@
                 <button type="button" class="btn-close model-colse" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h3 class="mb-30">Refund Amount</h3>
 
-                <div class="alert alert-danger d-none" id="adminerrormesgrechedual" role="alert">
-
-                </div>
 
                 <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
                     <div class="col mt-0">
@@ -397,6 +394,7 @@
         });
 
         function Editservicerequest(serviceid) {
+
             $("#loader").addClass("is-active");
             $.ajax({
                 type: 'post',
@@ -525,9 +523,10 @@
                                 'service Reschdual successfully',
                                 'success'
                             )
+                            $("#editrefundmodel").modal("hide");
+                            afterload();
                         }
-                        $("#editrefundmodel").modal("hide");
-                        afterload();
+
                     },
                     error: function (err) {
                         $("#loader").removeClass("is-active");
@@ -667,7 +666,7 @@
         });
         //$(".amountcal").change(function () {
         //    debugger;
-           
+
 
         //});
         //$(".amountcal").keyup(function () {
@@ -714,7 +713,6 @@
             refundobj.ServiceRequestID = $("#hiddenservicerequest").val();
             refundobj.refundamount = $("#idcalculate").val();
             refundobj.comments = $("#admincommetforrefund").val();
-
             $.ajax({
                 type: 'post',
                 url: '/Admin/refundservicepost',
@@ -724,7 +722,7 @@
                 success: function (respo) {
                     // $('#example').DataTable().ajax.reload();
                     $("#loader").removeClass("is-active");
-                    console.log(respo); 
+                    console.log(respo);
                 },
                 error: function (err) {
                     $("#loader").removeClass("is-active");
@@ -732,7 +730,7 @@
                 }
             });
         }
-     
+
 
     </script>
 

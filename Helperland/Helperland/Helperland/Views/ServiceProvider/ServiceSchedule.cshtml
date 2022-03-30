@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "BlockCustomer";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+
+<div class="main-content">
+    <div class="calender" id="calendar"></div>
+</div>
+
+<script type="text/javascript">
+    var events = [];
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/ServiceProvider/GetServiceRequestListForCalender',
+            type: 'post',
+            dataType: 'json',
+            success: function (resp) {
+                console.log(resp);
+                //servicestarttime
+                //serviceproviderid
+                //servicehours
+                resp.forEach((element) => {
+                    events.push({
+                        id: element.servirequestid,
+                        title: eventTitle(element.servicestarttime, element.serviceendtime),
+                        start: element.servicestarttime,
+                        end: element.serviceendtime,
+                        color: element.servicestatus == 4 ? "#525252" : "#1d7a8c",
+                        allDay: true,
+                        className: "text-center fw-bold"
+                    });
+                });
+
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: ''
+                    },
+                    events: events,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        showservicerequestdetailmodel(calEvent.event.id,1);
+                    },
+                    contentHeight: 600
+                });
+
+                calendar.render();
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+    
+    function showservicerequestdetailmodel(id, index) {
+        $("#trserviceprovidermodel").modal("show");
+        $("#hiddenServiceRequestId").val(id);
+        console.log($("#hiddenServiceRequestId").val(id));
+        $("#loader").addClass("is-active");
+        $.ajax({
+            type: 'Post',
+            url: '/serviceprovider/dispaydataformtheserviceid',
+            data: { "servicerequestid": id },
+            success: function (respo) {
+                console.log(respo);
+                $("#loader").removeClass("is-active");
+                document.getElementById("serviceproviderd&t").innerHTML = respo.user.serviceStartDate;
+                document.getElementById("serviceproviderduration").innerHTML = respo.user.serviceHours;
+                document.getElementById("serviceprovidersrid").innerHTML = respo.user.serviceRequestId;
+                document.getElementById("serviceproviderextra").innerHTML = respo.serviceRequestExtraName;
+                document.getElementById("serviceproviderprice").innerHTML = respo.user.totalCost;
+                document.getElementById("customername").innerHTML = respo.user.user.firstName + " " + respo.user.user.lastName;
+                document.getElementById("serviceproviderserviceaddress").innerHTML = respo.user.serviceRequestAddresses[0].addressLine1 +
+                    respo.user.serviceRequestAddresses[0].addressLine2 + '<br>' +
+                    respo.user.serviceRequestAddresses[0].postalCode +
+                    respo.user.serviceRequestAddresses[0].city;
+                document.getElementById("serviceproviderphonenumber").innerHTML = respo.user.serviceRequestAddresses[0].mobile;
+                document.getElementById("serviceprovideremail").innerHTML = respo.user.serviceRequestAddresses[0].email;
+                document.getElementById("serviceprovidercomments").innerHTML = respo.user.comments;
+               /* $("#btnaccept").html('<button class="btn btnlightgreen" onclick="AcceptReqest(' + respo.user.serviceRequestId + ', \'' + respo.user.recordVersion + '\')"><img src="..//img/service-provider/ic-check.png" alt="Alternate Text" class="me - 1"/> Accept</button>');*/
+
+                if (respo.user.hasPets == true) {
+                    document.getElementById("serviceproviderpet").innerHTML = '<img src="..//img/customer-service/included.png" alt="" /> I have pets at home'
+                    // alert("pet che");
+                }
+                else {
+                    document.getElementById("serviceproviderpet").innerHTML = '<img src="..//img/customer-service/not-included.png" alt="" /> I don' + "'" + 't have pets at home'
+                }
+                if (index == 0) {
+                    document.getElementById("btnreschedulejsdashbord").innerHTML = '<hr /><button class="btn btnReschedule d-inline-block" value="" onclick="rescheduleservicemodel()">Reschedule</button><button class="btn btncancel d-inline-block pl-2" value = "" onclick="canelservicemodel()"> Cancel</button>';
+                }
+                else {
+                    document.getElementById("btnreschedulejsdashbord").innerHTML = '';
+                }
+
+                var inputDate = respo.user.serviceStartDate;
+                const date = new Date(inputDate);
+                var inputTagDate = date.getFullYear().toString() + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + AppendZero(date.getDate().toString());
+
+                console.log(inputTagDate);
+
+                $("#datechange").val(inputTagDate);
+
+            },
+            error: function (respo) {
+                alert('error:' + respo.responseText);
+            }
+        });
+
+    }
+    function eventTitle(eventStartTime, eventEndTime) {
+        var start = new Date(eventStartTime);
+        var end = new Date(eventEndTime);
+        return AppendZero(start.getHours().toString()) + ":" + AppendZero(start.getMinutes().toString()) + " - " +
+            AppendZero(end.getHours().toString()) + ":" + AppendZero(end.getMinutes().toString());
+    }
+    function AppendZero(input) {
+        if (input.length == 1) {
+            return '0' + input;
+        }
+        return input;
+    }
+</script>

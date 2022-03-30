@@ -450,5 +450,71 @@ namespace Helperland.Controllers
             return Json(IsPasswordSame);
         }
         #endregion Customer my settings
+
+        //Customer FavouriteAndBlockServiceProvider block
+        public IActionResult FavouriteAndBlockServiceProvider()
+        {
+            return View();
+        }
+        public JsonResult getspforcust()
+        {
+//            select DISTINCT(ServiceProviderId), fb.IsFavorite,fb.IsBlocked from[dbo].[ServiceRequest] as sr
+//join
+//[dbo].[User] as usr
+//on
+//sr.ServiceProviderId = usr.UserId
+//left join
+//[dbo].[FavoriteAndBlocked] as fb
+//on
+//ISNULL(fb.TargetUserId, '`') = ISNULL(sr.ServiceProviderId, '`')
+//where sr.UserId = '24'
+            var serviceprovider = (from sr in _helperlandContext.ServiceRequests
+                                   join
+                                   usr in _helperlandContext.Users
+                                   on sr.ServiceProviderId equals usr.UserId
+                                   join 
+                                   fb in _helperlandContext.FavoriteAndBlockeds
+                                   on
+                                   (int?)sr.ServiceProviderId equals (int?)fb.TargetUserId into temp
+                                   from fb in temp.DefaultIfEmpty()
+                                   where sr.UserId == getLoggedinUserId()
+                                   select new
+                                   {
+                                       spid = sr.ServiceProviderId,
+                                       spprofile = usr.UserProfilePicture,
+                                       spservicecount = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == sr.ServiceProviderId).Count(),
+                                       spratings = (decimal?)_helperlandContext.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId).Average(x => x.Ratings),
+                                       spName = usr.FirstName + " " + usr.LastName,
+                                       spblock = (bool?)fb.IsBlocked,
+                                       spfav = (bool?)fb.IsFavorite
+                                   }).Distinct().ToList();
+            return Json(serviceprovider);
+        }
+        public JsonResult FavAndBlock([FromBody] BlockAndFavViewModel model)
+        {
+            FavoriteAndBlocked fb = _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == getLoggedinUserId() && x.TargetUserId == model.ServiceProviderid).FirstOrDefault();
+
+           
+            if (fb != null)
+            {
+                fb.IsFavorite = model.isfav;
+                fb.IsBlocked = model.isblock;
+                fb.UserId = getLoggedinUserId();
+                fb.TargetUserId = model.ServiceProviderid;
+                _helperlandContext.FavoriteAndBlockeds.Update(fb);
+            }
+            else
+            {
+                FavoriteAndBlocked newfb = new FavoriteAndBlocked();
+                newfb.IsFavorite = model.isfav;
+                newfb.IsBlocked = model.isblock;
+                newfb.UserId = getLoggedinUserId();
+                newfb.TargetUserId = model.ServiceProviderid;
+                _helperlandContext.FavoriteAndBlockeds.Add(newfb);
+            }
+            _helperlandContext.SaveChanges();
+
+            return Json(model);
+        }
     }
 }

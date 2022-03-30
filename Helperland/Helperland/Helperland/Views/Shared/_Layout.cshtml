@@ -23,9 +23,10 @@
     @*rateing css*@
 
     <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
-    
     <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
 
+    @*full calender*@
+<link href="~/lib/fullcalendar/main.css" rel="stylesheet" />
 
     @*custome css*@
     <link href="~/css/style.css" rel="stylesheet" />
@@ -218,7 +219,7 @@
                                         <b style="user-select: auto;">@sessionUser.UserName</b>
                                     </li>
 
-                                    <li><a class="dropdown-item" asp-action="dashboard" asp-controller="customer">My Dashboard</a></li>
+                                    <li><a class="dropdown-item" asp-action="Dashboard" asp-controller="customer">My Dashboard</a></li>
                                     <li>
 
                                         <a class="dropdown-item" asp-action="mysettings" asp-controller=@(sessionUser.UserType == (UserTypeEnum.Customer).ToString() ? "customer" : "Serviceprovider" )>My Setting</a>
@@ -386,6 +387,8 @@
     <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
     <script src="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.js"></script>
 
+    @*full calender js*@
+<script src="~/lib/fullcalendar/main.js"></script>
 
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
     @if (ViewBag.openmodel == true)

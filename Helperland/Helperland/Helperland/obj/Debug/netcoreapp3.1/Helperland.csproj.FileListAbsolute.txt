@@ -187,3 +187,5 @@ F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\BlockCustomer.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\Ratings.cshtml.g.cs
 F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Servicerequest.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\FavouriteAndBlockServiceProvider.cshtml.g.cs
+F:\PSD TO HTML\website\Helperland\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceSchedule.cshtml.g.cs

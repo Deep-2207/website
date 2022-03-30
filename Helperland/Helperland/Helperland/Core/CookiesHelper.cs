@@ -51,7 +51,7 @@ namespace Helperland.Core
 
                     else
                     {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "UserManagement", controller = "admin" });
+                        filterContext.Result = new RedirectToRouteResult(new { action = "UserManagement", controller = "Admin" });
                         return;
                     }
                        

@@ -21,7 +21,9 @@ a {
 }
 
 /* Common Style Start */
-
+.dropdown-item:active {
+    background: #f6f6f6 !important;
+}
 
 .dt-buttons {
     display: inline-block;
@@ -3495,14 +3497,18 @@ footer .footer-max-width .nav li a:hover {
 .btn-Accept{
     background-color:#1D7A8C !important;
     color:white;
-    padding:2px;
+    padding:0 15px !important;
+    border:none !important;
 }
-.btn-tomato{
-    background-color:#ff6b6b;
-    line-height:24px;
-    width:80px;
-    padding:5px;
-}
+    .btn-Accept:hover {
+        background-color: #146371 !important;
+    }
+    .btn-tomato {
+        background-color: #ff6b6b;
+        line-height: 24px;
+        width: 80px;
+        padding: 5px;
+    }
 
 .newservicerequest .action{
     min-width:155px !important;
@@ -3589,8 +3595,11 @@ footer .footer-max-width .nav li a:hover {
     box-shadow: none;
 }
 
-#editrefundmodel .modal-content{
-    max-width:100%;
+#editrefundmodel{
+    z-index:9999;
+}
+#editrefundmodel .modal-content {
+    max-width: 100%;
 }
 /*#editrefundmodel .modal-body label {
     font-weight: normal !important;
@@ -3655,4 +3664,37 @@ footer .footer-max-width .nav li a:hover {
 #ibamount,
 #pamount{
     display:inline-block;
+}
+.custfb tr td{
+    padding:0px !important;
+}
+.btn-completedsr{
+    padding:0px 5px !important;
+}
+.sidebar-max-width .main-content {
+    width:100% !important;
+    margin-left:10px !important;
+  
+}
+.fc-next-button:focus,
+.fc-prev-button:focus,
+.fc-today-button:focus{
+    border-color: #2c3e50 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+#rechedual input:focus,
+#rechedual select:focus {
+    border-color: #1D7A8C !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+.fc-button {
+    background: #e1e1e1 !important;
+    color: black !important;
+    border: none !important;
+}
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number{
+    color: black;
 }

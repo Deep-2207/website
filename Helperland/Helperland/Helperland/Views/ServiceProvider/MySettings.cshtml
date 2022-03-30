@@ -129,7 +129,7 @@
                 <div class="col-md-4">
                     <label for="usernationality" class="form-label">Nationality</label>
                     <select class="form-select language ms-2 w-100" id="usernationality">
-                        <option value="1" selected>Indian</option>
+                        <option value="1">Indian</option>
                         <option value="2">Germany</option>
                         <option value="3">American</option>
                     </select>
@@ -377,7 +377,9 @@
                         }
                     });
                     $("#userlanguage").val(resp.languageId);
-
+                    //$("#usernationality").val(parseInt(resp.nationalityid));
+                    console.log(resp.nationalityId);
+                    $("#usernationality option[value=" + resp.nationalityId + "]").attr('selected', 'selected');
                     /*address edit add*/
                   
                     if (resp.userAddresses.length > 0) {
@@ -419,10 +421,10 @@
                 lastName: $("#txtlastname").val(),
                 email: $("#txtemail").val(),
                 mobile: $("#txtphonenumber").val(),
-                language: $("userlanguage").val(),
+                languageid: $("#userlanguage").val(),
                 dateOfBirth: dbo.toISOString(),
                 gender: $('input[name="Gender"]:checked').val(),
-
+                nationalityid: $('#usernationality').val()
             };
 
             if ($("#txtfirstname").val() == "") {
@@ -488,7 +490,7 @@
             ) {
                 console.log(customer + "customer");
                 $.ajax({
-                    url: '/customer/updatedetialsbyuserid',
+                    url: '/serviceprovider/updatedetialsbyuserid',
                     type: 'post',
                     data: customer,
                     datatype: "json",

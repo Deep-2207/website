@@ -1,0 +1,165 @@
+﻿@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+    ViewData["Title"] = "BlockCustomer";
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+<div class="customer-table  dvblockcustomer custfb">
+    <input type="hidden" id="hiddenuserid" value="@sessionUser.UserID" />
+    <input type="hidden" id="hiddenServiceRequestId" value="" />
+    <input type="hidden" id="hiddenserviceproviderid" value="" />
+    <table id="example" class="display customer-table blockcustomer" style="width:100%">
+        <thead class="d-none">
+            <tr>
+                <th>Service ID <img alt="" class="sorting-img"></th>
+                <th>Service data <img alt="" class="sorting-img"></th>
+                <th class="cus-dait">Customer details <img alt="" class="sorting-img"></th>
+
+                <th>Customer ratings<img alt="" class="sorting-img"></th>
+                <th>buttons<img alt="" class="sorting-img"></th>
+            </tr>
+        </thead>
+        <tbody class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+        </tbody>
+    </table>
+</div>
+
+
+@section UserLayoutSection{
+    <script>
+        $(document).ready(function () {
+            $('#example').on('draw.dt', function () { //every time ajax call, this code execute
+
+                $(".ratingspdashboard").rating({
+                    min: 0,
+                    max: 5,
+                    step: 0.1,
+                    size: "xs",
+                    stars: "5",
+                    showClear: false,
+                    readonly: true,
+                    starCaptions: function (val) {
+                        return val;
+                    }
+                });
+            });
+            $('#example').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+
+                "bFilter": false, //hide Search bar
+                "pagingType": "full_numbers",
+                paging: true,
+                "pagingType": "full_numbers",
+                // bFilter: false,
+                ordering: true,
+                searching: false,
+                info: true,
+
+                "oLanguage": {
+                    "sInfo": "Total Records: _TOTAL_"
+                },
+                "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                "order": [],
+
+            });
+        });
+
+        $(document).ready(function () {
+            loaddata();
+
+        });
+
+        function loaddata() {
+            $("#loader").addClass("is-active");
+            $.ajax({
+                url: '/customer/getspforcust',
+                type: 'post',
+
+                success: function (respo) {
+                    $("#loader").removeClass("is-active");
+                    $('#example').DataTable().clear();
+
+                    console.log(respo);
+                    respo.forEach(function (element) {
+                        var t = $('#example').DataTable();
+                        var btnbandu;
+                        debugger;
+                        if (element.blockeduser != null) {
+                            btnnbandu = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="UnBlock">UnBlock</button>'
+                        }
+                        else {
+                            btnnbandu = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="Block">Block</button>'
+                        }
+                        var spratingsinput;
+                        if (element.spratings != null) {
+                            spratingsinput = '<input required class= "ratingspdashboard d-none"  value = "' + element.spratings + '" type = "text" title = "" > ';
+                        }
+                        else {
+                            spratingsinput = 'Not Rated';
+                        }
+                        var btnblock;
+                        var btnfav;
+                        if (element.spblock != null && element.spfav != null) {
+                            if (element.spblock == false) {
+                                btnblock = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfav + ',true)" value="Block">Block</button>'
+                            }
+                            else {
+                                btnblock = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfav + ',false)" value="UnBlock">UnBlock</button>'
+                            }
+
+                            if (element.spfav == false) {
+                                btnfav = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',true,' + element.spblock + ')" value="Block">Fav</button>'
+                            }
+                            else {
+                                btnfav = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',false,' + element.spblock + ')" value="UnBlock">UnFav</button>'
+                            }
+                        }
+                        else {
+                            btnblock = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',false,true)" value="Block">Block</button>'
+                            btnfav = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid +',true,false)" value="Block">Fav</button>'
+                        }
+                        t.row.add([
+                            '<img src="../' + element.spprofile + '" alt="Alternate Text" />',
+                            element.spName,
+                            'Services' + element.spservicecount,
+                            spratingsinput,
+                            btnblock + " " + btnfav
+                        ]).draw(false);
+                    });
+                }
+            });
+        }
+       
+        function BlockUnBlockAndFavUnFav(spid, isfav, isblock) {
+            debugger;
+            var bfsp = {}
+            bfsp.spid = spid;
+            bfsp.isfav = isfav;
+            bfsp.isblock = isblock;
+            $("#loader").addClass("is-active");
+            $.ajax({
+                url: '/customer/FavAndBlock',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(bfsp),
+                success: function (respo) {
+                    $("#loader").removeClass("is-active");
+                    $('#example').DataTable().clear();
+
+                    console.log(respo);
+                    location.reload();
+                    //  $(".btn-blockUnblock").html("Unblock");
+                }
+            });
+
+        }
+
+    </script>
+}

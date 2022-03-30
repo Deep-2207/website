@@ -337,7 +337,8 @@
 
                     $("#ddlyear").val(nData.getFullYear());
 
-                    $("#userlanguage").val(resp.languageId);
+                    //$("#userlanguage").val(resp.languageId);
+                    $("#userlanguage option[value=" + resp.languageId + "]").attr('selected', 'selected');
                 }
             });
 
@@ -377,7 +378,7 @@
                 lastName: $("#txtlastname").val(),
                 email: $("#txtemail").val(),
                 mobile: $("#txtphonenumber").val(),
-                language: $("userlanguage").val(),
+                languageid: $("#userlanguage").val(),
                 dateOfBirth: dbo.toISOString()
             };
             debugger;

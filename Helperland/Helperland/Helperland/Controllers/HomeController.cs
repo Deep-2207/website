@@ -59,7 +59,18 @@ namespace Helperland.Controllers
             this._hostingEnvironment = hostingEnvironment;
             this._user = new User();
         }
+        public int getLoggedinUserId()
+        {
 
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+            return sessionUser.UserID;
+        }
         public IActionResult Index()
         {
             var Email = HttpContext.Request.Cookies["EmailId"];
@@ -76,7 +87,7 @@ namespace Helperland.Controllers
                 else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
                     return RedirectToAction("UpcomingServices", "ServiceProvider");
                 else
-                    return RedirectToAction("UserManagement", "admin");
+                    return RedirectToAction("UserManagement", "Admin");
                 //userTypewiseRedirection(user.UserTypeId, user.F
             }
             else
@@ -289,9 +300,6 @@ namespace Helperland.Controllers
                 // ModifiedBy = model.UserId,
                 RecordVersion = Guid.NewGuid(),
                 Distance = 25,
-
-
-
             };
             _serviceRequestRepository.Add(serviceRequest);
             model.ServiceRequestID = serviceRequest.ServiceRequestId;
@@ -328,22 +336,31 @@ namespace Helperland.Controllers
             //         where ur.ZipCode = (serviceRequest.ZipCode).ToString()
             //List<User> sp = _helperlandContext.Users.Where(x => x.ZipCode == serviceRequest.ZipCode && x.IsApproved == true && x.UserTypeId == (int)UserTypeEnum.ServiceProvider && x.WorksWithPets == true).ToList();
 
-            List<User> sp = (from usr in _helperlandContext.Users
-                             join
-                             fb in _helperlandContext.FavoriteAndBlockeds 
-                             on
-                             usr.UserId equals fb.UserId into temp
-                             from fb in temp.DefaultIfEmpty()
-                             where usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true && usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
-                             select usr).ToList();
-
-
+            //List<User> sp = (from usr in _helperlandContext.Users
+            //                 join
+            //                 fb in _helperlandContext.FavoriteAndBlockeds
+            //                 on
+            //                 usr.UserId equals fb.UserId into temp
+            //                 from fb in temp.DefaultIfEmpty()
+            //                 where usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true && usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
+            //                 select usr).ToList();
+            var sp = (from usr in _helperlandContext.Users
+                      join
+                      fb in _helperlandContext.FavoriteAndBlockeds
+                      on
+                      getLoggedinUserId() equals fb.UserId into temp
+                      from fb in temp.DefaultIfEmpty()
+                      where usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true && usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
+                      select new
+                      {
+                          spmail = usr.Email
+                      }).ToList();
 
             EmailModel emailModel;
             foreach (var spsendmail in sp)
             {
                 emailModel = new EmailModel();
-                emailModel.To = spsendmail.Email;
+                emailModel.To = spsendmail.spmail;
                 emailModel.Subject = "Service AVailiblity";
                 emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId;
              
