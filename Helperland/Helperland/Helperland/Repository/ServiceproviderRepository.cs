@@ -84,7 +84,8 @@ namespace Helperland.Repository
 
         public ServiceRequest Detailsofsr(int servicerequestid)
         {
-            var sr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == null && x.ServiceRequestId == servicerequestid).FirstOrDefault();
+            //var sr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == null && x.ServiceRequestId == servicerequestid).FirstOrDefault();
+            var sr = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault();
             return sr;
         }
 
@@ -147,7 +148,7 @@ namespace Helperland.Repository
 
         public List<ServiceRequest> listoldrequest(int serviceproviderid)
         {
-            List<ServiceRequest> listsr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceproviderid).ToList();
+            List<ServiceRequest> listsr = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceproviderid && x.Status == (int)ServiceStatusEnum.Pending).ToList();
             return listsr;
         }
 

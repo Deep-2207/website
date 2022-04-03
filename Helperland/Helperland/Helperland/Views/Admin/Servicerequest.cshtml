@@ -356,7 +356,6 @@
                 t.column(3).search(serviceprovider).draw(true);
             }
 
-
             if (servicestutes != null) {
                 t.column(4).search(servicestutes).draw(true);
             }
@@ -457,7 +456,7 @@
             })
         }
 
-        function editandreschedul() {
+        function editandreschedulfun() {
             debugger;
             if ($("#admindatechange").val() == "") {
                 $("#spantimechange").html("Please Enter Date");
@@ -499,11 +498,11 @@
                 editdata.Comment = $("#admincommet").val();
                 $("#loader").addClass("is-active");
                 $.ajax({
-                    type: 'post',
+                    type:'post',
                     url: '/Admin/editandreschedul',
 
-                    dataType: 'json',
-                    contentType: 'application/json',
+                    dataType:'json',
+                    contentType:'application/json',
                     data: JSON.stringify(editdata),
                     success: function (respo) {
                         console.log(respo);
@@ -678,6 +677,7 @@
 
         //});
         function reflectrefund() {
+           
             if ($("#txtAmountToRefund").val().length == 0) {
                 $("#idcalculate").val("");
             }
@@ -713,6 +713,7 @@
             refundobj.ServiceRequestID = $("#hiddenservicerequest").val();
             refundobj.refundamount = $("#idcalculate").val();
             refundobj.comments = $("#admincommetforrefund").val();
+            $("#loader").addClass("is-active");
             $.ajax({
                 type: 'post',
                 url: '/Admin/refundservicepost',
@@ -722,6 +723,7 @@
                 success: function (respo) {
                     // $('#example').DataTable().ajax.reload();
                     $("#loader").removeClass("is-active");
+                    $("#refundmodel").modal("hide");
                     console.log(respo);
                 },
                 error: function (err) {

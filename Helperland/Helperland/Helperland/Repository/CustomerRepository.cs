@@ -88,8 +88,8 @@ namespace Helperland.Repository
         public List<ServiceRequest> GetServiceHistoryBySpID(int spid)
         {
             List<ServiceRequest> servicehistory = _helperlandContext.ServiceRequests.Where(x => x.UserId == spid &&
-                                                                                       x.Status == (int)ServiceStatusEnum.completed ||
-                                                                                       x.Status == (int)ServiceStatusEnum.Cancel).ToList();
+                                                                                       (x.Status == (int)ServiceStatusEnum.completed ||
+                                                                                       x.Status == (int)ServiceStatusEnum.Cancel)).ToList();
             return  servicehistory;
         }
 

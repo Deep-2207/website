@@ -72,6 +72,8 @@ namespace Helperland.ViewModels
 
         [JsonPropertyName("refundamount")]
         public decimal Refundamount { get; set; }
+        [JsonPropertyName("serviceproviderid")]
+        public int ServiceproviderId { get; set; }
 
         //public virtual User ServiceProvider { get; set; }
         //public virtual User User { get; set; }

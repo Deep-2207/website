@@ -65,7 +65,7 @@ namespace Helperland.Controllers
             return View(services);
         }
 
-       
+
         public JsonResult dispaydataformtheserviceid(int servicerequestid)
         {
             var user = _customerRepository.GetserviceReqestDetials(servicerequestid);
@@ -157,51 +157,71 @@ namespace Helperland.Controllers
                 _helperlandContext.ServiceRequests.Update(serviceRequest);
                 _helperlandContext.SaveChanges();
 
-                var eamilsend = (from sr in _helperlandContext.ServiceRequests
-                                 join u in _helperlandContext.Users on sr.UserId equals u.UserId
-                                 join sp in _helperlandContext.Users on sr.ServiceProviderId equals sp.UserId into sp1
-                                 from sp in sp1.DefaultIfEmpty()
-                                 where sr.ServiceRequestId == servicerequestid
-                                 select new
-                                 {
-                                     serviceProviderEmail = sp.Email,
-                                     availableSps = (from u in _helperlandContext.Users
-                                                     join fb in _helperlandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
-                                                     from fb in fb1.DefaultIfEmpty()
-                                                     where u.ZipCode == sr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(sessionUser.UserID) != fb.TargetUserId
-                                                     select u.Email).ToList()
-                                 }).ToList();
-
-
+               
                 EmailModel emailModel = new EmailModel();
                 string stremails = "";
                 var vCount = 0;
-                foreach (var e in eamilsend)
+                if (serviceRequest.ServiceProviderId != null)
                 {
-                    if (e.serviceProviderEmail != null)
+                    var onespemail = _helperlandContext.Users.Where(x => x.UserId == serviceRequest.ServiceProviderId).Select(x => x.Email).FirstOrDefault();
+                    stremails = onespemail;
+                }
+                else
+                {
+                  
+
+                    var eamilsend = (from usr in _helperlandContext.Users
+                                     join
+                                     fb in _helperlandContext.FavoriteAndBlockeds
+                                     on
+                                     usr.UserId equals fb.UserId into temp
+                                     from fb in temp.DefaultIfEmpty()
+                                     join
+                                     cust in _helperlandContext.Users
+                                     on
+                                     fb.TargetUserId equals cust.UserId
+                                     into temp1
+                                     from fb1 in temp1.DefaultIfEmpty()
+
+                                     where usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true &&
+                                     (fb.TargetUserId == sessionUser.UserID || fb.Equals(null)) &&
+                                     (fb.IsBlocked == false || fb.Equals(null))
+                                     
+                                     select new
+                                     {
+                                         serviceProviderEmail = usr.Email,
+                                         //availableSps = (from u in _helperlandContext.Users
+                                         //                join fb in _helperlandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                         //                from fb in fb1.DefaultIfEmpty()
+                                         //                where u.ZipCode == usr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(sessionUser.UserID) != fb.TargetUserId
+                                         //                select u.Email).ToList()
+                                     }).ToList();
+
+
+                    foreach (var e in eamilsend)
                     {
-                        stremails += e.serviceProviderEmail;
-                    }
-                    else
-                    {
-                        foreach (var sps in e.availableSps)
+
+                        if (vCount == 0)
                         {
-                            if (vCount == 0)
-                            {
-                                stremails += sps;
-                                vCount++;
-                            }
-                            else
-                            {
-                                stremails += "," + sps;
-                            }
+                            stremails += e.serviceProviderEmail;
+                            vCount++;
                         }
+                        else
+                        {
+                            stremails += "," + e.serviceProviderEmail;
+                        }
+
                     }
                 }
+
+
+
+
+
                 //emailModel.To = tempmail;
-                 emailModel.To = stremails;
+                emailModel.To = stremails;
                 emailModel.Subject = "Serivcer Reschedul ";
-                emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId + "New Time and Date : <Strong>" + changedate + " "+ chanhgetime + "</Strong>";
+                emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId + "New Time and Date : <Strong>" + changedate + " " + chanhgetime + "</Strong>";
 
                 MailHelper mailhelper = new MailHelper(_configuration);
                 mailhelper.Send(emailModel);
@@ -220,48 +240,57 @@ namespace Helperland.Controllers
 
             _helperlandContext.ServiceRequests.Update(serviceRequest);
             _helperlandContext.SaveChanges();
-            var eamilsend = (from sr in _helperlandContext.ServiceRequests
-                             join u in _helperlandContext.Users on sr.UserId equals u.UserId
-                             join sp in _helperlandContext.Users on sr.ServiceProviderId equals sp.UserId into sp1
-                             from sp in sp1.DefaultIfEmpty()
-                             where sr.ServiceRequestId == servicerequestid
-                             select new
-                             {
-                                 serviceProviderEmail = sp.Email,
-                                 availableSps = (from u in _helperlandContext.Users
-                                                 join fb in _helperlandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
-                                                 from fb in fb1.DefaultIfEmpty()
-                                                 where u.ZipCode == sr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider && getLoggedinUserId() != fb.TargetUserId
-                                                 select u.Email).ToList()
-                             }).ToList();
-
-
             EmailModel emailModel = new EmailModel();
             string stremails = "";
             var vCount = 0;
-            foreach (var e in eamilsend)
+            if (serviceRequest.ServiceProviderId != null)
             {
-                if (e.serviceProviderEmail != null)
+                var onespemail = _helperlandContext.Users.Where(x => x.UserId == serviceRequest.ServiceProviderId).Select(x => x.Email).FirstOrDefault();
+                stremails = onespemail;
+            }
+            else
+            {
+                var eamilsend = (from usr in _helperlandContext.Users
+                                 join
+                                 fb in _helperlandContext.FavoriteAndBlockeds
+                                 on
+                                 usr.UserId equals fb.UserId into temp
+                                 from fb in temp.DefaultIfEmpty()
+                                 join
+                                 cust in _helperlandContext.Users
+                                 on
+                                 fb.TargetUserId equals cust.UserId
+                                 into temp1
+                                 from fb1 in temp1.DefaultIfEmpty()
+
+                                 where usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true &&
+                                 (fb.TargetUserId == getLoggedinUserId() || fb.Equals(null)) &&
+                                 (fb.IsBlocked == false || fb.Equals(null))
+
+                                 select new
+                                 {
+                                     serviceProviderEmail = usr.Email,
+                                     //availableSps = (from u in _helperlandContext.Users
+                                     //                join fb in _helperlandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                     //                from fb in fb1.DefaultIfEmpty()
+                                     //                where u.ZipCode == usr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(sessionUser.UserID) != fb.TargetUserId
+                                     //                select u.Email).ToList()
+                                 }).ToList();
+                foreach (var e in eamilsend)
                 {
-                    stremails += e.serviceProviderEmail;
-                }
-                else
-                {
-                    foreach (var sps in e.availableSps)
+
+                    if (vCount == 0)
                     {
-                        if (vCount == 0)
-                        {
-                            stremails += sps;
-                            vCount++;
-                        }
-                        else
-                        {
-                            stremails += "," + sps;
-                        }
+                        stremails += e.serviceProviderEmail;
+                        vCount++;
                     }
+                    else
+                    {
+                        stremails += "," + e.serviceProviderEmail;
+                    }
+
                 }
             }
-            //emailModel.To = tempmail;
             emailModel.To = stremails;
             emailModel.Subject = "Serivcer Cancel ";
             emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId + " Is Cancelled";
@@ -295,12 +324,12 @@ namespace Helperland.Controllers
             return Json(serviceRequests);
         }
 
-      
+
         public JsonResult ratesp(int servicerequestid, int userid, float serviceontimearrival, float serviceFriendly, float serviceQualityofservice)
         {
 
             ServiceRequest serviceRequest = _customerRepository.GetserviceReqestDetials(servicerequestid);
-            Rating rating = _customerRepository.GetRatingForServicerequest(servicerequestid); 
+            Rating rating = _customerRepository.GetRatingForServicerequest(servicerequestid);
 
             RatingViewModel ratingViewModel = new RatingViewModel();
 
@@ -308,7 +337,7 @@ namespace Helperland.Controllers
             {
                 ratingViewModel.RatingId = rating.RatingId;
             }
-            ratingViewModel.ServiceProvider =_customerRepository.Getserviceprovider(serviceRequest.ServiceProviderId);
+            ratingViewModel.ServiceProvider = _customerRepository.Getserviceprovider(serviceRequest.ServiceProviderId);
 
             if (serviceRequest.Status == (int)ServiceStatusEnum.Cancel)
             {
@@ -319,8 +348,8 @@ namespace Helperland.Controllers
             return Json(new SingleEntity<RatingViewModel> { Result = ratingViewModel, Status = "ok" });
         }
 
-       
-    
+
+
         public JsonResult submitratings(Rating model)
         {
             ServiceRequest sr = _customerRepository.GetserviceReqestDetials(model.ServiceRequestId);
@@ -458,43 +487,67 @@ namespace Helperland.Controllers
         }
         public JsonResult getspforcust()
         {
-//            select DISTINCT(ServiceProviderId), fb.IsFavorite,fb.IsBlocked from[dbo].[ServiceRequest] as sr
-//join
-//[dbo].[User] as usr
-//on
-//sr.ServiceProviderId = usr.UserId
-//left join
-//[dbo].[FavoriteAndBlocked] as fb
-//on
-//ISNULL(fb.TargetUserId, '`') = ISNULL(sr.ServiceProviderId, '`')
-//where sr.UserId = '24'
-            var serviceprovider = (from sr in _helperlandContext.ServiceRequests
+            //            select DISTINCT(ServiceProviderId), fb.IsFavorite,fb.IsBlocked from[dbo].[ServiceRequest] as sr
+            //join
+            //[dbo].[User] as usr
+            //on
+            //sr.ServiceProviderId = usr.UserId
+            //left join
+            //[dbo].[FavoriteAndBlocked] as fb
+            //on
+            //ISNULL(fb.TargetUserId, '`') = ISNULL(sr.ServiceProviderId, '`')
+            //where sr.UserId = '24'
+            //var serviceprovider = (from sr in _helperlandContext.ServiceRequests
+            //                       join
+            //                       usr in _helperlandContext.Users
+            //                       on sr.ServiceProviderId equals usr.UserId
+            //                       join
+            //                       fb in _helperlandContext.FavoriteAndBlockeds
+            //                       on
+            //                      sr.ServiceProviderId equals fb.TargetUserId into temp
+            //                       from fb in temp.DefaultIfEmpty()
+            //                       where sr.UserId == getLoggedinUserId()
+            //                       select new
+            //                       {
+            //                           spid = sr.ServiceProviderId,
+            //                           spprofile = usr.UserProfilePicture,
+            //                           spservicecount = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == sr.ServiceProviderId).Count(),
+            //                           spratings = (decimal?)_helperlandContext.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId).Average(x => x.Ratings),
+            //                           spName = usr.FirstName + " " + usr.LastName,
+            //                           spblock = (bool?)fb.IsBlocked,
+            //                           spfav = (bool?)fb.IsFavorite
+            //                       }).Distinct().ToList();
+            var serviceprovider = (from sp in _helperlandContext.Users
                                    join
-                                   usr in _helperlandContext.Users
-                                   on sr.ServiceProviderId equals usr.UserId
-                                   join 
+                                   sr in _helperlandContext.ServiceRequests
+                                   on
+                                   sp.UserId equals sr.ServiceProviderId
+                                   join
                                    fb in _helperlandContext.FavoriteAndBlockeds
                                    on
-                                   (int?)sr.ServiceProviderId equals (int?)fb.TargetUserId into temp
+                                      sr.UserId equals fb.UserId
+                                   into temp
                                    from fb in temp.DefaultIfEmpty()
-                                   where sr.UserId == getLoggedinUserId()
+                                   where sr.UserId == getLoggedinUserId() && sr.Status == (int)ServiceStatusEnum.completed 
                                    select new
                                    {
                                        spid = sr.ServiceProviderId,
-                                       spprofile = usr.UserProfilePicture,
+                                       spprofile = sp.UserProfilePicture,
                                        spservicecount = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == sr.ServiceProviderId).Count(),
                                        spratings = (decimal?)_helperlandContext.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId).Average(x => x.Ratings),
-                                       spName = usr.FirstName + " " + usr.LastName,
-                                       spblock = (bool?)fb.IsBlocked,
-                                       spfav = (bool?)fb.IsFavorite
-                                   }).Distinct().ToList();
+                                       spName = sp.FirstName + " " + sp.LastName,
+                                       spfavblock = _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == sr.UserId && x.TargetUserId == sp.UserId).FirstOrDefault()
+                                   }
+                                   ).Distinct().ToList();
+
+
             return Json(serviceprovider);
         }
         public JsonResult FavAndBlock([FromBody] BlockAndFavViewModel model)
         {
             FavoriteAndBlocked fb = _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == getLoggedinUserId() && x.TargetUserId == model.ServiceProviderid).FirstOrDefault();
 
-           
+
             if (fb != null)
             {
                 fb.IsFavorite = model.isfav;

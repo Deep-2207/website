@@ -62,7 +62,7 @@ namespace Helperland.Controllers
                     Password = model.Password,
                     CreatedDate = DateTime.Now,
                     UserTypeId = (int)UserTypeEnum.Customer,
-                    IsApproved = false,
+                    IsApproved = true,
                     IsActive = true
                 };
 
@@ -98,7 +98,9 @@ namespace Helperland.Controllers
                     CreatedDate = DateTime.Now,
                     UserTypeId = (int)UserTypeEnum.ServiceProvider,
                     IsApproved = false,
-                    UserProfilePicture = "/img/service-provider/avatar-hat.png"
+                    UserProfilePicture = "/img/service-provider/avatar-hat.png",
+                    IsActive = true
+                    
                 };
 
                 _accountRepository.UpdateUser(user);

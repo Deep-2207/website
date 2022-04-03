@@ -72,8 +72,9 @@ function btnscheduleuptab() {
     document.getElementById('pills-profile-tab').classList.remove("fill");
 }
 function btndetailstab() {
-
     document.getElementById('pills-payment-tab').classList.add("disabled");
+    debugger;
+    $("#hiddenselectedspid").val("0");
 }
 function btntotalservices(userid) {
     document.getElementById('pills-details').classList.add("show");
@@ -84,6 +85,7 @@ function btntotalservices(userid) {
 
     getalladdressbyuserID(userid);
     FillCityDropdown();
+    loadtable();
 }
 
 function getDate() {
@@ -92,7 +94,7 @@ function getDate() {
     var nextDate = today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString());
     console.log(nextDate);
     document.getElementById("txtFromDate").value = nextDate;
-    $("#ppytime_time").html(AppendZero(today.getDate().toString()) + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" +  today.getFullYear().toString() + " " + $("#drpselecttime option:selected").text());
+    $("#ppytime_time").html(AppendZero(today.getDate().toString()) + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + today.getFullYear().toString() + " " + $("#drpselecttime option:selected").text());
     $("#txtFromDate").attr("min", (today.getFullYear().toString() + "-" + AppendZero((today.getMonth() + 1).toString()) + "-" + AppendZero(today.getDate().toString())));
 }
 
@@ -131,7 +133,7 @@ $("#ddlselecttime").change(function () {
     }
     temptime = totaltime - (tempcheckedcount * 0.5) + 3;
     selecttime = $('#ddlselecttime :selected').val();
-    
+
     console.log($('#ddlselecttime :selected').val());
     console.log(temptime);
     debugger;
@@ -297,7 +299,7 @@ function SaveNewAddress() {
                                 $(".btnaddress").addClass(" d-block");
 
                                 $(".newAddress").addClass(" d-none");
-                                
+
                             }
                         },
                         error: function (err) {
@@ -454,7 +456,7 @@ function completbooking() {
     completebooking.servicehourlyRate = _servicehourlyRate;
     completebooking.serviceHours = parseFloat($("#ddlselecttime").val());
     completebooking.extraHours = (ExtraservicedCheckedcount * 0.5);
-   
+
     completebooking.extraservicesName = [];
     $('input[name="Excheckbox"]').each(function () {
         if (this.checked) {
@@ -468,10 +470,17 @@ function completbooking() {
     completebooking.comments = $("#txtcomment").val();
     completebooking.haspets = $("#chkHasPet").prop('checked');
 
-
+    debugger;
 
     //tab-3
     completebooking.userAddressID = $('input[name=UserAddress]:checked').attr("id");
+    if ($("#hiddenselectedspid").val() != '') {
+        completebooking.serviceproviderid = $("#hiddenselectedspid").val();
+    }
+    else {
+        completebooking.serviceproviderid = 0;
+    }
+    
 
     //tab-4
     completebooking.paymentdone = true;
@@ -481,7 +490,7 @@ function completbooking() {
     console.log(ExtraservicedCheckedcount);
     console.log(totaltime);
     console.log(completebooking);
-
+  
 
     if (document.getElementById("spncardnumbervalidation").innerHTML == "" &&
         document.getElementById("spncardexpairedvalidation").innerHTML == "" &&
@@ -489,7 +498,7 @@ function completbooking() {
         document.getElementById("chktermsandcondion").checked) {
         $("#loader").addClass("is-active");
         $.ajax({
-            
+
             url: '/Home/Completbooking',
             type: 'post',
             dataType: 'json',
@@ -509,4 +518,86 @@ function completbooking() {
             }
         });
     }
+}
+
+
+function loadtable() {
+   
+    $('#example').DataTable({
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+
+        "bFilter": false, //hide Search bar
+        "pagingType": "full_numbers",
+        paging: false,
+        "pagingType": "full_numbers",
+        // bFilter: false,
+        ordering: false,
+        searching: false,
+        info: false,
+        "bDestroy": true,
+        "oLanguage": {
+            "sInfo": "Total Records: _TOTAL_"
+        },
+        "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+        responsive: true,
+        "order": [],
+
+    });
+    loaddata();
+}
+
+function loaddata() {
+    var zipcode = $("#txtzipcode").val();
+    console.log(zipcode);
+    $("#loader").addClass("is-active");
+
+    $.ajax({
+        url: '/home/getfavsp',
+        type: 'post',
+        data: { 'zipcode': zipcode },
+        success: function (respo) {
+            $("#loader").removeClass("is-active");
+            $('#example').DataTable().clear();
+           
+            console.log(respo);
+            respo.forEach(function (element) {
+                var t = $('#example').DataTable();
+               
+                debugger;
+                t.row.add([
+                    '<img src="../' + element.spprofile + '" alt="Alternate Text" />',
+                    element.spname,
+                    '<button class="btn btn-light btndirectselect mt-3" onclick="directassign(' + element.spid + ')">Select</button>'
+                ]).draw(false);
+            });
+        }
+    });
+}
+
+function directassign(spid) {
+   
+    $.ajax({
+        url: '/home/checkconflictsp',
+        type: 'post',
+        data: { 'spid': spid },
+        success: function (respo) {
+            $("#loader").removeClass("is-active");
+
+            if (respo == true) {
+                Swal.fire(
+                    'Block',
+                    'You are blocked by this serviceprovider',
+                    'error'
+                )
+            }
+            else {
+                $("#hiddenselectedspid").val(respo);
+                //aya kai karva nu
+                btnAddAddresstab();
+            }
+           
+            console.log(respo);
+           
+        }
+    });
 }

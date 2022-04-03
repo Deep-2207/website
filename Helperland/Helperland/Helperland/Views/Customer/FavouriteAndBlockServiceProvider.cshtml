@@ -88,14 +88,14 @@
                     console.log(respo);
                     respo.forEach(function (element) {
                         var t = $('#example').DataTable();
-                        var btnbandu;
-                        debugger;
-                        if (element.blockeduser != null) {
-                            btnnbandu = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="UnBlock">UnBlock</button>'
-                        }
-                        else {
-                            btnnbandu = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="Block">Block</button>'
-                        }
+                        //var btnbandu;
+                        //debugger;
+                        //if (element.blockeduser != null) {
+                        //    btnnbandu = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="UnBlock">UnBlock</button>'
+                        //}
+                        //else {
+                        //    btnnbandu = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.customeruserid + ')" value="Block">Block</button>'
+                        //}
                         var spratingsinput;
                         if (element.spratings != null) {
                             spratingsinput = '<input required class= "ratingspdashboard d-none"  value = "' + element.spratings + '" type = "text" title = "" > ';
@@ -105,19 +105,19 @@
                         }
                         var btnblock;
                         var btnfav;
-                        if (element.spblock != null && element.spfav != null) {
-                            if (element.spblock == false) {
-                                btnblock = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfav + ',true)" value="Block">Block</button>'
+                        if (element.spfavblock != null) {
+                            if (element.spfavblock.isBlocked == false) {
+                                btnblock = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfavblock.isFavorite + ',true)" value="Block">Block</button>'
                             }
                             else {
-                                btnblock = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfav + ',false)" value="UnBlock">UnBlock</button>'
+                                btnblock = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',' + element.spfavblock.isFavorite + ',false)" value="UnBlock">UnBlock</button>'
                             }
 
-                            if (element.spfav == false) {
-                                btnfav = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',true,' + element.spblock + ')" value="Block">Fav</button>'
+                            if (element.spfavblock.isFavorite == false) {
+                                btnfav = '<button class="btn btn-danger btn-tomato btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',true,' + element.spfavblock.isBlocked + ')" value="Block">Fav</button>'
                             }
                             else {
-                                btnfav = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',false,' + element.spblock + ')" value="UnBlock">UnFav</button>'
+                                btnfav = '<button class="btn btn-danger btn-Accept btn-rounded-17 btn-blockUnblock" onclick="BlockUnBlockAndFavUnFav(' + element.spid + ',false,' + element.spfavblock.isBlocked + ')" value="UnBlock">UnFav</button>'
                             }
                         }
                         else {

@@ -109,7 +109,8 @@
 
     .sidebar-collapse-dv {
         background-color: #fff;
-        max-height: 100vh;
+       /* max-height: 100vh;*/
+       height:100vh;
         position: absolute;
         left: 0px;
         top: 69px;

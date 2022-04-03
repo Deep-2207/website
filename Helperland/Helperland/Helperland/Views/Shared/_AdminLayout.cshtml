@@ -68,13 +68,13 @@
                         </li>*@
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Service Requests</a>
+                        <a class="nav-link" asp-action="servicerequest" asp-controller="Admin">Service Requests</a>
                     </li>
                     @*<li class="nav-item">
                             <a class="nav-link" href="#">Service Provider</a>
                         </li>*@
                     <li class="nav-item">
-                        <a class="nav-link" href="#">User Management</a>
+                        <a class="nav-link" asp-action="UserManagement" asp-controller="Admin">User Management</a>
                     </li>
 
                     @*<li class='nav-link sub-menu drop-2'>
@@ -148,13 +148,13 @@
                             </li>*@
 
                         <li class="nav-item">
-                            <a class="nav-link" id="idservicerequest" asp-action="servicerequest" asp-controller="admin">Service Requests</a>
+                            <a class="nav-link" id="idservicerequest" asp-action="servicerequest" asp-controller="Admin">Service Requests</a>
                         </li>
                         @*<li class="nav-item">
                                 <a class="nav-link" href="#">Service Provider</a>
                             </li>*@
                         <li class="nav-item border-bottom-0">
-                            <a class="nav-link" asp-action="UserManagement" asp-controller="admin">User Management</a>
+                            <a class="nav-link" asp-action="UserManagement" asp-controller="Admin">User Management</a>
                         </li>
 
                         @*<li class='nav-link sub-menu drop-2'>
@@ -272,7 +272,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" onclick="editandreschedul()">Save</button>
+                    <button class="btn btn-primary btn-lg btnlogin mt-2" type="button" onclick="editandreschedulfun()">Save</button>
 
                 </div>
 

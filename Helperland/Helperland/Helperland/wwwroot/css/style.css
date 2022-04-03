@@ -2202,8 +2202,8 @@ nav .navbar-nav-icone {
             }
 
             .admin-body .admin-dashboard .side-dashboard tr td .dropdown-menu {
-               /* min-height: 78px !important;*/
-                right: 0px !important;
+                /* min-height: 78px !important;*/
+                right: 17px !important;
                 top: 5px !important;
             }
 
@@ -3589,7 +3589,8 @@ footer .footer-max-width .nav li a:hover {
 #editrefundmodel input:focus,
 #editrefundmodel select:focus,
 #editrefundmodel textarea:focus,
-#txtAmountToRefund:focus{
+#txtAmountToRefund:focus
+{
     border-color: #1FB6FF !important;
     outline: 0;
     box-shadow: none;
@@ -3684,7 +3685,8 @@ footer .footer-max-width .nav li a:hover {
     box-shadow: none !important;
 }
 #rechedual input:focus,
-#rechedual select:focus {
+#rechedual select:focus,
+#filterratings:focus{
     border-color: #1D7A8C !important;
     outline: 0 !important;
     box-shadow: none !important;
@@ -3697,4 +3699,22 @@ footer .footer-max-width .nav li a:hover {
 .fc .fc-col-header-cell-cushion,
 .fc .fc-daygrid-day-number{
     color: black;
+}
+.btndirectselect {
+    width: auto;
+    padding: 0px 30px !important;
+    background: #e1e1e1;
+    
+}
+    .btndirectselect:hover {
+        background: #e1e1e1;
+        color: black !important;
+        cursor: pointer !important;
+    }
+
+    .bookfav table {
+        border-bottom: 1px solid transparent !important;
+    }
+.bookfav .dataTables_wrapper{
+    margin-left:0px !important;
 }

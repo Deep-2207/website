@@ -24,16 +24,19 @@ namespace Helperland.Controllers
         private readonly IAdminRepository _adminRepository;
         private readonly IConfiguration _configuration;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IServiceProviderRepository _serviceProviderRepository;
 
-        public AdminController(HelperlandContext helperlandContext ,
+        public AdminController(HelperlandContext helperlandContext,
                                 IAdminRepository adminRepository,
                                 IConfiguration configuration,
-                                ICustomerRepository customerRepository)
+                                ICustomerRepository customerRepository,
+                                IServiceProviderRepository serviceProviderRepository)
         {
             this._helperlandContext = helperlandContext;
             this._adminRepository = adminRepository;
             this._configuration = configuration;
             this._customerRepository = customerRepository;
+            this._serviceProviderRepository = serviceProviderRepository;
         }
         public int getLoggedinUserId()
         {
@@ -69,7 +72,7 @@ namespace Helperland.Controllers
                                          servicehours = sr.ServiceHours,
                                          customeruser = _helperlandContext.Users.Where(x => x.UserId == sr.UserId).FirstOrDefault(),
                                          serviceprovideruser = _helperlandContext.Users.Where(x => x.UserId == sr.ServiceProviderId).FirstOrDefault(),
-                                         ratings =(decimal?) _helperlandContext.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId).Average(x => x.Ratings),
+                                         ratings = (decimal?)_helperlandContext.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId).Average(x => x.Ratings),
                                          status = sr.Status,
                                          customeraddress1 = sradres.AddressLine1 + " " + sradres.AddressLine2,
                                          customeraddress2 = sradres.PostalCode + " " + sradres.City,
@@ -93,9 +96,9 @@ namespace Helperland.Controllers
                                   where sr.ServiceRequestId == servicerequestid
                                   select new
                                   {
-                                     starttimeanddate = sr.ServiceStartDate,
-                                     servicehourse = sr.ServiceHours,
-                                     serviceaddress = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault()
+                                      starttimeanddate = sr.ServiceStartDate,
+                                      servicehourse = sr.ServiceHours,
+                                      serviceaddress = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == servicerequestid).FirstOrDefault()
                                   }).FirstOrDefault();
             return Json(servicerequest);
         }
@@ -111,38 +114,50 @@ namespace Helperland.Controllers
             }
             ServiceRequest serviceRequest = _customerRepository.GetserviceReqestDetials(model.servicerequestid);
 
-            List<ServiceRequest> serviceproviderrequest = _customerRepository.GetAllserviceBySPID(serviceRequest.ServiceProviderId);
-            DateTime newdatetime = Convert.ToDateTime(model.startDate + " " + model.StartTime);
-            DateTime newdatetimewithservicehours = newdatetime.AddMinutes(serviceRequest.ServiceHours * 60);
-            //DateTime newtime = Convert.ToDateTime(chanhgetime);
+
+
+
+
             bool serviceRequestConflict = false;
             bool serviceovertime = true;
-            DateTime dateLimit = Convert.ToDateTime(model.startDate).AddHours(21);
-
-            if (newdatetimewithservicehours > dateLimit)
+            if (serviceRequest.ServiceProviderId != null)
             {
-                // return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = "Could not completed the service request, because service booking request is must be completed within 21:00 time" });
-                serviceovertime = false;
 
-            }
+                List<ServiceRequest> serviceproviderrequest = _serviceProviderRepository.listoldrequest((int)serviceRequest.ServiceProviderId);
+                DateTime newdatetime = Convert.ToDateTime(model.startDate + " " + model.StartTime);
+                DateTime newdatetimewithservicehours = newdatetime.AddMinutes(serviceRequest.ServiceHours * 60);
+                //DateTime newtime = Convert.ToDateTime(chanhgetime);
 
-            foreach (var timecheck in serviceproviderrequest)
-            {
-                if (timecheck.ServiceRequestId != model.servicerequestid)
+                DateTime dateLimit = Convert.ToDateTime(model.startDate).AddHours(21);
+
+                if (newdatetimewithservicehours > dateLimit)
                 {
-                    if (timecheck.ServiceStartDate <= newdatetimewithservicehours && newdatetime <= timecheck.ServiceStartDate.AddMinutes(timecheck.ServiceHours * 60))
-                    {
-                        serviceRequestConflict = false;
-                        break;
+                    // return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = "Could not completed the service request, because service booking request is must be completed within 21:00 time" });
+                    serviceovertime = false;
 
-                    }
-                    else
+                }
+
+                foreach (var timecheck in serviceproviderrequest)
+                {
+                    if (timecheck.ServiceRequestId != model.servicerequestid)
                     {
-                        serviceRequestConflict = true;
+                        if (timecheck.ServiceStartDate <= newdatetimewithservicehours && newdatetime <= timecheck.ServiceStartDate.AddMinutes(timecheck.ServiceHours * 60))
+                        {
+                            serviceRequestConflict = false;
+                            break;
+
+                        }
+                        else
+                        {
+                            serviceRequestConflict = true;
+                        }
                     }
                 }
             }
-
+            else
+            {
+                serviceRequestConflict = true;
+            }
             if (serviceRequestConflict == true)
             {
                 serviceRequest.ServiceStartDate = Convert.ToDateTime(model.startDate + " " + model.StartTime.ToString().Trim());
@@ -159,43 +174,55 @@ namespace Helperland.Controllers
                 _adminRepository.Updateservicerequest(serviceRequest);
                 _adminRepository.UpdateServicerequestAddress(address);
 
-                var eamilsend = (from sr in _helperlandContext.ServiceRequests
-                                 join
-                                 usermail in _helperlandContext.Users
-                                 on sr.UserId equals usermail.UserId
-                                 join
-                                 spemail in _helperlandContext.Users
-                                 on sr.ServiceProviderId equals spemail.UserId into tempsp
-                                 from temptempsp in tempsp.DefaultIfEmpty()
-                                 where sr.ServiceRequestId == model.servicerequestid
-                                 select new
-                                 {
-                                     getuseremail = usermail.Email,
-                                     getspemail = temptempsp.Email,
-
-                                 }).AsNoTracking().ToList();
-
+                var serviceuser = _helperlandContext.Users.Where(x => x.UserId == serviceRequest.UserId).FirstOrDefault();
 
                 EmailModel emailModel = new EmailModel();
                 string tempmail = "";
-                foreach (var spsendmail in eamilsend)
+                var vCount = 0;
+                if (serviceRequest.ServiceProviderId != null)
                 {
-
-                    tempmail += spsendmail.getuseremail;
-                    if (spsendmail.getspemail != null)
-                    {
-                        tempmail += ",";
-                        tempmail += spsendmail.getspemail;
-                    }
-                    
-
-                    tempmail += spsendmail.getuseremail;
-
-
+                    var onespemail = _helperlandContext.Users.Where(x => x.UserId == serviceRequest.ServiceProviderId).Select(x => x.Email).FirstOrDefault();
+                    tempmail = onespemail;
+                    tempmail += "," + serviceuser.Email;
                 }
-               
+                else
+                {
+                    var eamilsend = (from usr in _helperlandContext.Users
+                                     join
+                                     fb in _helperlandContext.FavoriteAndBlockeds
+                                     on
+                                     usr.UserId equals fb.UserId into temp
+                                     from fb in temp.DefaultIfEmpty()
+                                     join
+                                     cust in _helperlandContext.Users
+                                     on
+                                     fb.TargetUserId equals cust.UserId
+                                     into temp1
+                                     from fb1 in temp1.DefaultIfEmpty()
+
+                                     where usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && usr.ZipCode == serviceRequest.ZipCode && usr.IsApproved == true &&
+                                     (fb.TargetUserId == serviceuser.UserId || fb.Equals(null)) &&
+                                     (fb.IsBlocked == false || fb.Equals(null))
+
+                                     select new
+                                     {
+                                         serviceProviderEmail = usr.Email,
+                                        
+                                     }).ToList();
+                    tempmail += serviceuser.Email;
+                    foreach (var spsendmail in eamilsend)
+                    {
+                        
+                        if (spsendmail.serviceProviderEmail != null)
+                        {
+                            tempmail += ",";
+                            tempmail += spsendmail.serviceProviderEmail;
+                        }
+                        
+                    }
+                }
                 emailModel.To = tempmail;
-               // emailModel.To = stremails;
+                //emailModel.To = stremails;
                 emailModel.Subject = "Serivcer Reschedul ";
                 emailModel.Body = "Service ID " + serviceRequest.ServiceRequestId + " By Admin And <br/> New Time And Date is" + model.startDate + "-" + model.StartTime;
 
@@ -222,46 +249,64 @@ namespace Helperland.Controllers
             servicerequest.ModifiedDate = DateTime.Now;
 
             _adminRepository.Updateservicerequest(servicerequest);
-
-            var eamilsend = (from sr in _helperlandContext.ServiceRequests
-                             join
-                             usermail in _helperlandContext.Users
-                             on sr.UserId equals usermail.UserId
-                             join
-                             spemail in _helperlandContext.Users
-                             on sr.ServiceProviderId equals spemail.UserId into tempsp
-                             from temptempsp in tempsp.DefaultIfEmpty()
-                             where sr.ServiceRequestId == serviceid
-                             select new
-                             {
-                                 getuseremail = usermail.Email,
-                                 getspemail = temptempsp.Email,
-
-                             }).AsNoTracking().ToList();
-
-
+            var serviceuser = _helperlandContext.Users.Where(x => x.UserId == servicerequest.UserId).FirstOrDefault();
             EmailModel emailModel = new EmailModel();
             string tempmail = "";
-            foreach (var spsendmail in eamilsend)
+            var vCount = 0;
+            if (servicerequest.ServiceProviderId != null)
             {
-
-                tempmail += spsendmail.getuseremail;
-                if (spsendmail.getspemail != null)
-                {
-                    tempmail += ",";
-                    tempmail += spsendmail.getspemail;
-                }
-
-
-                tempmail += spsendmail.getuseremail;
-
-
+                var onespemail = _helperlandContext.Users.Where(x => x.UserId == servicerequest.ServiceProviderId).Select(x => x.Email).FirstOrDefault();
+                tempmail = onespemail;
             }
+            else
+            {
+                var eamilsend = (from usr in _helperlandContext.Users
+                                 join
+                                 fb in _helperlandContext.FavoriteAndBlockeds
+                                 on
+                                 usr.UserId equals fb.UserId into temp
+                                 from fb in temp.DefaultIfEmpty()
+                                 join
+                                 cust in _helperlandContext.Users
+                                 on
+                                 fb.TargetUserId equals cust.UserId
+                                 into temp1
+                                 from fb1 in temp1.DefaultIfEmpty()
 
+                                 where usr.UserTypeId == (int)UserTypeEnum.ServiceProvider && usr.ZipCode == servicerequest.ZipCode && usr.IsApproved == true &&
+                                 (fb.TargetUserId == servicerequest.UserId || fb.Equals(null)) &&
+                                 (fb.IsBlocked == false || fb.Equals(null))
+
+                                 select new
+                                 {
+                                     serviceProviderEmail = usr.Email,
+
+                                     //availableSps = (from u in _helperlandContext.Users
+                                     //                join fb in _helperlandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                     //                from fb in fb1.DefaultIfEmpty()
+                                     //                where u.ZipCode == usr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeEnum.ServiceProvider && Convert.ToInt16(sessionUser.UserID) != fb.TargetUserId
+                                     //                select u.Email).ToList()
+                                 }).ToList();
+
+
+
+                tempmail += serviceuser.Email;
+                foreach (var spsendmail in eamilsend)
+                {
+
+                    if (spsendmail.serviceProviderEmail != null)
+                    {
+                        tempmail += ",";
+                        tempmail += spsendmail.serviceProviderEmail;
+                    }
+
+                }
+            }
             emailModel.To = tempmail;
-            // emailModel.To = stremails;
-            emailModel.Subject = "Serivcer Cancelled";
-            emailModel.Body = "Service ID " + serviceid + "is Cancelled By Admin";
+            //emailModel.To = stremails;
+            emailModel.Subject = "Serivcer Cancelled ";
+            emailModel.Body = "Service ID " + servicerequest.ServiceRequestId + "Cancelled By Admin ";
+
 
             MailHelper mailhelper = new MailHelper(_configuration);
             mailhelper.Send(emailModel);
@@ -287,7 +332,7 @@ namespace Helperland.Controllers
 
             return Json(loginuser);
         }
-        public JsonResult activedeactive(int userid,int index)
+        public JsonResult activedeactive(int userid, int index)
         {
             var user = HttpContext.Session.GetString("User");
             SessionUser sessionUser = new SessionUser();
@@ -341,7 +386,7 @@ namespace Helperland.Controllers
         }
         public JsonResult searchserviceprovider(string searchTerm)
         {
-            if(searchTerm != null)
+            if (searchTerm != null)
             {
                 var users = _adminRepository.GetAllServiceprovider();
 
@@ -366,7 +411,15 @@ namespace Helperland.Controllers
         public JsonResult refundservicepost([FromBody] ServiceRequestViewModel model)
         {
             var servicrequest = _customerRepository.GetserviceReqestDetials(model.ServiceRequestID);
-            servicrequest.RefundedAmount = model.Refundamount;
+            if (servicrequest.RefundedAmount == null)
+            {
+                servicrequest.RefundedAmount = model.Refundamount;
+            }
+            else
+            {
+                servicrequest.RefundedAmount += model.Refundamount;
+            }
+
             servicrequest.ModifiedBy = getLoggedinUserId();
             servicrequest.ModifiedDate = DateTime.Now;
             servicrequest.Comments = model.Comments;

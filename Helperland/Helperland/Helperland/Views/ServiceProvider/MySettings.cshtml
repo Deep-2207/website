@@ -424,7 +424,8 @@
                 languageid: $("#userlanguage").val(),
                 dateOfBirth: dbo.toISOString(),
                 gender: $('input[name="Gender"]:checked').val(),
-                nationalityid: $('#usernationality').val()
+                nationalityid: $('#usernationality').val(),
+                zipcode: $("#txtpostalcode").val(),
             };
 
             if ($("#txtfirstname").val() == "") {
